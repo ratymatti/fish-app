@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import Header from './components/Header/Header';
+// import Log from './components/Log/Log';
 import MainContainer from './components/MainContainer/MainContainer';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
       <Header />
       <MainContainer
         addFish={addFish} />
+      {/* <Log fishes={fishes} />   */}
     </div>
   );
 }
