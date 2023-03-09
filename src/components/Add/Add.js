@@ -13,12 +13,12 @@ const optionsSpecies = [
 const optionsCm = [];
 
 const optionsRiver = [
-    {value: 'Kitkajoki', label: 'Kitkajoki'},
-    {value: 'Kuusinkijoki', label: 'Kuusinkijoki'},
+    { value: 'Kitkajoki', label: 'Kitkajoki' },
+    { value: 'Kuusinkijoki', label: 'Kuusinkijoki' },
 ];
 
 function addCmOptions() {
-    for (let i = 1; i < 201; i++) {
+    for (let i = 1; i <= 200; i++) {
         optionsCm.push({value: i, label: i + ' cm'})
     }
 }
@@ -26,21 +26,44 @@ function addCmOptions() {
 addCmOptions()
 
 export default function Add(props) {
-    const [startDate, setStartDate] = useState(new Date());
+    const [species, setSpecies] = useState('');
+    const [cm, setCm] = useState(0);
+    const [river, setRiver] = useState('');
+    const [catchDate, setCatchDate] = useState(new Date());
+
+    function handleSubmit(event) {
+        event.preventDefault();
+        const fish = {
+            species: species,
+            cm: cm,
+            river: river,
+            date: catchDate
+        }
+
+        props.addFish(fish);
+    }
 
   return (
     <div className='add'>
         <form>
             <Select 
                 options={optionsSpecies}
-                placeholder='Species' />
+                placeholder='Species'
+                onChange={(selectedSpecies) => setSpecies(selectedSpecies.value)} />
             <Select
                 options={optionsCm}
-                placeholder='cm' />
+                placeholder='cm'
+                onChange={(selectedCm) => setCm(selectedCm.value)} />
             <Select
                 options={optionsRiver}
-                placeholder='River' />
-            <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />         
+                placeholder='River'
+                onChange={(selectedRiver) => setRiver(selectedRiver.value)} />
+            <DatePicker 
+                selected={catchDate} 
+                onChange={(date) => setCatchDate(date)} />
+            <button 
+                type='submit'
+                onClick={handleSubmit}>Submit</button>         
         </form>
     </div>
   )
