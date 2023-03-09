@@ -33,11 +33,13 @@ export default function Add(props) {
 
     function handleSubmit(event) {
         event.preventDefault();
+        
         const fish = {
             species: species,
             cm: cm,
             river: river,
-            date: catchDate
+            date: catchDate,
+            id: new Date().valueOf()
         }
 
         props.addFish(fish);

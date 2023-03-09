@@ -10,8 +10,6 @@ function App() {
     console.log('adding fish:', fish);
     setFishes([...fishes, fish]);
   }
-  
-
 
   return (
     <div className="App">
@@ -21,5 +19,7 @@ function App() {
     </div>
   );
 }
+
+
 
 export default App;
