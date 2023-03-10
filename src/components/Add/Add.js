@@ -15,6 +15,7 @@ const optionsCm = [];
 const optionsRiver = [
     { value: 'Kitkajoki', label: 'Kitkajoki' },
     { value: 'Kuusinkijoki', label: 'Kuusinkijoki' },
+    { value: 'Byske', label: 'Byske' }
 ];
 
 function addCmOptions() {
@@ -33,7 +34,7 @@ export default function Add(props) {
 
     function handleSubmit(event) {
         event.preventDefault();
-        
+
         const fish = {
             species: species,
             cm: cm,
