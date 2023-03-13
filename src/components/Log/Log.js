@@ -6,10 +6,12 @@ export default function Log(props) {
     <div className='log'>
         <table>
             <thead>
-                <th>Species</th>
-                <th>Length</th>
-                <th>River</th> 
-                <th>Date</th>
+                <tr>
+                    <th>Species</th>
+                    <th>Length</th>
+                    <th>River</th> 
+                    <th>Date</th>
+                </tr>
             </thead>
             <tbody>
                 {props.fishes.map(fish => (

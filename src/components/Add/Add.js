@@ -34,17 +34,19 @@ export default function Add(props) {
 
     function handleSubmit(event) {
         event.preventDefault();
-
+      
+        const formattedDate = `${catchDate.getDate()}.${catchDate.getMonth() + 1}.${catchDate.getFullYear()}`;
+      
         const fish = {
-            species: species,
-            cm: cm,
-            river: river,
-            date: catchDate,
-            id: new Date().valueOf()
+          species: species,
+          cm: cm,
+          river: river,
+          date: formattedDate,
+          id: new Date().valueOf()
         }
-
+      
         props.addFish(fish);
-    }
+      }
 
   return (
     <div className='add'>
