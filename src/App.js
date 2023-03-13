@@ -24,9 +24,12 @@ function App() {
         </ul>
         <h1>Fish App</h1>
       </div>
-      <MainContainer
-        addFish={addFish}
-        fishes={fishes} />
+      <div>
+        <MainContainer
+          addFish={addFish}
+          fishes={fishes}
+          active={active} />
+      </div>
     </div>
   );
 }
