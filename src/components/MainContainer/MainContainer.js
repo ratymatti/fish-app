@@ -9,7 +9,7 @@ export default function MainContainer(props) {
   return (
     <div className='main-container'>
       {props.active === 'Add' && <Add addFish={props.addFish} />}
-      {props.active === 'Log' && <Log fishes={props.fishes} />}
+      {props.active === 'Log' && <Log fishes={props.fishes} sortByField={props.sortByField} />}
       {props.active === 'Weather' && <Weather />}
     </div>
   )

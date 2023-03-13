@@ -7,10 +7,10 @@ export default function Log(props) {
         <table>
             <thead>
                 <tr>
-                    <th>Species</th>
-                    <th>Length</th>
-                    <th>River</th> 
-                    <th>Date</th>
+                    <th onClick={() => props.sortByField('species')}>Species</th>
+                    <th onClick={() => props.sortByField('cm')}>Length</th>
+                    <th onClick={() => props.sortByField('river')}>River</th> 
+                    <th onClick={() => props.sortByField('date')}>Date</th>
                 </tr>
             </thead>
             <tbody>
