@@ -15,11 +15,12 @@ export default function Log(props) {
             </thead>
             <tbody>
                 {props.fishes.map(fish => (
+                    
                     <tr key={fish.id}>
                         <td>{fish.species}</td>
                         <td>{fish.cm}</td>
                         <td>{fish.river}</td>
-                        <td>{fish.date}</td>
+                        <td>{fish.date.toString()}</td>
                     </tr>
                 ))}
             </tbody>   

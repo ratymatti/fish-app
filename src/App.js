@@ -15,22 +15,43 @@ function App() {
   }
 
   function sortByField(field) {
-    const sortedFishes = [...fishes].sort((a, b) => {
-      if (a[field] < b[field]) {
-        return -1;
+    
+      switch(field) {
+        case 'species':
+          const sortedBySpecies = [...fishes].sort((fishA, fishB) => {
+            const speciesComparison = fishA.species.localeCompare(fishB.species);
+            if (speciesComparison === 0) {
+              // If species are equal, compare by size
+              return fishB.cm - fishA.cm;  
+            } else {
+              // Otherwise, compare by species
+              return speciesComparison;
+            }
+          });
+          return setFishes([...sortedBySpecies]);
+        case 'cm':
+          return setFishes([...fishes.sort((fishA, fishB) => {
+            return fishB.cm - fishA.cm;
+          })])  
+        case 'river':
+          return setFishes([...fishes.sort((fishA, fishB) => {
+            return fishA.river.localeCompare(fishB.river);
+          })])
+        case 'date':
+          const sortedFishes = [...fishes].sort((fishA, fishB) => {
+            const dateComparison = fishB.date.getTime() - fishA.date.getTime();
+            if (dateComparison === 0) {
+              // If the dates are equal, compare by size
+              return fishB.size - fishA.size;
+            } else {
+              // Otherwise, compare by date
+              return dateComparison;
+            }
+          });
+          return setFishes(sortedFishes); 
+        default:
+          return setFishes([...fishes]);
       }
-      if (a[field] > b[field]) {
-        return 1;
-      }
-      
-      return 0;
-    });
-  
-    if (field === 'cm' || field === 'date') {
-      setFishes(sortedFishes.reverse());  
-    } else {
-      setFishes(sortedFishes);
-    }
   }
   
 

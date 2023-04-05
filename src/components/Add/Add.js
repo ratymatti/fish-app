@@ -35,13 +35,11 @@ export default function Add(props) {
     function handleSubmit(event) {
         event.preventDefault();
       
-        const formattedDate = `${catchDate.getDate()}.${catchDate.getMonth() + 1}.${catchDate.getFullYear()}`;
-      
         const fish = {
           species: species,
           cm: cm,
           river: river,
-          date: formattedDate,
+          date: catchDate,
           id: new Date().valueOf()
         }
       
