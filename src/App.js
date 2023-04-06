@@ -34,9 +34,17 @@ function App() {
             return fishB.cm - fishA.cm;
           })])  
         case 'river':
-          return setFishes([...fishes.sort((fishA, fishB) => {
-            return fishA.river.localeCompare(fishB.river);
-          })])
+          const sortedByRiver = [...fishes].sort((fishA, fishB) => {
+            const riverComparison = fishA.river.localeCompare(fishB.river);
+            if (riverComparison === 0) {
+              // If river is same, compare by size
+              return fishB.cm - fishA.cm;
+            } else {
+              // Otherwise, compare by river
+              return riverComparison;
+            }
+          });
+          return setFishes([...sortedByRiver]);
         case 'date':
           const sortedFishes = [...fishes].sort((fishA, fishB) => {
             const dateComparison = fishB.date.getTime() - fishA.date.getTime();
