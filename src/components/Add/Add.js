@@ -82,7 +82,10 @@ export default function Add(props) {
                 type='submit'
                 onClick={handleSubmit}>Submit</button>         
         </form>
-        {error && <div className="error">{error}</div>}
+        {error &&   <div className="error">
+                        {error}<br></br>
+                        <button onClick={() => setError('')}>Close</button>
+                    </div>}
     </div>
   )
 }
