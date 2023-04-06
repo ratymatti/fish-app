@@ -19,10 +19,10 @@ function App() {
       switch(field) {
         case 'species':
           const sortedBySpecies = [...fishes].sort((fishA, fishB) => {
-            const speciesComparison = fishA.species.localeCompare(fishB.species);
+            const speciesComparison = fishB.species.localeCompare(fishA.species);
             if (speciesComparison === 0) {
               // If species are equal, compare by size
-              return fishB.cm - fishA.cm;  
+              return fishA.cm - fishB.cm;  
             } else {
               // Otherwise, compare by species
               return speciesComparison;
@@ -31,14 +31,14 @@ function App() {
           return setFishes([...sortedBySpecies]);
         case 'cm':
           return setFishes([...fishes.sort((fishA, fishB) => {
-            return fishB.cm - fishA.cm;
+            return fishA.cm - fishB.cm;
           })])  
         case 'river':
           const sortedByRiver = [...fishes].sort((fishA, fishB) => {
-            const riverComparison = fishA.river.localeCompare(fishB.river);
+            const riverComparison = fishB.river.localeCompare(fishA.river);
             if (riverComparison === 0) {
               // If river is same, compare by size
-              return fishB.cm - fishA.cm;
+              return fishA.cm - fishB.cm;
             } else {
               // Otherwise, compare by river
               return riverComparison;
@@ -47,10 +47,10 @@ function App() {
           return setFishes([...sortedByRiver]);
         case 'date':
           const sortedFishes = [...fishes].sort((fishA, fishB) => {
-            const dateComparison = fishB.date.getTime() - fishA.date.getTime();
+            const dateComparison = fishA.date.getTime() - fishB.date.getTime();
             if (dateComparison === 0) {
               // If the dates are equal, compare by size
-              return fishB.size - fishA.size;
+              return fishA.size - fishB.size;
             } else {
               // Otherwise, compare by date
               return dateComparison;

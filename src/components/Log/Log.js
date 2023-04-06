@@ -14,7 +14,7 @@ export default function Log(props) {
                 </tr>
             </thead>
             <tbody>
-                {props.fishes.map(fish => (
+                {props.fishes.slice(0).reverse().map(fish => (
                     
                     <tr key={fish.id}>
                         <td>{fish.species}</td>
