@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Select from 'react-select';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import './Add.css';
 
 const optionsSpecies = [
     { value: 'trout', label: 'Trout' },
@@ -31,20 +32,33 @@ export default function Add(props) {
     const [cm, setCm] = useState(0);
     const [river, setRiver] = useState('');
     const [catchDate, setCatchDate] = useState(new Date());
+    const [error, setError] = useState('');
 
     function handleSubmit(event) {
         event.preventDefault();
-      
-        const fish = {
-          species: species,
-          cm: cm,
-          river: river,
-          date: catchDate,
-          id: new Date().valueOf()
+        let errorMessage = '';
+
+        if (!species) {
+            errorMessage = 'Species is required.';
+        } else if (!cm || isNaN(cm) || cm <= 0) {
+            errorMessage = 'Cm must be greater than 0.';
+        } else if (!river) {
+            errorMessage = 'River is required.';
+        } else {
+
+            const fish = {
+                species: species,
+                cm: cm,
+                river: river,
+                date: catchDate,
+                id: new Date().valueOf()
+              };
+
+              props.addFish(fish);      
         }
-      
-        props.addFish(fish);
-      }
+        
+        setError(errorMessage);
+    }
 
   return (
     <div className='add'>
@@ -68,6 +82,7 @@ export default function Add(props) {
                 type='submit'
                 onClick={handleSubmit}>Submit</button>         
         </form>
+        {error && <div className="error">{error}</div>}
     </div>
   )
 }
