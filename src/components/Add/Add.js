@@ -63,19 +63,23 @@ export default function Add(props) {
   return (
     <div className='add'>
         <form>
-            <Select 
+            <Select
+                className='options' 
                 options={optionsSpecies}
                 placeholder='Species'
                 onChange={(selectedSpecies) => setSpecies(selectedSpecies.value)} />
             <Select
+                className='options' 
                 options={optionsCm}
                 placeholder='cm'
                 onChange={(selectedCm) => setCm(selectedCm.value)} />
             <Select
+                className='options' 
                 options={optionsRiver}
                 placeholder='River'
                 onChange={(selectedRiver) => setRiver(selectedRiver.value)} />
-            <DatePicker 
+            <DatePicker
+                className='options'  
                 selected={catchDate} 
                 onChange={(date) => setCatchDate(date)} />
             <button 

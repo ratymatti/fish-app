@@ -20,7 +20,7 @@ export default function Log(props) {
                         <td>{fish.species}</td>
                         <td>{fish.cm}</td>
                         <td>{fish.river}</td>
-                        <td>{fish.date.toString()}</td>
+                        <td>{fish.date.toLocaleDateString('en-GB')}</td>
                     </tr>
                 ))}
             </tbody>   
