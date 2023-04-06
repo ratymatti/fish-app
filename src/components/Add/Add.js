@@ -80,7 +80,8 @@ export default function Add(props) {
                 onChange={(selectedRiver) => setRiver(selectedRiver.value)} />
             <DatePicker
                 className='options'  
-                selected={catchDate} 
+                selected={catchDate}
+                dateFormat="dd/MM/yyyy"
                 onChange={(date) => setCatchDate(date)} />
             <button 
                 type='submit'
