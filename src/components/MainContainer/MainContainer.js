@@ -12,7 +12,7 @@ export default function MainContainer(props) {
       {props.active === 'Add' && <Add addFish={props.addFish} />}
       {props.active === 'Log' && <Log fishes={props.fishes} sortByField={props.sortByField} />}
       {props.active === 'Weather' && <Weather />}
-      {props.active === 'Map' && <Map />}
+      {props.active === 'Map' && <Map location={props.location} />}
     </div>
   )
 }

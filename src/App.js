@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import MainContainer from './components/MainContainer/MainContainer';
 
@@ -9,6 +9,8 @@ function App() {
     //  {species: 'steelhead', cm: 80, river: 'Skeena', date: '12.03.2022', id: 1},
     //  {species: 'salmon', cm: 120, river: 'Lakselva', date: '12.08.2023', id: 2}
   ]);
+
+  const [location, setLocation] = useState({});
 
   function addFish(fish) {
     setFishes([...fishes, fish]);
@@ -61,6 +63,29 @@ function App() {
           return setFishes([...fishes]);
       }
   }
+
+  function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+        
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+        
+        if (lat && lng) {
+          setLocation({ lat: lat, lng: lng });
+        }
+        
+      }, (err) => {
+        console.log(err)
+      })
+    } else {
+      alert('geolocation not supported in your browser');
+    }
+  }
+
+  useEffect(() => {
+    getLocation();
+  }, [])
   
 
   return (
@@ -79,7 +104,8 @@ function App() {
           addFish={addFish}
           fishes={fishes}
           active={active}
-          sortByField={sortByField} />
+          sortByField={sortByField}
+          location={location} />
       </div>
     </div>
   );
