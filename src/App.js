@@ -65,6 +65,7 @@ function App() {
   }
 
   function getLocation() {
+    
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
         
@@ -76,8 +77,10 @@ function App() {
         }
         
       }, (err) => {
-        console.log(err)
+            console.log(err);
+            alert(err);
       })
+
     } else {
       alert('geolocation not supported in your browser');
     }
@@ -92,7 +95,7 @@ function App() {
     <div className="App">
       <div className='header'>
         <ul>
-            <li><button onClick={() => setActive('Add')}>Add</button></li>
+            <li><button onClick={() => setActive('Add')}>Add Fish</button></li>
             <li><button onClick={() => setActive('Log')}>Log</button></li>
             <li><button onClick={() => setActive('Map')}>Map</button></li>
             <li><button onClick={() => setActive('Weather')}>Weather</button></li>
