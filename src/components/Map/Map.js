@@ -13,7 +13,7 @@ export default function Map(props) {
     }
     
     return <GoogleMap
-              zoom={10}
-              center={props.location}
+              zoom={12}
+              center={props.center}
               mapContainerClassName='map-container' />
 }
