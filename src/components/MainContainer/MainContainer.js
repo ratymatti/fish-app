@@ -1,7 +1,7 @@
 import React from 'react';
 import AddContainer from '../AddContainer/AddContainer';
 import Log from '../Log/Log';
-import Map from '../Map/Map';
+import MapContainer from '../MapContainer/MapContainer';
 import Weather from '../Weather/Weather';
 import './MainContainer.css';
 
@@ -12,7 +12,7 @@ export default function MainContainer(props) {
       {props.active === 'AddContainer' && <AddContainer addFish={props.addFish} location={props.location} />}
       {props.active === 'Log' && <Log fishes={props.fishes} sortByField={props.sortByField} />}
       {props.active === 'Weather' && <Weather />}
-      {props.active === 'Map' && <Map center={props.location} />}
+      {props.active === 'MapContainer' && <MapContainer center={props.location} />}
     </div>
   )
 }
