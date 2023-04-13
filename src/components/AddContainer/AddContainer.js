@@ -10,8 +10,8 @@ export default function AddContainer(props) {
         return (
             <div className='map'>
                 <Map
-                center={props.location} />
-                <button>Add location</button>
+                    center={props.location} />
+                <button onClick={() => setActive('add')}>Select location</button>
             </div>
         )
     } else {
