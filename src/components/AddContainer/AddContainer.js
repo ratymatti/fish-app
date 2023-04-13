@@ -15,7 +15,9 @@ export default function AddContainer(props) {
                 <button className='button' onClick={() => setActive('add')}>Select location</button>
             </div>
         )
-    } else {
+    };
+
+    if (active === 'add') {
         return (
             <div className='add'>
                 <button className='button' onClick={() => setActive('map')}>Edit location</button>
@@ -23,6 +25,6 @@ export default function AddContainer(props) {
                 addFish={props.addFish} />
             </div>
         )
-    }
-}
+    };
+};
 

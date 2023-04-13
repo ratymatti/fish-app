@@ -39,6 +39,7 @@
     ]
   },
   "devDependencies": {
+    "@ubilabs/google-maps-react-hooks": "^2.0.2",
     "dotenv": "^16.0.3"
   }
 }

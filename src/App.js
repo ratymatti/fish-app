@@ -3,7 +3,7 @@ import './App.css';
 import MainContainer from './components/MainContainer/MainContainer';
 
 function App() {
-  const [active, setActive] = useState('Add');
+  const [active, setActive] = useState('');
 
   const [fishes, setFishes] = useState([
     //  {species: 'steelhead', cm: 80, river: 'Skeena', date: '12.03.2022', id: 1},
