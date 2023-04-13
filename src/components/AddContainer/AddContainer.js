@@ -18,6 +18,7 @@ export default function AddContainer(props) {
     } else {
         return (
             <div className='add'>
+                <button onClick={() => setActive('map')}>Edit location</button>
                 <Add
                 addFish={props.addFish} />
             </div>
