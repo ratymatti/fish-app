@@ -12,13 +12,13 @@ export default function AddContainer(props) {
                 <Map
                     center={props.location}
                     zoom={12} />
-                <button onClick={() => setActive('add')}>Select location</button>
+                <button className='button' onClick={() => setActive('add')}>Select location</button>
             </div>
         )
     } else {
         return (
             <div className='add'>
-                <button onClick={() => setActive('map')}>Edit location</button>
+                <button className='button' onClick={() => setActive('map')}>Edit location</button>
                 <Add
                 addFish={props.addFish} />
             </div>
