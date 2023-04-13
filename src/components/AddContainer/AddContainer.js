@@ -6,7 +6,7 @@ import './AddContainer.css';
 export default function AddContainer(props) {
     const [active, setActive] = useState('map');
 
-    if (active === 'map') {
+    if (active === 'map' && props.location) {
         return (
             <div className='map'>
                 <Map
@@ -15,7 +15,7 @@ export default function AddContainer(props) {
                 <button className='button' onClick={() => setActive('add')}>Select location</button>
             </div>
         )
-    };
+    } 
 
     if (active === 'add') {
         return (

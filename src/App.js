@@ -11,6 +11,7 @@ function App() {
   ]);
 
   const [location, setLocation] = useState({});
+  const [disabled, setDisabled] = useState(true);
 
   function addFish(fish) {
     setFishes([...fishes, fish]);
@@ -64,38 +65,36 @@ function App() {
       }
   }
 
-  function getLocation() {
-    
+  async function getLocation() {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
+      try {
+        const position = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject);
+        });
         
-        const lat = position.coords.latitude;
-        const lng = position.coords.longitude;
+        const { latitude: lat, longitude: lng } = position.coords;
         
-        if (lat && lng) {
-          setLocation({ lat: lat, lng: lng });
-        }
-        
-      }, (err) => {
-            console.log(err);
-            alert(err);
-      })
-
+        setLocation({ lat, lng })
+        setDisabled(false);
+      } catch (error) {
+        console.error(error);
+        alert(error.message);
+      }
     } else {
-      alert('geolocation not supported in your browser');
+      alert('Geolocation not supported in your browser');
     }
   }
+  
 
   useEffect(() => {
     getLocation();
-  }, [])
-  
+  }, []);
 
   return (
     <div className="App">
       <div className='header'>
         <ul>
-            <li><button onClick={() => setActive('AddContainer')}>Add Fish</button></li>
+            <li><button disabled={disabled} onClick={() => setActive('AddContainer')}>Add Fish</button></li>
             <li><button onClick={() => setActive('Log')}>Log</button></li>
             <li><button onClick={() => setActive('MapContainer')}>Map</button></li>
             <li><button onClick={() => setActive('Weather')}>Weather</button></li>
