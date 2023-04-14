@@ -4,7 +4,7 @@ export const mapStyles = [
         "elementType": "labels.text.fill",
         "stylers": [
             {
-                "color": "#444444"
+                "color": "#000000"
             }
         ]
     },
@@ -74,6 +74,15 @@ export const mapStyles = [
             },
             {
                 "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "color": "#000000"
             }
         ]
     }
