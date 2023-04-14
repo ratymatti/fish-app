@@ -96,7 +96,7 @@ function App() {
         <ul>
             <li><button disabled={disabled} onClick={() => setActive('AddContainer')}>Add Fish</button></li>
             <li><button onClick={() => setActive('Log')}>Log</button></li>
-            <li><button onClick={() => setActive('MapContainer')}>Map</button></li>
+            <li><button disabled={disabled} onClick={() => setActive('MapContainer')}>Map</button></li>
             <li><button onClick={() => setActive('Weather')}>Weather</button></li>
         </ul>
         <h1>Fish App</h1>
