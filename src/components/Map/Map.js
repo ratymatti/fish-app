@@ -3,6 +3,13 @@ import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api'
 import './Map.css';
 import { mapStyles } from '../../modules/mapStyles/mapStyles';
 
+const options = {
+    styles: mapStyles,
+    disableDefaultUI: true,
+    mapTypeControl: true,
+    zoomControl: true,
+}
+
 export default function Map(props) {
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_API_KEY,
@@ -20,9 +27,6 @@ export default function Map(props) {
         }
     }, [map]);
     
-    const options = {
-        styles: mapStyles,
-    }
 
     if (!isLoaded) {
         return <div>Loading...</div>;
