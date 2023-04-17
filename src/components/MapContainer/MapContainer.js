@@ -7,7 +7,8 @@ export default function MapContainer(props) {
         <Map
             center={props.center}
             zoom={10}
-            active={props.active} />
+            active={props.active}
+            markerLocations={props.fishes} />
     </div>
   )
 }

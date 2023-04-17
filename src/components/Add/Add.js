@@ -53,8 +53,8 @@ export default function Add(props) {
                 date: catchDate,
                 id: new Date().valueOf(),
                 location: {
-                    lat: props.fishGeolocation[0].lat,
-                    lgn: props.fishGeolocation[0].lng    
+                    lat: props.fishGeolocation[0].location.lat,
+                    lng: props.fishGeolocation[0].location.lng    
                 }
               };
 

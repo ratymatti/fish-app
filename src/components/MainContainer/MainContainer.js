@@ -21,7 +21,8 @@ export default function MainContainer(props) {
       {props.active === 'Weather' && <Weather />}
       {props.active === 'MapContainer' && <MapContainer
                                             center={props.location}
-                                            active={props.active} />
+                                            active={props.active}
+                                            fishes={props.fishes} />
                                             }
     </div>
   )
