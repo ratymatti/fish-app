@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api'
+import { GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api'
 import './Map.css';
 import { mapStyles } from '../../modules/mapStyles/mapStyles';
 
@@ -16,27 +16,29 @@ export default function Map(props) {
     });
     
     const [markers, setMarkers] = useState([]);
-
+    
     useEffect(() => {
         setMarkers(props.markerLocations);
     }, [props.markerLocations]);
 
-    if (!isLoaded) {
-        return <div>Loading...</div>;
-    }
-
     function handleClick(event) {
         if (props.active === 'AddContainer') {
-            props.setFishGeolocation([{location: {
-                lat: event.latLng.lat(),
-                lng: event.latLng.lng(),
-                },
+            props.setFishGeolocation([
+                {
+                    location: {
+                        lat: event.latLng.lat(),
+                        lng: event.latLng.lng(),
+                    },
                 id: new Date()
-            }]); 
-        }   
-    }
+                }
+            ]); 
+        };   
+    };
 
-    
+    if (!isLoaded) {
+        return <div>Loading...</div>;
+    };
+
 
     return (
         <GoogleMap
@@ -48,7 +50,7 @@ export default function Map(props) {
             }}
             options={options}
         >
-           {markers.map(marker => <Marker  key={marker.id.valueOf()}
+           {isLoaded && markers.map(marker => <MarkerF  key={marker.id.valueOf()}
                                             position={{ lat: marker.location.lat, lng: marker.location.lng }} />)}    
         </GoogleMap>
     );
