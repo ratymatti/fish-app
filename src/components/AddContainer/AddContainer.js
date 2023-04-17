@@ -5,6 +5,7 @@ import './AddContainer.css';
 
 export default function AddContainer(props) {
     const [active, setActive] = useState('map');
+    const [fishGeolocation, setFishGeolocation] = useState([]);
 
     if (active === 'map' && props.location) {
         return (
@@ -12,7 +13,9 @@ export default function AddContainer(props) {
                 <Map
                     center={props.location}
                     zoom={12}
-                    active={props.active} />
+                    active={props.active}
+                    setFishGeolocation={setFishGeolocation}
+                    markerLocations={fishGeolocation} />
                 <button className='button' onClick={() => setActive('add')}>Select location</button>
             </div>
         )
@@ -23,7 +26,8 @@ export default function AddContainer(props) {
             <div className='add'>
                 <button className='button' onClick={() => setActive('map')}>Edit location</button>
                 <Add
-                addFish={props.addFish} />
+                addFish={props.addFish}
+                fishGeolocation={fishGeolocation} />
             </div>
         )
     };

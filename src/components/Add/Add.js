@@ -51,7 +51,11 @@ export default function Add(props) {
                 cm: cm,
                 river: river,
                 date: catchDate,
-                id: new Date().valueOf()
+                id: new Date().valueOf(),
+                location: {
+                    lat: props.fishGeolocation[0].lat,
+                    lgn: props.fishGeolocation[0].lng    
+                }
               };
 
               props.addFish(fish);      
