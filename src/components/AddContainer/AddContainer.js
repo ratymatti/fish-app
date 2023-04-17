@@ -11,7 +11,8 @@ export default function AddContainer(props) {
             <div className='map'>
                 <Map
                     center={props.location}
-                    zoom={12} />
+                    zoom={12}
+                    active={props.active} />
                 <button className='button' onClick={() => setActive('add')}>Select location</button>
             </div>
         )

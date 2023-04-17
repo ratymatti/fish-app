@@ -6,7 +6,8 @@ export default function MapContainer(props) {
     <div className='map-container'>
         <Map
             center={props.center}
-            zoom={10} />
+            zoom={10}
+            active={props.active} />
     </div>
   )
 }
