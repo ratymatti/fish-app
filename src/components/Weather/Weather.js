@@ -7,5 +7,5 @@ export default function Weather() {
         <h3>Coming Soon..ish</h3>
     </div>
   )
-}
+};
 

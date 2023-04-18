@@ -8,7 +8,7 @@ const optionsSpecies = [
     { value: 'trout', label: 'Trout' },
     { value: 'salmon', label: 'Salmon' },
     { value: 'grayling', label: 'Grayling' },
-    { value: 'rainbowtrout', label: 'Rainbowtrout'}
+    { value: 'rainbowtrout', label: 'Rainbowtrout' }
 ];
 
 const optionsCm = [];
@@ -21,9 +21,9 @@ const optionsRiver = [
 
 function addCmOptions() {
     for (let i = 1; i <= 200; i++) {
-        optionsCm.push({value: i, label: i + ' cm'})
+        optionsCm.push({ value: i, label: i + ' cm' })
     }
-}
+};
 
 addCmOptions()
 
@@ -54,48 +54,48 @@ export default function Add(props) {
                 id: new Date().valueOf(),
                 location: {
                     lat: props.fishGeolocation[0].location.lat,
-                    lng: props.fishGeolocation[0].location.lng    
+                    lng: props.fishGeolocation[0].location.lng
                 }
-              };
+            };
 
-              props.addFish(fish);      
-        }
-        
+            props.addFish(fish);
+        };
+
         setError(errorMessage);
-    }
+    };
 
-  return (
-    <div className='add'>
-        <form>
-            <Select
-                className='options' 
-                options={optionsSpecies}
-                placeholder='Species'
-                onChange={(selectedSpecies) => setSpecies(selectedSpecies.value)} />
-            <Select
-                className='options' 
-                options={optionsCm}
-                placeholder='cm'
-                onChange={(selectedCm) => setCm(selectedCm.value)} />
-            <Select
-                className='options' 
-                options={optionsRiver}
-                placeholder='River'
-                onChange={(selectedRiver) => setRiver(selectedRiver.value)} />
-            <DatePicker
-                className='options'  
-                selected={catchDate}
-                dateFormat="dd/MM/yyyy"
-                onChange={(date) => setCatchDate(date)} />
-            <button 
-                type='submit'
-                onClick={handleSubmit}>Submit</button>         
-        </form>
-        {error &&   <div className="error">
-                        {error}<br></br>
-                        <button onClick={() => setError('')}>Close</button>
-                    </div>}
-    </div>
-  )
-}
+    return (
+        <div className='add'>
+            <form>
+                <Select
+                    className='options'
+                    options={optionsSpecies}
+                    placeholder='Species'
+                    onChange={(selectedSpecies) => setSpecies(selectedSpecies.value)} />
+                <Select
+                    className='options'
+                    options={optionsCm}
+                    placeholder='cm'
+                    onChange={(selectedCm) => setCm(selectedCm.value)} />
+                <Select
+                    className='options'
+                    options={optionsRiver}
+                    placeholder='River'
+                    onChange={(selectedRiver) => setRiver(selectedRiver.value)} />
+                <DatePicker
+                    className='options'
+                    selected={catchDate}
+                    dateFormat="dd/MM/yyyy"
+                    onChange={(date) => setCatchDate(date)} />
+                <button
+                    type='submit'
+                    onClick={handleSubmit}>Submit</button>
+            </form>
+            {error && <div className="error">
+                {error}<br></br>
+                <button onClick={() => setError('')}>Close</button>
+            </div>}
+        </div>
+    )
+};
 

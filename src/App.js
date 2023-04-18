@@ -18,52 +18,56 @@ function App() {
   }
 
   function sortByField(field) {
-    
-      switch(field) {
-        case 'species':
-          const sortedBySpecies = [...fishes].sort((fishA, fishB) => {
-            const speciesComparison = fishB.species.localeCompare(fishA.species);
-            if (speciesComparison === 0) {
-              // If species are equal, compare by size
-              return fishA.cm - fishB.cm;  
-            } else {
-              // Otherwise, compare by species
-              return speciesComparison;
-            }
-          });
-          return setFishes([...sortedBySpecies]);
-        case 'cm':
-          return setFishes([...fishes.sort((fishA, fishB) => {
+
+    switch (field) {
+      case 'species':
+        const sortedBySpecies = [...fishes].sort((fishA, fishB) => {
+          const speciesComparison = fishB.species.localeCompare(fishA.species);
+          if (speciesComparison === 0) {
+            // If species are equal, compare by size
             return fishA.cm - fishB.cm;
-          })])  
-        case 'river':
-          const sortedByRiver = [...fishes].sort((fishA, fishB) => {
-            const riverComparison = fishB.river.localeCompare(fishA.river);
-            if (riverComparison === 0) {
-              // If river is same, compare by size
-              return fishA.cm - fishB.cm;
-            } else {
-              // Otherwise, compare by river
-              return riverComparison;
-            }
-          });
-          return setFishes([...sortedByRiver]);
-        case 'date':
-          const sortedFishes = [...fishes].sort((fishA, fishB) => {
-            const dateComparison = fishA.date.getTime() - fishB.date.getTime();
-            if (dateComparison === 0) {
-              // If the dates are equal, compare by size
-              return fishA.size - fishB.size;
-            } else {
-              // Otherwise, compare by date
-              return dateComparison;
-            }
-          });
-          return setFishes(sortedFishes); 
-        default:
-          return setFishes([...fishes]);
-      }
-  }
+          } else {
+            // Otherwise, compare by species
+            return speciesComparison;
+          }
+        });
+        return setFishes([...sortedBySpecies]);
+
+      case 'cm':
+        return setFishes([...fishes.sort((fishA, fishB) => {
+          return fishA.cm - fishB.cm;
+        })]);
+
+      case 'river':
+        const sortedByRiver = [...fishes].sort((fishA, fishB) => {
+          const riverComparison = fishB.river.localeCompare(fishA.river);
+          if (riverComparison === 0) {
+            // If river is same, compare by size
+            return fishA.cm - fishB.cm;
+          } else {
+            // Otherwise, compare by river
+            return riverComparison;
+          }
+        });
+        return setFishes([...sortedByRiver]);
+
+      case 'date':
+        const sortedFishes = [...fishes].sort((fishA, fishB) => {
+          const dateComparison = fishA.date.getTime() - fishB.date.getTime();
+          if (dateComparison === 0) {
+            // If the dates are equal, compare by size
+            return fishA.size - fishB.size;
+          } else {
+            // Otherwise, compare by date
+            return dateComparison;
+          }
+        });
+        return setFishes(sortedFishes);
+
+      default:
+        return setFishes([...fishes]);
+    }
+  };
 
   async function getLocation() {
     if (navigator.geolocation) {
@@ -71,9 +75,9 @@ function App() {
         const position = await new Promise((resolve, reject) => {
           navigator.geolocation.getCurrentPosition(resolve, reject);
         });
-        
+
         const { latitude: lat, longitude: lng } = position.coords;
-        
+
         setLocation({ lat, lng })
         setDisabled(false);
       } catch (error) {
@@ -84,7 +88,7 @@ function App() {
       alert('Geolocation not supported in your browser');
     }
   }
-  
+
 
   useEffect(() => {
     getLocation();
@@ -94,10 +98,10 @@ function App() {
     <div className="App">
       <div className='header'>
         <ul>
-            <li><button disabled={disabled} onClick={() => setActive('AddContainer')}>Add Fish</button></li>
-            <li><button onClick={() => setActive('Log')}>Log</button></li>
-            <li><button disabled={disabled} onClick={() => setActive('MapContainer')}>Map</button></li>
-            <li><button onClick={() => setActive('Weather')}>Weather</button></li>
+          <li><button disabled={disabled} onClick={() => setActive('AddContainer')}>Add Fish</button></li>
+          <li><button onClick={() => setActive('Log')}>Log</button></li>
+          <li><button disabled={disabled} onClick={() => setActive('MapContainer')}>Map</button></li>
+          <li><button onClick={() => setActive('Weather')}>Weather</button></li>
         </ul>
         <h1>Fish App</h1>
       </div>
@@ -111,7 +115,7 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
 
 

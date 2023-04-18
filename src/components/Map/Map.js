@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api'
+import React, { useState, useEffect } from 'react';
+import { GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api';
 import './Map.css';
 import { mapStyles } from '../../modules/mapStyles/mapStyles';
 
@@ -8,7 +8,7 @@ const options = {
     disableDefaultUI: true,
     mapTypeControl: true,
     zoomControl: true,
-}
+};
 
 export default function Map(props) {
     const { isLoaded } = useLoadScript({
@@ -37,8 +37,7 @@ export default function Map(props) {
 
     if (!isLoaded) {
         return <div>Loading...</div>;
-    };
-
+    }
 
     return (
         <GoogleMap
@@ -53,5 +52,5 @@ export default function Map(props) {
            {isLoaded && markers.map(marker => <MarkerF  key={marker.id.valueOf()}
                                             position={{ lat: marker.location.lat, lng: marker.location.lng }} />)}    
         </GoogleMap>
-    );
-}
+    )
+};
