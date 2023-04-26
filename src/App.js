@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import MainContainer from './components/MainContainer/MainContainer';
+import { sortFishes } from './modules/sortFishes/sortFishes';
 
 function App() {
   const [active, setActive] = useState('');
@@ -17,57 +18,14 @@ function App() {
     setFishes([...fishes, fish]);
   }
 
+  function changeLocation(location) {
+    setLocation(location);
+  }
+
   function sortByField(field) {
-
-    switch (field) {
-      case 'species':
-        const sortedBySpecies = [...fishes].sort((fishA, fishB) => {
-          const speciesComparison = fishB.species.localeCompare(fishA.species);
-          if (speciesComparison === 0) {
-            // If species are equal, compare by size
-            return fishA.cm - fishB.cm;
-          } else {
-            // Otherwise, compare by species
-            return speciesComparison;
-          }
-        });
-        return setFishes([...sortedBySpecies]);
-
-      case 'cm':
-        return setFishes([...fishes.sort((fishA, fishB) => {
-          return fishA.cm - fishB.cm;
-        })]);
-
-      case 'river':
-        const sortedByRiver = [...fishes].sort((fishA, fishB) => {
-          const riverComparison = fishB.river.localeCompare(fishA.river);
-          if (riverComparison === 0) {
-            // If river is same, compare by size
-            return fishA.cm - fishB.cm;
-          } else {
-            // Otherwise, compare by river
-            return riverComparison;
-          }
-        });
-        return setFishes([...sortedByRiver]);
-
-      case 'date':
-        const sortedFishes = [...fishes].sort((fishA, fishB) => {
-          const dateComparison = fishA.date.getTime() - fishB.date.getTime();
-          if (dateComparison === 0) {
-            // If the dates are equal, compare by size
-            return fishA.size - fishB.size;
-          } else {
-            // Otherwise, compare by date
-            return dateComparison;
-          }
-        });
-        return setFishes(sortedFishes);
-
-      default:
-        return setFishes([...fishes]);
-    }
-  };
+    const sortedFishes = sortFishes(field, fishes);
+    setFishes(sortedFishes);
+  }  
 
   async function getLocation() {
     if (navigator.geolocation) {
@@ -111,7 +69,8 @@ function App() {
           fishes={fishes}
           active={active}
           sortByField={sortByField}
-          location={location} />
+          location={location}
+          changeLocation={changeLocation} />
       </div>
     </div>
   );

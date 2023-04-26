@@ -12,7 +12,8 @@ export default function MainContainer(props) {
       {props.active === 'AddContainer' && <AddContainer
                                             addFish={props.addFish}
                                             location={props.location}
-                                            active={props.active} />
+                                            active={props.active}
+                                            changeLocation={props.changeLocation} />
                                             }
       {props.active === 'Log' &&  <Log
                                     fishes={props.fishes}
