@@ -31,7 +31,8 @@ export default function Map(props) {
                     },
                 id: new Date()
                 }
-            ]); 
+            ]);
+            props.setDisabled(false); 
         };   
     };
 

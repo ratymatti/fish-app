@@ -20,7 +20,7 @@ const optionsRiver = [
 ];
 
 function addCmOptions() {
-    for (let i = 1; i <= 200; i++) {
+    for (let i = 10; i <= 200; i++) {
         optionsCm.push({ value: i, label: i + ' cm' })
     }
 };
@@ -44,6 +44,8 @@ export default function Add(props) {
             errorMessage = 'Cm must be greater than 0.';
         } else if (!river) {
             errorMessage = 'River is required.';
+        } else if (!props.fishGeolocation) {
+            errorMessage = 'Location is required.';
         } else {
 
             const fish = {
