@@ -8,6 +8,11 @@ export default function AddContainer(props) {
     const [fishGeolocation, setFishGeolocation] = useState([]);
 
     function handleClick() {
+        props.changeLocation({
+                lat: fishGeolocation[0].location.lat,
+                lng: fishGeolocation[0].location.lng
+            }
+        );
         setActive('map');
     }
 
@@ -30,8 +35,10 @@ export default function AddContainer(props) {
             <div className='add'>
                 <button className='button' onClick={handleClick}>Edit location</button>
                 <Add
-                addFish={props.addFish}
-                fishGeolocation={fishGeolocation} />
+                    addFish={props.addFish}
+                    fishGeolocation={fishGeolocation}
+                    getCurrentLocation={props.getCurrentLocation}
+                    setActive={setActive} />
             </div>
         )
     };

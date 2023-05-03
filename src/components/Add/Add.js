@@ -34,7 +34,7 @@ export default function Add(props) {
     const [catchDate, setCatchDate] = useState(new Date());
     const [error, setError] = useState('');
 
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
         event.preventDefault();
         let errorMessage = '';
 
@@ -58,7 +58,9 @@ export default function Add(props) {
                 }
             };
 
-            props.addFish(fish);
+            props.addFish(fish)
+            await props.getCurrentLocation();
+            props.setActive('map');
         };
 
         setError(errorMessage);

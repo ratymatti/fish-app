@@ -13,7 +13,8 @@ export default function MainContainer(props) {
                                             addFish={props.addFish}
                                             location={props.location}
                                             active={props.active}
-                                            changeLocation={props.changeLocation} />
+                                            changeLocation={props.changeLocation}
+                                            getCurrentLocation={props.getCurrentLocation} />
                                             }
       {props.active === 'Log' &&  <Log
                                     fishes={props.fishes}

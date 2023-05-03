@@ -43,7 +43,7 @@ export const sortFishes = (field, fishes) => {
             return dateComparison;
           }
         });
-        return sortedFishes;
+        return [...sortedFishes];
 
       default:
         return [...fishes];

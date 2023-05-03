@@ -70,7 +70,8 @@ function App() {
           active={active}
           sortByField={sortByField}
           location={location}
-          changeLocation={changeLocation} />
+          changeLocation={changeLocation}
+          getCurrentLocation={getLocation} />
       </div>
     </div>
   );
