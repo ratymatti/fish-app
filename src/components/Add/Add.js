@@ -59,8 +59,7 @@ export default function Add(props) {
                     lng: props.fishGeolocation[0].location.lng
                 }
             };
-
-            props.addFish(fish)
+            props.addFish(fish);
             await props.getCurrentLocation();
             props.setActive('map');
         };

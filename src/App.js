@@ -7,8 +7,7 @@ function App() {
   const [active, setActive] = useState('');
 
   const [fishes, setFishes] = useState([
-    //  {species: 'steelhead', cm: 80, river: 'Skeena', date: '12.03.2022', id: 1},
-    //  {species: 'salmon', cm: 120, river: 'Lakselva', date: '12.08.2023', id: 2}
+    
   ]);
 
   const [location, setLocation] = useState({});
@@ -47,7 +46,6 @@ function App() {
     }
   }
 
-
   useEffect(() => {
     getLocation();
   }, []);
@@ -71,7 +69,8 @@ function App() {
           sortByField={sortByField}
           location={location}
           changeLocation={changeLocation}
-          getCurrentLocation={getLocation} />
+          getCurrentLocation={getLocation}
+          disabled={disabled} />
       </div>
     </div>
   );

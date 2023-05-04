@@ -4,6 +4,7 @@ import Log from '../Log/Log';
 import MapContainer from '../MapContainer/MapContainer';
 import Weather from '../Weather/Weather';
 import './MainContainer.css';
+import { FaSpinner } from 'react-icons/fa';
 
 
 export default function MainContainer(props) {
@@ -26,6 +27,9 @@ export default function MainContainer(props) {
                                             active={props.active}
                                             fishes={props.fishes} />
                                             }
+      <div className='spinning-icon'>
+        {props.disabled && <FaSpinner size='3rem' />}                                        
+      </div>                                                                          
     </div>
   )
 }
