@@ -59,6 +59,7 @@ export default function Add(props) {
                     lng: props.fishGeolocation[0].location.lng
                 }
             };
+
             props.setLoading(true);
             props.setActive('loading');
             props.addFish(fish);
@@ -67,7 +68,9 @@ export default function Add(props) {
             props.setActive('map');
         };
 
-        setError(errorMessage);
+        if (errorMessage) {
+            setError(errorMessage);
+        }    
     };
 
     return (

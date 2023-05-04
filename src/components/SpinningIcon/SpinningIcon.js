@@ -8,5 +8,5 @@ export default function SpinningIcon(props) {
         {props.disabled && <FaSpinner size='3rem' />}                                        
       </div>  
   )
-}
+};
 
