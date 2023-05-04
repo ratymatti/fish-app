@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import Map from '../Map/Map';
 import Add from '../Add/Add';
 import './AddContainer.css';
+import SpinningIcon from '../SpinningIcon/SpinningIcon';
 
 export default function AddContainer(props) {
     const [active, setActive] = useState('map');
     const [fishGeolocation, setFishGeolocation] = useState([]);
     const [disabled, setDisabled] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     function handleClick() {
         if (fishGeolocation.length) {
@@ -45,9 +47,15 @@ export default function AddContainer(props) {
                     addFish={props.addFish}
                     fishGeolocation={fishGeolocation}
                     getCurrentLocation={props.getCurrentLocation}
-                    setActive={setActive} />
+                    setActive={setActive}
+                    setLoading={setLoading} />
             </div>
         )
     };
+
+    if (active === 'loading') {
+        return <SpinningIcon
+                    disabled={loading} />
+    }
 };
 
