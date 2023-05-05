@@ -48,8 +48,12 @@ export default function Add(props) {
             errorMessage = 'River is required.';
         } else if (!props.fishGeolocation) {
             errorMessage = 'Location is required.';
+        } 
+        
+        if (errorMessage) {
+            setError(errorMessage);
+            return;
         } else {
-
             const fish = createFish();
 
             props.setLoading(true);
@@ -59,10 +63,6 @@ export default function Add(props) {
             props.setFishGeolocation([]);
             props.setLoading(false);
             props.setCurrent('map');
-        };
-
-        if (errorMessage) {
-            setError(errorMessage);
         }    
     };
 
