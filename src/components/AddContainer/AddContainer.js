@@ -5,6 +5,14 @@ import './AddContainer.css';
 import SpinningIcon from '../SpinningIcon/SpinningIcon';
 
 export default function AddContainer(props) {
+
+    const {
+        active,
+        addFish,
+        changeLocation,
+        getCurrentLocation,
+        location
+    } = props;
     
     const [current, setCurrent] = useState('map');
     const [fishGeolocation, setFishGeolocation] = useState([]);
@@ -13,7 +21,7 @@ export default function AddContainer(props) {
 
     function handleClick() {
         if (fishGeolocation.length) {
-            props.changeLocation({
+            changeLocation({
                 lat: fishGeolocation[0].location.lat,
                 lng: fishGeolocation[0].location.lng
             }
@@ -25,13 +33,13 @@ export default function AddContainer(props) {
     };
 
 
-    if (current === 'map' && props.location) {
+    if (current === 'map' && location) {
         return (
             <div className='map'>
                 <Map
-                    center={props.location}
+                    center={location}
                     zoom={12}
-                    active={props.active}
+                    active={active}
                     setFishGeolocation={setFishGeolocation}
                     markerLocations={fishGeolocation}
                     setDisabled={setDisabled} />
@@ -45,9 +53,9 @@ export default function AddContainer(props) {
             <div className='add'>
                 <button className='button' onClick={handleClick}>Edit location</button>
                 <Add
-                    addFish={props.addFish}
+                    addFish={addFish}
                     fishGeolocation={fishGeolocation}
-                    getCurrentLocation={props.getCurrentLocation}
+                    getCurrentLocation={getCurrentLocation}
                     setCurrent={setCurrent}
                     setLoading={setLoading}
                     setFishGeolocation={setFishGeolocation} />
