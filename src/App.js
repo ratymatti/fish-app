@@ -5,11 +5,7 @@ import { sortFishes } from './modules/sortFishes/sortFishes';
 
 function App() {
   const [active, setActive] = useState('');
-
-  const [fishes, setFishes] = useState([
-    
-  ]);
-
+  const [fishes, setFishes] = useState([]);
   const [location, setLocation] = useState({});
   const [disabled, setDisabled] = useState(true);
 
