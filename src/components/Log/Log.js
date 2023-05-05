@@ -2,19 +2,22 @@ import React from 'react'
 import './Log.css';
 
 export default function Log(props) {
+    
+    const { fishes, sortByField } = props;
+
   return (
     <div className='log'>
         <table>
             <thead>
                 <tr>
-                    <th onClick={() => props.sortByField('species')}>Species</th>
-                    <th onClick={() => props.sortByField('cm')}>Length</th>
-                    <th onClick={() => props.sortByField('river')}>River</th> 
-                    <th onClick={() => props.sortByField('date')}>Date</th>
+                    <th onClick={() => sortByField('species')}>Species</th>
+                    <th onClick={() => sortByField('cm')}>Length</th>
+                    <th onClick={() => sortByField('river')}>River</th> 
+                    <th onClick={() => sortByField('date')}>Date</th>
                 </tr>
             </thead>
             <tbody>
-                {props.fishes.slice(0).reverse().map(fish => (
+                {fishes.slice(0).reverse().map(fish => (
                     
                     <tr key={fish.id}>
                         <td>{fish.species}</td>
