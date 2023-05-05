@@ -11,8 +11,6 @@ const optionsSpecies = [
     { value: 'rainbowtrout', label: 'Rainbowtrout' }
 ];
 
-const optionsCm = [];
-
 const optionsRiver = [
     { value: 'Kitkajoki', label: 'Kitkajoki' },
     { value: 'Kuusinkijoki', label: 'Kuusinkijoki' },
@@ -20,6 +18,8 @@ const optionsRiver = [
     { value: 'Kemijoki', label: 'Kemijoki' },
     { value: 'Ounasjoki', label: 'Ounasjoki' },
 ];
+
+const optionsCm = [];
 
 function addCmOptions() {
     for (let i = 10; i <= 200; i++) {
@@ -36,6 +36,15 @@ export default function Add(props) {
     const [catchDate, setCatchDate] = useState(new Date());
     const [error, setError] = useState('');
 
+    const {
+        addFish,
+        fishGeolocation,
+        getCurrentLocation,
+        setCurrent,
+        setFishGeolocation,
+        setLoading
+    } = props;
+
     async function handleSubmit(event) {
         event.preventDefault();
         const errorMessage = validateForm();
@@ -46,13 +55,13 @@ export default function Add(props) {
         } else {
             const fish = createFish();
 
-            props.setLoading(true);
-            props.setCurrent('loading');
-            props.addFish(fish);
-            await props.getCurrentLocation();
-            props.setFishGeolocation([]);
-            props.setLoading(false);
-            props.setCurrent('map');
+            setLoading(true);
+            setCurrent('loading');
+            addFish(fish);
+            await getCurrentLocation();
+            setFishGeolocation([]);
+            setLoading(false);
+            setCurrent('map');
         }    
     };
 
@@ -63,7 +72,7 @@ export default function Add(props) {
             return 'Cm must be greater than 0.';
         } else if (!river) {
             return 'River is required.';
-        } else if (!props.fishGeolocation) {
+        } else if (!fishGeolocation) {
             return 'Location is required.';
         } else {
             return null;
@@ -78,8 +87,8 @@ export default function Add(props) {
             date: catchDate,
             id: new Date().valueOf(),
             location: {
-                lat: props.fishGeolocation[0].location.lat,
-                lng: props.fishGeolocation[0].location.lng
+                lat: fishGeolocation[0].location.lat,
+                lng: fishGeolocation[0].location.lng
                }    
         }
     };
