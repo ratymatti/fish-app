@@ -5,7 +5,8 @@ import './AddContainer.css';
 import SpinningIcon from '../SpinningIcon/SpinningIcon';
 
 export default function AddContainer(props) {
-    const [active, setActive] = useState('map');
+    
+    const [current, setCurrent] = useState('map');
     const [fishGeolocation, setFishGeolocation] = useState([]);
     const [disabled, setDisabled] = useState(true);
     const [loading, setLoading] = useState(false);
@@ -17,14 +18,14 @@ export default function AddContainer(props) {
                 lng: fishGeolocation[0].location.lng
             }
             );
-            setActive('map');
+            setCurrent('map');
         } else {
-            setActive('map');
+            setCurrent('map');
         }   
     };
 
 
-    if (active === 'map' && props.location) {
+    if (current === 'map' && props.location) {
         return (
             <div className='map'>
                 <Map
@@ -34,12 +35,12 @@ export default function AddContainer(props) {
                     setFishGeolocation={setFishGeolocation}
                     markerLocations={fishGeolocation}
                     setDisabled={setDisabled} />
-                <button className='button' disabled={disabled}  onClick={() => setActive('add')}>Select location</button>
+                <button className='button' disabled={disabled}  onClick={() => setCurrent('add')}>Select location</button>
             </div>
         )
     } 
 
-    if (active === 'add') {
+    if (current === 'add') {
         return (
             <div className='add'>
                 <button className='button' onClick={handleClick}>Edit location</button>
@@ -47,13 +48,14 @@ export default function AddContainer(props) {
                     addFish={props.addFish}
                     fishGeolocation={fishGeolocation}
                     getCurrentLocation={props.getCurrentLocation}
-                    setActive={setActive}
-                    setLoading={setLoading} />
+                    setCurrent={setCurrent}
+                    setLoading={setLoading}
+                    setFishGeolocation={setFishGeolocation} />
             </div>
         )
     };
 
-    if (active === 'loading') {
+    if (current === 'loading') {
         return <SpinningIcon
                     disabled={loading} />
     }

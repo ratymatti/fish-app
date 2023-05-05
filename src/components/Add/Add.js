@@ -63,11 +63,12 @@ export default function Add(props) {
             };
 
             props.setLoading(true);
-            props.setActive('loading');
+            props.setCurrent('loading');
             props.addFish(fish);
             await props.getCurrentLocation();
+            props.setFishGeolocation([]);
             props.setLoading(false);
-            props.setActive('map');
+            props.setCurrent('map');
         };
 
         if (errorMessage) {
