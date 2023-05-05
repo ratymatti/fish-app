@@ -27,12 +27,12 @@ function addCmOptions() {
     }
 };
 
-addCmOptions()
+addCmOptions();
 
 export default function Add(props) {
-    const [species, setSpecies] = useState('');
+    const [species, setSpecies] = useState(null);
     const [cm, setCm] = useState(0);
-    const [river, setRiver] = useState('');
+    const [river, setRiver] = useState(null);
     const [catchDate, setCatchDate] = useState(new Date());
     const [error, setError] = useState('');
 
@@ -50,17 +50,7 @@ export default function Add(props) {
             errorMessage = 'Location is required.';
         } else {
 
-            const fish = {
-                species: species,
-                cm: cm,
-                river: river,
-                date: catchDate,
-                id: new Date().valueOf(),
-                location: {
-                    lat: props.fishGeolocation[0].location.lat,
-                    lng: props.fishGeolocation[0].location.lng
-                }
-            };
+            const fish = createFish();
 
             props.setLoading(true);
             props.setCurrent('loading');
@@ -74,6 +64,20 @@ export default function Add(props) {
         if (errorMessage) {
             setError(errorMessage);
         }    
+    };
+
+    function createFish() {
+        return {
+            species: species,
+            cm: cm,
+            river: river,
+            date: catchDate,
+            id: new Date().valueOf(),
+            location: {
+                lat: props.fishGeolocation[0].location.lat,
+                   lng: props.fishGeolocation[0].location.lng
+               }    
+        }
     };
 
     return (
