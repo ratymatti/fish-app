@@ -38,18 +38,8 @@ export default function Add(props) {
 
     async function handleSubmit(event) {
         event.preventDefault();
-        let errorMessage = '';
+        const errorMessage = validateForm();
 
-        if (!species) {
-            errorMessage = 'Species is required.';
-        } else if (!cm || isNaN(cm) || cm <= 0) {
-            errorMessage = 'Cm must be greater than 0.';
-        } else if (!river) {
-            errorMessage = 'River is required.';
-        } else if (!props.fishGeolocation) {
-            errorMessage = 'Location is required.';
-        } 
-        
         if (errorMessage) {
             setError(errorMessage);
             return;
@@ -66,6 +56,20 @@ export default function Add(props) {
         }    
     };
 
+    function validateForm() {
+        if (!species) {
+            return 'Species is required.';
+        } else if (!cm || isNaN(cm) || cm <= 0) {
+            return 'Cm must be greater than 0.';
+        } else if (!river) {
+            return 'River is required.';
+        } else if (!props.fishGeolocation) {
+            return 'Location is required.';
+        } else {
+            return null;
+        }     
+    };
+
     function createFish() {
         return {
             species: species,
@@ -75,7 +79,7 @@ export default function Add(props) {
             id: new Date().valueOf(),
             location: {
                 lat: props.fishGeolocation[0].location.lat,
-                   lng: props.fishGeolocation[0].location.lng
+                lng: props.fishGeolocation[0].location.lng
                }    
         }
     };
