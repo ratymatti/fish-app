@@ -16,14 +16,23 @@ export default function Map(props) {
     });
     
     const [markers, setMarkers] = useState([]);
+
+    const { 
+        active,
+        center,
+        markerLocations,
+        zoom,
+        setFishGeolocation,
+        setDisabled
+    } = props;
     
     useEffect(() => {
-        setMarkers(props.markerLocations);
-    }, [props.markerLocations]);
+        setMarkers(markerLocations);
+    }, [markerLocations]);
 
     function handleClick(event) {
-        if (props.active === 'AddContainer') {
-            props.setFishGeolocation([
+        if (active === 'AddContainer') {
+            setFishGeolocation([
                 {
                     location: {
                         lat: event.latLng.lat(),
@@ -32,7 +41,7 @@ export default function Map(props) {
                 id: new Date()
                 }
             ]);
-            props.setDisabled(false); 
+            setDisabled(false); 
         };   
     };
 
@@ -42,8 +51,8 @@ export default function Map(props) {
 
     return (
         <GoogleMap
-            zoom={props.zoom}
-            center={props.center}
+            zoom={zoom}
+            center={center}
             mapContainerClassName='map-container'
             onClick={(event) => {
                 handleClick(event);
