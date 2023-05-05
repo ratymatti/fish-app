@@ -4,32 +4,42 @@ import Log from '../Log/Log';
 import MapContainer from '../MapContainer/MapContainer';
 import Weather from '../Weather/Weather';
 import './MainContainer.css';
-import { FaSpinner } from 'react-icons/fa';
 import SpinningIcon from '../SpinningIcon/SpinningIcon';
 
 
 export default function MainContainer(props) {
+  const {
+    active,
+    addFish,
+    changeLocation,
+    disabled,
+    fishes,
+    getCurrentLocation,
+    location,
+    sortByField
+    } = props;
+
   return (
     <div className='main-container'>
-      {props.active === 'AddContainer' && <AddContainer
-                                            addFish={props.addFish}
-                                            location={props.location}
-                                            active={props.active}
-                                            changeLocation={props.changeLocation}
-                                            getCurrentLocation={props.getCurrentLocation} />
+      {active === 'AddContainer' && <AddContainer
+                                            addFish={addFish}
+                                            location={location}
+                                            active={active}
+                                            changeLocation={changeLocation}
+                                            getCurrentLocation={getCurrentLocation} />
                                             }
-      {props.active === 'Log' &&  <Log
-                                    fishes={props.fishes}
-                                    sortByField={props.sortByField} />
+      {active === 'Log' &&  <Log
+                                    fishes={fishes}
+                                    sortByField={sortByField} />
                                     }
-      {props.active === 'Weather' && <Weather />}
-      {props.active === 'MapContainer' && <MapContainer
-                                            center={props.location}
-                                            active={props.active}
-                                            fishes={props.fishes} />
+      {active === 'Weather' && <Weather />}
+      {active === 'MapContainer' && <MapContainer
+                                            center={location}
+                                            active={active}
+                                            fishes={fishes} />
                                             }
       <SpinningIcon
-        disabled={props.disabled} />                                                                         
+        disabled={disabled} />                                                                         
     </div>
   )
 }

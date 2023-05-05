@@ -16,12 +16,14 @@ const optionsCm = [];
 const optionsRiver = [
     { value: 'Kitkajoki', label: 'Kitkajoki' },
     { value: 'Kuusinkijoki', label: 'Kuusinkijoki' },
-    { value: 'Byske', label: 'Byske' }
+    { value: 'Byske', label: 'Byske' },
+    { value: 'Kemijoki', label: 'Kemijoki' },
+    { value: 'Ounasjoki', label: 'Ounasjoki' },
 ];
 
 function addCmOptions() {
     for (let i = 10; i <= 200; i++) {
-        optionsCm.push({ value: i, label: i + ' cm' })
+        optionsCm.push({ value: i, label: `${i} cm` })
     }
 };
 
