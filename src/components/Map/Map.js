@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api';
 import './Map.css';
 import { mapStyles } from '../../modules/mapStyles/mapStyles';
+import SpinningIcon from '../SpinningIcon/SpinningIcon';
 
 const options = {
     styles: mapStyles,
@@ -46,7 +47,7 @@ export default function Map(props) {
     };
 
     if (!isLoaded) {
-        return <div>Loading...</div>;
+        return <SpinningIcon />;
     }
 
     return (

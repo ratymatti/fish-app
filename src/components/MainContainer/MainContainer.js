@@ -38,8 +38,7 @@ export default function MainContainer(props) {
                                             active={active}
                                             fishes={fishes} />
                                             }
-      <SpinningIcon
-        disabled={disabled} />                                                                         
+      {disabled && <SpinningIcon />}                                                                       
     </div>
   )
 }
