@@ -64,7 +64,11 @@ export default function AddContainer(props) {
     };
 
     if (current === 'loading') {
-        return <SpinningIcon />
+        return (
+            <div className='loading'>
+                <SpinningIcon />
+            </div> 
+        )
     }
 };
 

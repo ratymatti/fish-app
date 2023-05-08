@@ -47,7 +47,11 @@ export default function Map(props) {
     };
 
     if (!isLoaded) {
-        return <SpinningIcon />;
+        return (
+            <div className='loading'>
+                <SpinningIcon />
+            </div>
+        ) 
     }
 
     return (
