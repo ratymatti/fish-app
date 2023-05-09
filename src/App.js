@@ -6,7 +6,7 @@ import { sortFishes } from './modules/sortFishes/sortFishes';
 function App() {
   const [active, setActive] = useState('');
   const [fishes, setFishes] = useState([]);
-  const [location, setLocation] = useState({});
+  const [location, setLocation] = useState(null);
   const [disabled, setDisabled] = useState(true);
 
   function addFish(fish) {
