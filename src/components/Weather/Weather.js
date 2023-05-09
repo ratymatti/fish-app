@@ -16,7 +16,7 @@ export default function Weather(props) {
 
     try {
       const response =  await fetch(`${apiUrl}lat=${location.lat}&lon=${location.lng}&appid=${apiKey}&units=${units}`);
-
+      console.log('fetched from api');
       if (response.ok) {
         const data = await response.json();
         setWeather(data);
@@ -30,11 +30,6 @@ export default function Weather(props) {
   useEffect(() => {
     getWeather();
   }, [])
-
-  if (weather) {
-    console.log(weather);
-  }
-  
 
   return (
     <div className='weather'>
