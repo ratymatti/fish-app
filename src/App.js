@@ -55,7 +55,6 @@ function App() {
 
   useEffect(() => {
     getWeather();
-    console.log('i effected')
   }, [location]);
 
   return (

@@ -20,10 +20,11 @@ export default function AddContainer(props) {
 
     function handleClick() {
         if (fishGeolocation.length) {
-            changeLocation({
-                lat: fishGeolocation[0].location.lat,
-                lng: fishGeolocation[0].location.lng
-            }
+            changeLocation(
+                {
+                    lat: fishGeolocation[0].location.lat,
+                    lng: fishGeolocation[0].location.lng
+                }
             );
             setCurrent('map');
         } else {
