@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import MainContainer from './components/MainContainer/MainContainer';
 import { sortFishes } from './modules/sortFishes/sortFishes';
+import fetchWeather from './modules/fetchWeather/fetchWeather';
 
 function App() {
   const [active, setActive] = useState('');
   const [fishes, setFishes] = useState([]);
   const [location, setLocation] = useState(null);
   const [disabled, setDisabled] = useState(true);
+  const [weather, setWeather] = useState(null);
 
   function addFish(fish) {
     setFishes([...fishes, fish]);
@@ -42,9 +44,18 @@ function App() {
     }
   }
 
+  async function getWeather() {
+    const currentWeather = await fetchWeather(location);
+    setWeather(currentWeather);
+  }
+
   useEffect(() => {
     getLocation();
   }, []);
+
+  useEffect(() => {
+    getWeather();
+  }, [location]);
 
   return (
     <div className="App">
@@ -66,7 +77,8 @@ function App() {
           location={location}
           changeLocation={changeLocation}
           getCurrentLocation={getLocation}
-          disabled={disabled} />
+          disabled={disabled}
+          weather={weather} />
       </div>
     </div>
   );

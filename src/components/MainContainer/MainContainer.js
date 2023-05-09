@@ -16,7 +16,8 @@ export default function MainContainer(props) {
     fishes,
     getCurrentLocation,
     location,
-    sortByField
+    sortByField,
+    weather
     } = props;
 
   return (
@@ -33,7 +34,7 @@ export default function MainContainer(props) {
                                     sortByField={sortByField} />
                                     }
       {active === 'Weather' && <Weather
-                                  location={location} />}
+                                  weather={weather} />}
       {active === 'MapContainer' && <MapContainer
                                             center={location}
                                             active={active}
