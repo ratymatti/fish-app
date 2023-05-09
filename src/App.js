@@ -10,6 +10,7 @@ function App() {
   const [location, setLocation] = useState(null);
   const [disabled, setDisabled] = useState(true);
   const [weather, setWeather] = useState(null);
+  const [currentUserLocation, setCurrentUserLocation] = useState(null);
 
   function addFish(fish) {
     setFishes([...fishes, fish]);
@@ -33,7 +34,11 @@ function App() {
 
         const { latitude: lat, longitude: lng } = position.coords;
 
-        setLocation({ lat, lng })
+        if (!currentUserLocation) {
+          setCurrentUserLocation({ lat, lng });
+        }
+
+        setLocation({ lat, lng });
         setDisabled(false);
       } catch (error) {
         console.error(error);
@@ -45,7 +50,7 @@ function App() {
   }
 
   async function getWeather() {
-    const currentWeather = await fetchWeather(location);
+    const currentWeather = await fetchWeather(currentUserLocation);
     setWeather(currentWeather);
   }
 
@@ -55,7 +60,7 @@ function App() {
 
   useEffect(() => {
     getWeather();
-  }, [location]);
+  }, [currentUserLocation]);
 
   return (
     <div className="App">
