@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Weather.css';
+import WeatherCard from '../WeatherCard/WeatherCard';
 
 export default function Weather(props) {
 
@@ -17,6 +18,7 @@ export default function Weather(props) {
 
       if (response.ok) {
         const data = await response.json();
+        console.log(data)
         setWeather(data);
       }
 
@@ -31,13 +33,16 @@ export default function Weather(props) {
   }
 
   if (weather) {
-    console.log(weather);
+    console.log('weather');
+
   }
   
 
   return (
     <div className='weather'>
         <button onClick={(event) => {handleClick(event)}}>get weather</button>
+        <WeatherCard
+          data={weather} />
     </div>
   )
 };
