@@ -14,16 +14,16 @@ function App() {
 
   function addFish(fish) {
     setFishes([...fishes, fish]);
-  }
+  };
 
   function changeLocation(location) {
     setLocation(location);
-  }
+  };
 
   function sortByField(field) {
     const sortedFishes = sortFishes(field, fishes);
     setFishes(sortedFishes);
-  }  
+  };  
 
   async function getLocation() {
     if (navigator.geolocation) {
@@ -47,12 +47,12 @@ function App() {
     } else {
       alert('Geolocation not supported in your browser');
     }
-  }
+  };
 
   async function getWeather() {
     const currentWeather = await fetchWeather(currentUserLocation);
     setWeather(currentWeather);
-  }
+  };
 
   useEffect(() => {
     getLocation();

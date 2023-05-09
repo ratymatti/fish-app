@@ -1,3 +1,8 @@
+/**
+ * Function fetchWeather, used for fetching current weather data from api
+ * @param {*} location 
+ * @returns object that contains current weather data 
+ */
 
 async function fetchWeather(location) {
     const apiKey = process.env.REACT_APP_WEATHER_API_KEY;

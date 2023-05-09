@@ -1,4 +1,5 @@
 .weather-card {
     border: 1px solid lime;
     padding: 10px;
+    margin: 10px;
 }
