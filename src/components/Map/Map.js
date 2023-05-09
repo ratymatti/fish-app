@@ -64,8 +64,14 @@ export default function Map(props) {
             }}
             options={options}
         >
-           {isLoaded && markers.map(marker => <MarkerF  key={marker.id.valueOf()}
-                                            position={{ lat: marker.location.lat, lng: marker.location.lng }} />)}    
+           {isLoaded && markers.map(marker => <MarkerF
+                                                key={marker.id.valueOf()}
+                                                position={
+                                                    {   
+                                                        lat: marker.location.lat,
+                                                        lng: marker.location.lng
+                                                    }
+                                                } />)}    
         </GoogleMap>
     )
 };

@@ -17,7 +17,6 @@ export default function AddContainer(props) {
     const [current, setCurrent] = useState('map');
     const [fishGeolocation, setFishGeolocation] = useState([]);
     const [disabled, setDisabled] = useState(true);
-    const [loading, setLoading] = useState(false);
 
     function handleClick() {
         if (fishGeolocation.length) {
@@ -57,7 +56,6 @@ export default function AddContainer(props) {
                     fishGeolocation={fishGeolocation}
                     getCurrentLocation={getCurrentLocation}
                     setCurrent={setCurrent}
-                    setLoading={setLoading}
                     setFishGeolocation={setFishGeolocation} />
             </div>
         )

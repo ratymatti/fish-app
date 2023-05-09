@@ -42,7 +42,6 @@ export default function Add(props) {
         getCurrentLocation,
         setCurrent,
         setFishGeolocation,
-        setLoading
     } = props;
 
     async function handleSubmit(event) {
@@ -55,12 +54,10 @@ export default function Add(props) {
         } else {
             const fish = createFish();
 
-            setLoading(true);
             setCurrent('loading');
             addFish(fish);
             await getCurrentLocation();
             setFishGeolocation([]);
-            setLoading(false);
             setCurrent('map');
         }    
     };
