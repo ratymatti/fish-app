@@ -24,14 +24,14 @@ export default function Weather(props) {
         setWeatherTracking([...weatherTracking, newWeather]);
         setNewWeatherLocation([]); 
       }
+    }
       
-    }  
-  }
+  };   
 
   function handleSelection() {
     setCurrent('weather');
     addToTracking();
-  }
+  };
 
   if (current === 'weather') {
     return (
@@ -39,12 +39,15 @@ export default function Weather(props) {
           {!weather && <SpinningIcon />}
           {weather && <WeatherCard
                           data={weather} />}
-          {weatherTracking.length && <WeatherCard 
-                                        data={weatherTracking[0]} /> }                
+          {weatherTracking && weatherTracking.map((card, index) => (
+            <WeatherCard 
+              key={index}
+              data={card} />  
+          ))}                                              
           <button onClick={() => setCurrent('map')}>Add new</button>                
       </div>
     )
-  }
+  };
 
   if (current === 'map') {
     return (
@@ -55,14 +58,12 @@ export default function Weather(props) {
           markerLocations={newWeatherLocation}
           setNewWeatherLocation={setNewWeatherLocation}
           active={active} />
-        <button onClick={() => {
-          handleSelection()
-        }}>Set Weather Tracking</button>
+        <button onClick={() => { handleSelection() }}>Set Weather Tracking</button>
       </div>
     )
   }
 
 
   
-};
+}
 
