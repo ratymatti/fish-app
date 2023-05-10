@@ -24,7 +24,8 @@ export default function Map(props) {
         markerLocations,
         zoom,
         setFishGeolocation,
-        setDisabled
+        setDisabled,
+        setNewWeatherLocation,
     } = props;
     
     useEffect(() => {
@@ -32,18 +33,26 @@ export default function Map(props) {
     }, [markerLocations]);
 
     function handleClick(event) {
+        
+        const selectedLocation = [
+            {
+                location: {
+                    lat: event.latLng.lat(),
+                    lng: event.latLng.lng(),
+                },
+            id: new Date()
+            }
+        ];
+        
+
         if (active === 'AddContainer') {
-            setFishGeolocation([
-                {
-                    location: {
-                        lat: event.latLng.lat(),
-                        lng: event.latLng.lng(),
-                    },
-                id: new Date()
-                }
-            ]);
+            setFishGeolocation(selectedLocation);
             setDisabled(false); 
-        };   
+        }
+        
+        if (active === 'Weather') {
+            setNewWeatherLocation(selectedLocation);
+        }
     };
 
     if (!isLoaded) {

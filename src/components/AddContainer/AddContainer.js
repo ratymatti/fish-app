@@ -11,7 +11,7 @@ export default function AddContainer(props) {
         addFish,
         changeLocation,
         getCurrentLocation,
-        location
+        location,
     } = props;
     
     const [current, setCurrent] = useState('map');

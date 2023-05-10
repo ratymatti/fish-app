@@ -5,29 +5,32 @@ import SpinningIcon from '../SpinningIcon/SpinningIcon';
 import Map from '../Map/Map';
 
 export default function Weather(props) {
-  const [active, setActive] = useState('weather');
+  const [current, setCurrent] = useState('weather');
+  const [newWeatherLocation, setNewWeatherLocation] = useState([]);
 
-  const { weather, location } = props;
+  const { weather, location, active } = props;
 
-  if (active === 'weather') {
+  if (current === 'weather') {
     return (
       <div className='weather'>
           {!weather && <SpinningIcon />}
           {weather && <WeatherCard
                           data={weather} />}
-          <button onClick={() => setActive('map')}>Add new</button>                
+          <button onClick={() => setCurrent('map')}>Add new</button>                
       </div>
     )
   }
 
-  if (active === 'map') {
+  if (current === 'map') {
     return (
       <div className='map'>
         <Map
           center={location}
           zoom={10}
-          markerLocations={[]} />
-        <button onClick={() => setActive('weather')}>Set Weather Tracking</button>  
+          markerLocations={newWeatherLocation}
+          setNewWeatherLocation={setNewWeatherLocation}
+          active={active} />
+        <button onClick={() => setCurrent('weather')}>Set Weather Tracking</button>  
       </div>
     )
   }

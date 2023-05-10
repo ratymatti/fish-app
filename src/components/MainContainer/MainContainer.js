@@ -35,7 +35,8 @@ export default function MainContainer(props) {
                                     }
       {active === 'Weather' && <Weather
                                   weather={weather}
-                                  location={location} />}
+                                  location={location}
+                                  active={active} />}
       {active === 'MapContainer' && <MapContainer
                                             center={location}
                                             active={active}
