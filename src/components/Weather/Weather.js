@@ -21,7 +21,8 @@ export default function Weather(props) {
       const newWeather = await fetchWeather(coords);
       
       if (newWeather) {
-        setWeatherTracking([newWeather]); 
+        setWeatherTracking([...weatherTracking, newWeather]);
+        setNewWeatherLocation([]); 
       }
       
     }  
@@ -38,6 +39,8 @@ export default function Weather(props) {
           {!weather && <SpinningIcon />}
           {weather && <WeatherCard
                           data={weather} />}
+          {weatherTracking.length && <WeatherCard 
+                                        data={weatherTracking[0]} /> }                
           <button onClick={() => setCurrent('map')}>Add new</button>                
       </div>
     )
