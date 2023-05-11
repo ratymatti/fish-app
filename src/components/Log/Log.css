@@ -1,4 +1,19 @@
 .log {
-    border: 1px solid gold;
-    width: 300px;
+    width: 90%;
+    display: flex;
+    justify-content: space-around;
+    align-items: start;
+}
+
+table {
+    width: 100%;
+}
+
+th {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.row {
+    background-color: darkcyan;
 }

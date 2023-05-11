@@ -3,3 +3,13 @@
     padding: 10px;
     margin: 10px;
 }
+
+.weather-card h3 {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.weather-card h5 {
+    font-weight: 300;
+    margin: 2px;
+}

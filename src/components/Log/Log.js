@@ -19,7 +19,7 @@ export default function Log(props) {
             <tbody>
                 {fishes.slice(0).reverse().map(fish => (
                     
-                    <tr key={fish.id}>
+                    <tr className='row' key={fish.id}>
                         <td>{fish.species}</td>
                         <td>{fish.cm}</td>
                         <td>{fish.river}</td>
