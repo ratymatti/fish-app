@@ -3,6 +3,7 @@ import './App.css';
 import MainContainer from './components/MainContainer/MainContainer';
 import { sortFishes } from './modules/sortFishes/sortFishes';
 import fetchWeather from './modules/fetchWeather/fetchWeather';
+import Header from './components/Header/Header';
 
 function App() {
   const [active, setActive] = useState('');
@@ -64,15 +65,9 @@ function App() {
 
   return (
     <div className="App">
-      <div className='header'>
-        <ul>
-          <li><button disabled={disabled} onClick={() => setActive('AddContainer')}>Add Fish</button></li>
-          <li><button onClick={() => setActive('Log')}>Log</button></li>
-          <li><button disabled={disabled} onClick={() => setActive('MapContainer')}>Map</button></li>
-          <li><button onClick={() => setActive('Weather')}>Weather</button></li>
-        </ul>
-        <h1>Fisherman</h1>
-      </div>
+      <Header
+        disabled={disabled}
+        setActive={setActive} />
       <div>
         <MainContainer
           addFish={addFish}
