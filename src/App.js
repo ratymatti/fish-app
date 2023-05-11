@@ -4,6 +4,7 @@ import MainContainer from './components/MainContainer/MainContainer';
 import { sortFishes } from './modules/sortFishes/sortFishes';
 import fetchWeather from './modules/fetchWeather/fetchWeather';
 import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 
 function App() {
   const [active, setActive] = useState('');
@@ -80,6 +81,7 @@ function App() {
           disabled={disabled}
           weather={weather} />
       </div>
+      <Footer />
     </div>
   );
 };
