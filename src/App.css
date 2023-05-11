@@ -41,4 +41,5 @@ button {
 button:hover {
   color: cyan;
   cursor: pointer;
+  opacity: 50%;
 }
