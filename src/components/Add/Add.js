@@ -90,6 +90,10 @@ export default function Add(props) {
         }
     };
 
+    const styles = {
+        color: 'black'
+    }
+
     return (
         <div className='add'>
             <form>
@@ -97,6 +101,7 @@ export default function Add(props) {
                     className='options'
                     options={optionsSpecies}
                     placeholder='Species'
+                    styles={styles}
                     onChange={(selectedSpecies) => setSpecies(selectedSpecies.value)} />
                 <Select
                     className='options'

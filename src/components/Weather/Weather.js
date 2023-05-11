@@ -54,14 +54,14 @@ export default function Weather(props) {
       <div className='map'>
         <Map
           center={location}
-          zoom={10}
+          zoom={5}
           markerLocations={newWeatherLocation}
           setNewWeatherLocation={setNewWeatherLocation}
           active={active} />
         <button onClick={() => { handleSelection() }}>Set Weather Tracking</button>
       </div>
     )
-  }
+  };
 
 
   

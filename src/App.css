@@ -1,16 +1,22 @@
 .App {
   text-align: center;
-  border: 1px solid red;
+  
   margin: 20px;
   width: 600px;
   height: 500px;
+  background-color: black;
+  opacity: 75%;
+  color: white;
+}
+
+body {
+  background-color: darkgray;
 }
 
 .header {
-  border: 1px solid greenyellow;
+  border-bottom: 1px solid white;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid black;
   padding: 10px;
 }
 
@@ -26,7 +32,13 @@
 
 button {
   background: none;
-  border: 1px solid black;
-  border-radius: 5px;
+  border: 1px solid white;
   padding: 5px;
+  color: white;
+  margin: 10px;
+}
+
+button:hover {
+  color: cyan;
+  cursor: pointer;
 }
