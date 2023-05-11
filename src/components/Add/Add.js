@@ -92,7 +92,7 @@ export default function Add(props) {
 
     const styles = {
         color: 'black'
-    }
+    };
 
     return (
         <div className='add'>
