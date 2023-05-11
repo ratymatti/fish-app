@@ -90,8 +90,8 @@ export default function Add(props) {
         }
     };
 
-    const styles = {
-        color: 'black'
+    const styleOptions = {
+        option: (styles) => ({...styles, color: 'black'})
     };
 
     return (
@@ -101,17 +101,19 @@ export default function Add(props) {
                     className='options'
                     options={optionsSpecies}
                     placeholder='Species'
-                    styles={styles}
+                    styles={styleOptions}
                     onChange={(selectedSpecies) => setSpecies(selectedSpecies.value)} />
                 <Select
                     className='options'
                     options={optionsCm}
                     placeholder='cm'
+                    styles={styleOptions}
                     onChange={(selectedCm) => setCm(selectedCm.value)} />
                 <Select
                     className='options'
                     options={optionsRiver}
                     placeholder='River'
+                    styles={styleOptions}
                     onChange={(selectedRiver) => setRiver(selectedRiver.value)} />
                 <DatePicker
                     className='options'
