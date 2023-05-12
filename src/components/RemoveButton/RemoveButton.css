@@ -1,0 +1,9 @@
+.remove-button {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.remove-buttons p {
+    font-size: 0.8rem;
+}
+

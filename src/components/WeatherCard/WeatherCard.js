@@ -1,5 +1,6 @@
 import React from 'react';
 import './WeatherCard.css';
+import RemoveButton from '../RemoveButton/RemoveButton';
 
 export default function WeatherCard({ data, isRemovable, removeTracking }) {
 
@@ -21,7 +22,9 @@ export default function WeatherCard({ data, isRemovable, removeTracking }) {
         {content.info.map(({text, value}, index) => (
           <h5 key={index}>{text}{value}</h5>
         ))}
-        {isRemovable && <button onClick={() => {removeTracking(content.id)}}>x</button>}
+        {isRemovable && <RemoveButton
+                          removeTracking={removeTracking}
+                          content={content} /> }
     </div>
   )
 }
