@@ -13,8 +13,7 @@ export default function WeatherCard({ data, isRemovable, removeTracking }) {
         { text: 'Wind Speed: ' , value: `${data?.wind?.speed || 0} m/s` },
       ],
       id: data.id
-    };
-    
+    };  
       
   return (
     <div className='weather-card'>

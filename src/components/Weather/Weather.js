@@ -33,8 +33,8 @@ export default function Weather(props) {
     addToTracking();
   };
 
-  function removeTracking(id) {
-    setWeatherTracking([...weatherTracking].filter(card => card.id !== id));
+  function removeTracking(idToRemove) {
+    setWeatherTracking([...weatherTracking].filter(card => card.id !== idToRemove));
   };
 
   if (current === 'weather') {
