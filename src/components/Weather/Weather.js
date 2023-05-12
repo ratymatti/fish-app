@@ -13,7 +13,7 @@ export default function Weather(props) {
   const { weather, location, active } = props;
 
   async function addToTracking() {
-    if (newWeatherLocation) {
+    if (newWeatherLocation.length) {
       const coords = {
          lat: newWeatherLocation[0].location.lat,
          lng: newWeatherLocation[0].location.lng
