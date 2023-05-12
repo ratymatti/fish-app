@@ -33,6 +33,10 @@ export default function Weather(props) {
     addToTracking();
   };
 
+  function removeTracking(id) {
+    setWeatherTracking([...weatherTracking].filter(card => card.id !== id));
+  };
+
   if (current === 'weather') {
     return (
       <div className='weather'>
@@ -42,7 +46,9 @@ export default function Weather(props) {
           {weatherTracking && weatherTracking.map((card, index) => (
             <WeatherCard 
               key={index}
-              data={card} />  
+              data={card}
+              isRemovable={true}
+              removeTracking={removeTracking} />  
           ))}                                              
           <button onClick={() => setCurrent('map')}>Add new</button>                
       </div>
