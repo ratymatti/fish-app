@@ -7,13 +7,15 @@ export default function RemoveButton({ removeTracking, content }) {
 
   return (
     <div className='remove-button'>
+      <div className='trash-button'>
         {clicked === false && <BsTrash
-                                onClick={() => setClicked(true)} /> }
+                                  onClick={() => setClicked(true)} /> }
+      </div>
         {clicked === true && (
             <div className='remove-buttons'>
                 <p>Are you sure?</p> 
-                <button onClick={() => removeTracking(content.id) }>Yes</button>
-                <button onClick={() => setClicked(false)}>No</button>
+                <button className='yes-button' onClick={() => removeTracking(content.id) }>Yes</button>
+                <button className='no-button' onClick={() => setClicked(false)}>No</button>
             </div>
         )}
     </div>

@@ -3,7 +3,22 @@
     justify-content: flex-end;
 }
 
+.trash-button:hover {
+    color: cyan;
+}
+
+.remove-buttons button {
+    font-size: 0.6rem;
+}
+
 .remove-buttons p {
     font-size: 0.8rem;
 }
 
+.yes-button:hover {
+    border: 1px solid greenyellow;
+}
+
+.no-button:hover {
+    border: 1px solid red;
+}
