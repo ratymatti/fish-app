@@ -4,7 +4,7 @@
 }
 
 .trash-button:hover {
-    color: cyan;
+    color: red;
 }
 
 .remove-buttons button {
@@ -13,12 +13,4 @@
 
 .remove-buttons p {
     font-size: 0.8rem;
-}
-
-.yes-button:hover {
-    border: 1px solid greenyellow;
-}
-
-.no-button:hover {
-    border: 1px solid red;
 }
