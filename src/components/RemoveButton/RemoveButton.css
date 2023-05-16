@@ -5,6 +5,7 @@
 
 .trash-button:hover {
     color: red;
+    cursor: pointer;
 }
 
 .remove-buttons button {
