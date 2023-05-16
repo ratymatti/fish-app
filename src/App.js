@@ -22,8 +22,8 @@ function App() {
     setLocation(location);
   };
 
-  function sortByField(field) {
-    const sortedFishes = sortFishes(field, fishes);
+  function sortByField(field, direction) {
+    const sortedFishes = sortFishes(field, fishes, direction); // arg direction
     setFishes(sortedFishes);
   };  
 
