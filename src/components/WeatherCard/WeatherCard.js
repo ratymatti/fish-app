@@ -13,12 +13,14 @@ export default function WeatherCard({ data, isRemovable, removeTracking }) {
         { text: 'Pressure: ', value: `${data?.main?.pressure || 0} hPa` },
         { text: 'Wind Speed: ' , value: `${data?.wind?.speed || 0} m/s` },
       ],
-      id: data.id
+      id: data.id,
+      icon: `http://openweathermap.org/img/w/${data.weather[0].icon}.png` 
     };  
       
   return (
     <div className='weather-card'>
         <h3>{content.header}</h3>
+        <div id="icon"><img id="wicon" src={content.icon} alt="Weather icon"/></div>
         {content.info.map(({text, value}, index) => (
           <h5 key={index}>{text}{value}</h5>
         ))}
