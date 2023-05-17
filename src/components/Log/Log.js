@@ -3,7 +3,7 @@ import './Log.css';
 
 export default function Log({ fishes, sortByField }) {
     const [direction, setDirection] = useState('desc');
-    const [currentField, setCurrentField] = useState('date');
+    const [currentField, setCurrentField] = useState('date')
 
     /**
      * handleClick function that calls sorting function with arguments field (that

@@ -23,25 +23,26 @@ export default function MainContainer(props) {
   return (
     <div className='main-container'>
       {active === 'AddContainer' && <AddContainer
-                                            addFish={addFish}
-                                            location={location}
-                                            active={active}
-                                            changeLocation={changeLocation}
-                                            getCurrentLocation={getCurrentLocation} />
-                                            }
+                                      addFish={addFish}
+                                      location={location}
+                                      active={active}
+                                      changeLocation={changeLocation}
+                                      getCurrentLocation={getCurrentLocation} />
+                                      }
       {active === 'Log' &&  <Log
-                                    fishes={fishes}
-                                    sortByField={sortByField} />
-                                    }
+                              fishes={fishes}
+                              sortByField={sortByField} />
+                              }
       {active === 'Weather' && <Weather
                                   weather={weather}
                                   location={location}
-                                  active={active} />}
+                                  active={active} />
+                                  }
       {active === 'MapContainer' && <MapContainer
-                                            center={location}
-                                            active={active}
-                                            fishes={fishes} />
-                                            }
+                                      center={location}
+                                      active={active}
+                                      fishes={fishes} />
+                                      }
       {disabled && <SpinningIcon />}                                                                       
     </div>
   )

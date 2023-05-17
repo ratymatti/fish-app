@@ -24,15 +24,9 @@ function App() {
   };
 
   function sortByField(field, direction) {
-    const sortedFishes = sortFishes(field, fishes, direction); // arg direction
+    const sortedFishes = sortFishes(field, fishes, direction);
     setFishes(sortedFishes);
   };  
-
-
-  async function getWeather() {
-    const currentWeather = await fetchWeather(currentUserLocation);
-    setWeather(currentWeather);
-  };
 
   useEffect(() => {
     async function getCoords() {
@@ -49,6 +43,11 @@ function App() {
   }, []);
 
   useEffect(() => {
+    async function getWeather() {
+      const currentWeather = await fetchWeather(currentUserLocation);
+      setWeather(currentWeather);
+    };
+    
     getWeather();
   }, [currentUserLocation]);
 
