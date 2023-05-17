@@ -3,6 +3,7 @@ import './App.css';
 import MainContainer from './components/MainContainer/MainContainer';
 import { sortFishes } from './modules/sortFishes/sortFishes';
 import fetchWeather from './modules/fetchWeather/fetchWeather';
+import getLocation from './modules/getLocation/getLocation';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 
@@ -27,29 +28,6 @@ function App() {
     setFishes(sortedFishes);
   };  
 
-  async function getLocation() {
-    if (navigator.geolocation) {
-      try {
-        const position = await new Promise((resolve, reject) => {
-          navigator.geolocation.getCurrentPosition(resolve, reject);
-        });
-
-        const { latitude: lat, longitude: lng } = position.coords;
-
-        if (!currentUserLocation) {
-          setCurrentUserLocation({ lat, lng });
-        }
-
-        setLocation({ lat, lng });
-        setDisabled(false);
-      } catch (error) {
-        console.error(error);
-        alert(error.message);
-      }
-    } else {
-      alert('Geolocation not supported in your browser');
-    }
-  };
 
   async function getWeather() {
     const currentWeather = await fetchWeather(currentUserLocation);
@@ -57,7 +35,17 @@ function App() {
   };
 
   useEffect(() => {
-    getLocation();
+    async function getCoords() {
+      const coords = await getLocation(); 
+      setLocation(coords);
+      
+      if (!currentUserLocation) {
+        setCurrentUserLocation(coords);
+      }  
+    };
+    
+    getCoords();
+    setDisabled(false);   
   }, []);
 
   useEffect(() => {

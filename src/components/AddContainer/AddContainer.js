@@ -46,7 +46,7 @@ export default function AddContainer(props) {
                 <button className='button' disabled={disabled}  onClick={() => setCurrent('add')}>Select location</button>
             </div>
         )
-    } 
+    }; 
 
     if (current === 'add') {
         return (
@@ -68,6 +68,6 @@ export default function AddContainer(props) {
                 <SpinningIcon />
             </div> 
         )
-    }
+    };
 };
 

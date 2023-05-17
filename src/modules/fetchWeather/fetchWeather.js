@@ -26,4 +26,4 @@ async function fetchWeather(location) {
     }
 };
 
-  export default fetchWeather;
+export default fetchWeather;
