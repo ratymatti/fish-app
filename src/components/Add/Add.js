@@ -3,6 +3,7 @@ import Select from 'react-select';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import './Add.css';
+import fetchWeather from '../../modules/fetchWeather/fetchWeather';
 
 const optionsSpecies = [
     { value: 'trout', label: 'Trout' },
@@ -52,7 +53,7 @@ export default function Add(props) {
             setError(errorMessage);
             return;
         } else {
-            const fish = createFish();
+            const fish = await createFish();
 
             setCurrent('loading');
             addFish(fish);
@@ -76,7 +77,17 @@ export default function Add(props) {
         }     
     };
 
-    function createFish() {
+    async function createFish() {
+        const today = new Date();
+        let weather;
+
+        if (today.getDate() === catchDate.getDate()) {
+            weather = await fetchWeather({
+                lat: fishGeolocation[0].location.lat,
+                lng: fishGeolocation[0].location.lng 
+            })
+        } 
+
         return {
             species: species,
             cm: cm,
@@ -86,7 +97,8 @@ export default function Add(props) {
             location: {
                 lat: fishGeolocation[0].location.lat,
                 lng: fishGeolocation[0].location.lng
-               }    
+               },
+            weather: weather       
         }
     };
 

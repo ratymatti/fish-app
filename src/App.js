@@ -30,9 +30,9 @@ function App() {
 
   useEffect(() => {
     async function getCoords() {
-      const coords = await getLocation(); 
+      const coords = await getLocation();
       setLocation(coords);
-      
+    
       if (!currentUserLocation) {
         setCurrentUserLocation(coords);
       }  
@@ -40,7 +40,7 @@ function App() {
     
     getCoords();
     setDisabled(false);   
-  }, []);
+  }, [currentUserLocation]);
 
   useEffect(() => {
     async function getWeather() {
