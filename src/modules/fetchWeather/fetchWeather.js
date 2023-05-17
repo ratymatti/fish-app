@@ -1,6 +1,8 @@
 /**
- * Function fetchWeather, used for fetching current weather data from api
- * @param {*} location 
+ * Function fetchWeather, used for fetching current weather data from 
+ * OpenWeatherMap current weather api, used to track current weather situation 
+ * in users current location and locations that user are tracking.
+ * @param {*} location - object with values { lat, lng }
  * @returns object that contains current weather data 
  */
 

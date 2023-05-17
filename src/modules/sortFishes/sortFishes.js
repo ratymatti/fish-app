@@ -68,6 +68,5 @@ export const sortFishes = (field, fishes, direction) => {
     if (direction === 'desc') {
       return result;
     }
-
-    
-  };
+ 
+};
