@@ -56,18 +56,16 @@ function App() {
       <Header
         disabled={disabled}
         setActive={setActive} />
-      <div>
-        <MainContainer
-          addFish={addFish}
-          fishes={fishes}
-          active={active}
-          sortByField={sortByField}
-          location={location}
-          changeLocation={changeLocation}
-          getCurrentLocation={getLocation}
-          disabled={disabled}
-          weather={weather} />
-      </div>
+      <MainContainer
+        addFish={addFish}
+        fishes={fishes}
+        active={active}
+        sortByField={sortByField}
+        location={location}
+        changeLocation={changeLocation}
+        getCurrentLocation={getLocation}
+        disabled={disabled}
+        weather={weather} />
       <Footer />
     </div>
   );
