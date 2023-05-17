@@ -1,7 +1,12 @@
 export const sortFishes = (field, fishes, direction) => {
 
-    // new function inside this that sorts array, after that return 
-    // final result reversed or not depending state variable direction
+    /**
+     * Function that sorts fishes depending on users choices.
+     * firstSort() function sorts array of objects by selected field
+     * and after that it's returned descending or ascending order 
+     * depending value of direction parameter.
+     * @returns that sorted list
+     */
 
     function firstSort() {
       switch (field) {

@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 import './Log.css';
 
-export default function Log(props) {
+export default function Log({ fishes, sortByField }) {
     const [direction, setDirection] = useState('desc');
-    const [currentField, setCurrentField] = useState('date')
-    const { fishes, sortByField } = props;
+    const [currentField, setCurrentField] = useState('date');
 
-    //function handleClick (arg field)
-    //calls sortByField, another arg direction
+    /**
+     * handleClick function that calls sorting function with arguments field (that
+     * user selected) and direction (desc or asc) depending on current direction state
+     * variable.
+     * @param {*} field 
+     */
 
     function handleClick(field) {
         if (field === currentField) {
@@ -19,9 +22,7 @@ export default function Log(props) {
           setCurrentField(field);
           sortByField(field, 'desc');
         }
-      }
-      
-    
+      }  
 
   return (
     <div className='log'>
@@ -48,5 +49,5 @@ export default function Log(props) {
         </table>
     </div>
   )
-}
+};
 
