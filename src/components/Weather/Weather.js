@@ -67,9 +67,6 @@ export default function Weather(props) {
         <button onClick={() => { handleSelection() }}>Set Weather Tracking</button>
       </div>
     )
-  };
-
-
-  
-}
+  };  
+};
 

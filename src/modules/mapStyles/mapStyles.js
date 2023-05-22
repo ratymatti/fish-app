@@ -1,3 +1,7 @@
+/**
+ * Array of objects that contains styling for GoogleMaps -component
+ */
+
 export const mapStyles = [
     {
         "featureType": "administrative",

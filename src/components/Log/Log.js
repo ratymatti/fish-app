@@ -6,8 +6,8 @@ export default function Log({ fishes, sortByField }) {
     const [currentField, setCurrentField] = useState('date')
 
     /**
-     * handleClick function that calls sorting function with arguments field (that
-     * user selected) and direction (desc or asc) depending on current direction state
+     * handleClick function that calls sorting function with arguments 'field' (that
+     * user selected) and 'direction' (desc or asc) depending on current direction state
      * variable.
      * @param {*} field 
      */

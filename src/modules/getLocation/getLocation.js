@@ -1,3 +1,9 @@
+/**
+ * Function that gets users geolocation information from browser, if allowed.
+ * 
+ * @returns object that contains users geolocation information, key lat for latitude and lng for longitude
+ */
+
 async function getLocation() {
     if (navigator.geolocation) {
       try {
