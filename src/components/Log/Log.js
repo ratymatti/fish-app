@@ -31,7 +31,7 @@ export default function Log({ fishes, sortByField }) {
                 <tr>
                     <th onClick={() => handleClick('species')}>Species</th>
                     <th onClick={() => handleClick('cm')}>Length</th>
-                    <th onClick={() => handleClick('river')}>River</th> 
+                    <th onClick={() => handleClick('water')}>Water</th> 
                     <th onClick={() => handleClick('date')}>Date</th>
                 </tr>
             </thead>
@@ -41,7 +41,7 @@ export default function Log({ fishes, sortByField }) {
                     <tr className='row' key={fish.id}>
                         <td>{fish.species}</td>
                         <td>{fish.cm}</td>
-                        <td>{fish.river}</td>
+                        <td>{fish.water}</td>
                         <td>{fish.date.toLocaleDateString('en-GB')}</td>
                     </tr>
                 ))}

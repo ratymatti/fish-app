@@ -12,7 +12,7 @@ const optionsSpecies = [
     { value: 'rainbowtrout', label: 'Rainbowtrout' }
 ];
 
-const optionsRiver = [
+const optionsWater = [
     { value: 'Kitkajoki', label: 'Kitkajoki' },
     { value: 'Kuusinkijoki', label: 'Kuusinkijoki' },
     { value: 'Byske', label: 'Byske' },
@@ -34,7 +34,7 @@ addCmOptions();
 export default function Add(props) {
     const [species, setSpecies] = useState(null);
     const [cm, setCm] = useState(0);
-    const [river, setRiver] = useState(null);
+    const [water, setWater] = useState(null);
     const [catchDate, setCatchDate] = useState(new Date());
     const [error, setError] = useState('');
 
@@ -69,8 +69,8 @@ export default function Add(props) {
             return 'Species is required.';
         } else if (!cm || isNaN(cm) || cm <= 0) {
             return 'Cm must be greater than 0.';
-        } else if (!river) {
-            return 'River is required.';
+        } else if (!water) {
+            return 'Water is required.';
         } else if (!fishGeolocation) {
             return 'Location is required.';
         } else {
@@ -92,7 +92,7 @@ export default function Add(props) {
         return {
             species: species,
             cm: cm,
-            river: river,
+            water: water,
             date: catchDate,
             id: new Date().valueOf(),
             location: {
@@ -124,10 +124,10 @@ export default function Add(props) {
                     onChange={(selectedCm) => setCm(selectedCm.value)} />
                 <Select
                     className='options'
-                    options={optionsRiver}
-                    placeholder='River'
+                    options={optionsWater}
+                    placeholder='Water'
                     styles={styleOptions}
-                    onChange={(selectedRiver) => setRiver(selectedRiver.value)} />
+                    onChange={(selectedWater) => setWater(selectedWater.value)} />
                 <DatePicker
                     className='options'
                     selected={catchDate}
