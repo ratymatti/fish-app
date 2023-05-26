@@ -18,6 +18,7 @@ const optionsRiver = [
     { value: 'Byske', label: 'Byske' },
     { value: 'Kemijoki', label: 'Kemijoki' },
     { value: 'Ounasjoki', label: 'Ounasjoki' },
+    { value: 'Other', label: 'Other' },
 ];
 
 const optionsCm = [];
