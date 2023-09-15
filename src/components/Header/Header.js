@@ -10,7 +10,7 @@ export default function Header({ disabled, setActive }) {
           <li><button disabled={disabled} onClick={() => setActive('MapContainer')}>Map</button></li>
           <li><button onClick={() => setActive('Weather')}>Weather</button></li>
         </ul>
-        <h1>Logbook</h1>
+        <h1>Only Fishes</h1>
       </div>  
   )
 };
