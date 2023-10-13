@@ -8,9 +8,14 @@ import fetchWeather from '../../modules/fetchWeather/fetchWeather';
 export default function Weather(props) {
   const [current, setCurrent] = useState('weather');
   const [newWeatherLocation, setNewWeatherLocation] = useState([]);
-  const [weatherTracking, setWeatherTracking] = useState([]);
 
-  const { weather, location, active } = props;
+  const {
+    weather,
+    location,
+    active,
+    weatherTracking,
+    setWeatherTracking
+  } = props;
 
   async function addToTracking() {
     if (newWeatherLocation.length) {

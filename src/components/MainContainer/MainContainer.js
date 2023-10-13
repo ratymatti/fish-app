@@ -17,7 +17,9 @@ export default function MainContainer(props) {
     getCurrentLocation,
     location,
     sortByField,
-    weather
+    weather,
+    weatherTracking,
+    setWeatherTracking
     } = props;
 
   return (
@@ -36,7 +38,9 @@ export default function MainContainer(props) {
       {active === 'Weather' && <Weather
                                   weather={weather}
                                   location={location}
-                                  active={active} />
+                                  active={active}
+                                  weatherTracking={weatherTracking}
+                                  setWeatherTracking={setWeatherTracking} />
                                   }
       {active === 'MapContainer' && <MapContainer
                                       center={location}
