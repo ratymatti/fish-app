@@ -40,7 +40,7 @@ function App() {
     };
     
     getCoords();
-    setDisabled(false);   
+      setDisabled(false);   
   }, [currentUserLocation]);
 
   useEffect(() => {
