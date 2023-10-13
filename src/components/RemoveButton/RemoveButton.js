@@ -19,8 +19,10 @@ export default function RemoveButton({ removeTracking, content }) {
         {clicked === true && (
             <div className='remove-buttons'>
                 <p>Are you sure?</p> 
-                <button onClick={() => handleClick(content.id) }>Yes</button>
-                <button onClick={() => setClicked(false)}>No</button>
+                <button
+                  onClick={() => handleClick(content.id)}>Yes</button>
+                <button
+                  onClick={() => setClicked(false)}>No</button>
             </div>
         )}
     </div>
