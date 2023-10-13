@@ -17,7 +17,18 @@ async function fetchWeather(location) {
             console.log('fetched from api');
             if (response.ok) {
               const data = await response.json();
-              return data;
+              const weather = {
+                name: data.name,
+                id: data.id,
+                icon: data.weather[0].icon,
+                temp: data.main.temp,
+                feels_like: data.main.feels_like,
+                humidity: data.main.humidity,
+                pressure: data.main.pressure,
+                wind_speed: data.wind.speed,
+                wind_direction: data.wind.deg
+              }
+              return weather;
             }
       
           } catch(err) {
