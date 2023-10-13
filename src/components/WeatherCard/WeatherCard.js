@@ -2,7 +2,13 @@ import React from 'react';
 import './WeatherCard.css';
 import RemoveButton from '../RemoveButton/RemoveButton';
 
-export default function WeatherCard({ data, isRemovable, removeTracking }) {
+export default function WeatherCard(props) {
+
+    const {
+      data,
+      isRemovable,
+      removeTracking
+    } = props;
 
     const content = {
       header: `Current Weather in ${data?.name || ''}`,
