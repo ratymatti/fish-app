@@ -15,6 +15,7 @@ function App() {
   const [weather, setWeather] = useState(null);
   const [currentUserLocation, setCurrentUserLocation] = useState(null);
   const [weatherTracking, setWeatherTracking] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   function addFish(fish) {
     setFishes([...fishes, fish]);
@@ -68,7 +69,9 @@ function App() {
         disabled={disabled}
         weather={weather}
         weatherTracking={weatherTracking}
-        setWeatherTracking={setWeatherTracking} />
+        setWeatherTracking={setWeatherTracking}
+        isLoggedIn={isLoggedIn}
+        setIsLoggedIn={setIsLoggedIn} />
       <Footer />
     </div>
   );

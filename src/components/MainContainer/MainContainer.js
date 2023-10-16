@@ -5,6 +5,7 @@ import MapContainer from '../MapContainer/MapContainer';
 import Weather from '../Weather/Weather';
 import './MainContainer.css';
 import SpinningIcon from '../SpinningIcon/SpinningIcon';
+import Auth from '../Auth/Auth';
 
 
 export default function MainContainer(props) {
@@ -19,7 +20,9 @@ export default function MainContainer(props) {
     sortByField,
     weather,
     weatherTracking,
-    setWeatherTracking
+    setWeatherTracking,
+    isLoggedIn,
+    setIsLoggedIn
     } = props;
 
   return (
@@ -47,7 +50,9 @@ export default function MainContainer(props) {
                                       active={active}
                                       fishes={fishes} />
                                       }
-      {disabled && <SpinningIcon />}                                                                       
+      {disabled && <SpinningIcon />}
+      {!isLoggedIn && <Auth
+                        setIsLoggedIn={setIsLoggedIn} />}                                                                       
     </div>
   )
 }
