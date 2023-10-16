@@ -24,4 +24,4 @@ yarn-debug.log*
 yarn-error.log*
 
 # Ignore the firebase.js file
-config/firebase.js
+firebase.js
