@@ -8,12 +8,3 @@
     overflow: scroll;
     overflow-x: hidden;
 }
-
-.main-container::-webkit-scrollbar {
-    color: white;
-}
-
-.main-container::-webkit-scrollbar-thumb {
-    background-color: darkgrey;
-    outline: 1px solid slategrey;
-  }

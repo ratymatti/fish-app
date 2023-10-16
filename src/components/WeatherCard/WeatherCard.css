@@ -5,6 +5,7 @@
 }
 
 .weather-card h3 {
+    font-size: 1rem;
     text-decoration: underline;
     text-underline-offset: 3px;
 }
