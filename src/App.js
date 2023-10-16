@@ -7,9 +7,11 @@ import getLocation from './modules/getLocation/getLocation';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 
+
+
 function App() {
-  const [active, setActive] = useState('');
   const [fishes, setFishes] = useState([]);
+  const [active, setActive] = useState('');
   const [location, setLocation] = useState(null);
   const [disabled, setDisabled] = useState(true);
   const [weather, setWeather] = useState(null);
