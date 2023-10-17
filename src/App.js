@@ -64,6 +64,7 @@ function App() {
         id: doc.id
       }));
       console.log(filteredData);
+      setFishes(filteredData)
     } catch(err) {
       console.error(err);
     }

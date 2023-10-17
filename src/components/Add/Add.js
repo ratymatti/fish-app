@@ -101,13 +101,22 @@ export default function Add(props) {
                 lat: fishGeolocation[0].location.lat,
                 lng: fishGeolocation[0].location.lng 
             })
-        } 
+        }
+
+        
+        const day = catchDate.getDate().toString().padStart(2, '0'); // Ensure two digits with leading zero
+        const month = (catchDate.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+        const year = catchDate.getFullYear();
+
+        const savedDate = `${day}/${month}/${year}`;
+        
 
         return {
             species: species,
             cm: cm,
             water: water,
             date: catchDate,
+            dateString: savedDate,
             id: new Date().valueOf(),
             location: {
                 lat: fishGeolocation[0].location.lat,

@@ -42,7 +42,7 @@ export default function Log({ fishes, sortByField }) {
                         <td>{fish.species}</td>
                         <td>{fish.cm}</td>
                         <td>{fish.water}</td>
-                        <td>{fish.date.toLocaleDateString('en-GB')}</td>
+                        <td>{fish.dateString}</td>
                     </tr>
                 ))}
             </tbody>   
