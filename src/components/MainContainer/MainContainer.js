@@ -52,7 +52,8 @@ export default function MainContainer(props) {
                                       }
       {disabled && <SpinningIcon />}
       {!isLoggedIn && <Auth
-                        setIsLoggedIn={setIsLoggedIn} />}                                                                       
+                        setIsLoggedIn={setIsLoggedIn}
+                        isLoggedIn={isLoggedIn} />}                                                                       
     </div>
   )
 }

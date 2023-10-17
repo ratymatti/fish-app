@@ -5,7 +5,8 @@ import { auth } from '../../config/firebase';
 
 export default function Auth(props) {
   const {
-    setIsLoggedIn
+    setIsLoggedIn,
+    isLoggedIn
   } = props;  
 
   async function signInWithGoogle() {
@@ -30,8 +31,13 @@ export default function Auth(props) {
 
   return (
     <div className='auth'>
-        <button onClick={signInWithGoogle}>Sign In With Google</button>
-        <button onClick={logOut}>Sign Out</button>
+        {isLoggedIn ?
+            <button
+                onClick={logOut}>Sign Out</button> :
+            <button
+                onClick={signInWithGoogle}>Sign In With Google</button>
+        }
+        
     </div>
   )
 }

@@ -57,7 +57,9 @@ function App() {
     <div className="App">
       <Header
         disabled={disabled}
-        setActive={setActive} />
+        setActive={setActive}
+        isLoggedIn={isLoggedIn}
+        setIsLoggedIn={setIsLoggedIn} />
       <MainContainer
         addFish={addFish}
         fishes={fishes}
