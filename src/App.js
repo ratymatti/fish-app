@@ -6,6 +6,8 @@ import fetchWeather from './modules/fetchWeather/fetchWeather';
 import getLocation from './modules/getLocation/getLocation';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
+import { db } from './config/firebase';
+import { collection, getDocs } from 'firebase/firestore';
 
 function App() {
   const [active, setActive] = useState('');
@@ -16,6 +18,8 @@ function App() {
   const [currentUserLocation, setCurrentUserLocation] = useState(null);
   const [weatherTracking, setWeatherTracking] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const fishesRef = collection(db, "fishes");
 
   function addFish(fish) {
     setFishes([...fishes, fish]);
@@ -48,10 +52,22 @@ function App() {
     async function getWeather() {
       const currentWeather = await fetchWeather(currentUserLocation);
       setWeather(currentWeather);
-    };
-    
+    }; 
     getWeather();
   }, [currentUserLocation]);
+
+  async function getDocuments() {
+    try {
+      const data = await getDocs(fishesRef);
+      console.log(data);
+    } catch(err) {
+      console.error(err);
+    }
+  }    
+
+  useEffect(() => {
+    getDocuments();  
+  },[]) 
 
   return (
     <div className="App">
