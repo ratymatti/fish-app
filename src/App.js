@@ -59,7 +59,11 @@ function App() {
   async function getDocuments() {
     try {
       const data = await getDocs(fishesRef);
-      console.log(data);
+      const filteredData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id
+      }));
+      console.log(filteredData);
     } catch(err) {
       console.error(err);
     }
