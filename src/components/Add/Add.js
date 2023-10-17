@@ -4,6 +4,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import './Add.css';
 import fetchWeather from '../../modules/fetchWeather/fetchWeather';
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from '../../config/firebase';
 
 const optionsSpecies = [
     { value: 'trout', label: 'Trout' },
@@ -46,6 +48,17 @@ export default function Add(props) {
         setFishGeolocation,
     } = props;
 
+    const fishesRef = collection(db, "fishes");
+
+    async function onSubmitFish() {
+        try {
+            const newFish = await createFish();
+            await addDoc(fishesRef, newFish);
+        } catch(err) {
+            console.error(err);
+        }
+    }
+
     async function handleSubmit(event) {
         event.preventDefault();
         const errorMessage = validateForm();
@@ -58,6 +71,7 @@ export default function Add(props) {
 
             setCurrent('loading');
             addFish(fish);
+            onSubmitFish();
             await getCurrentLocation();
             setFishGeolocation([]);
             setCurrent('map');
