@@ -67,7 +67,6 @@ export default function Add(props) {
             setError(errorMessage);
             return;
         } else {
-            const fish = await createFish();
 
             setCurrent('loading');
             onSubmitFish();
