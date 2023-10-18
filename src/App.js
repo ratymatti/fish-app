@@ -56,20 +56,20 @@ function App() {
     getWeather();
   }, [currentUserLocation]);
    
+  async function getDocuments() {
+    try {
+      const data = await getDocs(fishesRef);
+      const filteredData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id
+      }));
+      setFishes(filteredData)
+    } catch(err) {
+      console.error(err);
+    }
+  }
 
   useEffect(() => {
-    async function getDocuments() {
-      try {
-        const data = await getDocs(fishesRef);
-        const filteredData = data.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id
-        }));
-        setFishes(filteredData)
-      } catch(err) {
-        console.error(err);
-      }
-    }
     getDocuments(); 
   },[]); 
 
@@ -93,7 +93,8 @@ function App() {
         weatherTracking={weatherTracking}
         setWeatherTracking={setWeatherTracking}
         isLoggedIn={isLoggedIn}
-        setIsLoggedIn={setIsLoggedIn} />
+        setIsLoggedIn={setIsLoggedIn}
+        getDocuments={getDocuments} />
       <Footer />
     </div>
   );

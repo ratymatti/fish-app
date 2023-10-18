@@ -22,7 +22,8 @@ export default function MainContainer(props) {
     weatherTracking,
     setWeatherTracking,
     isLoggedIn,
-    setIsLoggedIn
+    setIsLoggedIn,
+    getDocuments
     } = props;
 
   return (
@@ -32,7 +33,8 @@ export default function MainContainer(props) {
                                       location={location}
                                       active={active}
                                       changeLocation={changeLocation}
-                                      getCurrentLocation={getCurrentLocation} />
+                                      getCurrentLocation={getCurrentLocation}
+                                      getDocuments={getDocuments} />
                                       }
       {active === 'Log' &&  <Log
                               fishes={fishes}

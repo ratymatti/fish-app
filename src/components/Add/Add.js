@@ -41,7 +41,7 @@ export default function Add(props) {
     const [error, setError] = useState('');
 
     const {
-        addFish,
+        getDocuments,
         fishGeolocation,
         getCurrentLocation,
         setCurrent,
@@ -70,8 +70,8 @@ export default function Add(props) {
             const fish = await createFish();
 
             setCurrent('loading');
-            addFish(fish);
             onSubmitFish();
+            getDocuments();
             await getCurrentLocation();
             setFishGeolocation([]);
             setCurrent('map');

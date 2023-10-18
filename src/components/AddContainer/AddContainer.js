@@ -12,6 +12,7 @@ export default function AddContainer(props) {
         changeLocation,
         getCurrentLocation,
         location,
+        getDocuments
     } = props;
     
     const [current, setCurrent] = useState('map');
@@ -57,7 +58,8 @@ export default function AddContainer(props) {
                     fishGeolocation={fishGeolocation}
                     getCurrentLocation={getCurrentLocation}
                     setCurrent={setCurrent}
-                    setFishGeolocation={setFishGeolocation} />
+                    setFishGeolocation={setFishGeolocation}
+                    getDocuments={getDocuments} />
             </div>
         )
     };
