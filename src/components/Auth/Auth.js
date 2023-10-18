@@ -2,6 +2,7 @@ import React from 'react'
 import { signInWithPopup, signOut } from "firebase/auth";
 import { googleProvider } from '../../config/firebase';
 import { auth } from '../../config/firebase';
+import "./Auth.css";
 
 export default function Auth(props) {
   const {
