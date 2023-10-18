@@ -11,7 +11,6 @@ import Auth from '../Auth/Auth';
 export default function MainContainer(props) {
   const {
     active,
-    addFish,
     changeLocation,
     disabled,
     fishes,
@@ -29,7 +28,6 @@ export default function MainContainer(props) {
   return (
     <div className='main-container'>
       {active === 'AddContainer' && <AddContainer
-                                      addFish={addFish}
                                       location={location}
                                       active={active}
                                       changeLocation={changeLocation}

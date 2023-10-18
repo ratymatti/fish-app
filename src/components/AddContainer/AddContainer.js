@@ -8,7 +8,6 @@ export default function AddContainer(props) {
 
     const {
         active,
-        addFish,
         changeLocation,
         getCurrentLocation,
         location,
@@ -54,7 +53,6 @@ export default function AddContainer(props) {
             <div className='add'>
                 <button className='button' onClick={handleClick}>Edit location</button>
                 <Add
-                    addFish={addFish}
                     fishGeolocation={fishGeolocation}
                     getCurrentLocation={getCurrentLocation}
                     setCurrent={setCurrent}

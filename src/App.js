@@ -21,10 +21,6 @@ function App() {
 
   const fishesRef = collection(db, "fishes");
 
-  function addFish(fish) {
-    setFishes([...fishes, fish]);
-  };
-
   function changeLocation(location) {
     setLocation(location);
   };
@@ -81,7 +77,6 @@ function App() {
         isLoggedIn={isLoggedIn}
         setIsLoggedIn={setIsLoggedIn} />
       <MainContainer
-        addFish={addFish}
         fishes={fishes}
         active={active}
         sortByField={sortByField}
