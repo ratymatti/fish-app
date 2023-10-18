@@ -13,7 +13,6 @@ function App() {
   const [active, setActive] = useState('');
   const [fishes, setFishes] = useState([]);
   const [location, setLocation] = useState(null);
-  const [disabled, setDisabled] = useState(true);
   const [weather, setWeather] = useState(null);
   const [currentUserLocation, setCurrentUserLocation] = useState(null);
   const [weatherTracking, setWeatherTracking] = useState([]);
@@ -44,12 +43,6 @@ function App() {
   }, [currentUserLocation]);
 
   useEffect(() => {
-    if (isLoggedIn) {
-      setDisabled(false);
-    }
-  },[isLoggedIn])
-
-  useEffect(() => {
     async function getWeather() {
       const currentWeather = await fetchWeather(currentUserLocation);
       setWeather(currentWeather);
@@ -77,7 +70,6 @@ function App() {
   return (
     <div className="App">
       <Header
-        disabled={disabled}
         setActive={setActive}
         isLoggedIn={isLoggedIn}
         setIsLoggedIn={setIsLoggedIn} />
@@ -88,7 +80,6 @@ function App() {
         location={location}
         changeLocation={changeLocation}
         getCurrentLocation={getLocation}
-        disabled={disabled}
         weather={weather}
         weatherTracking={weatherTracking}
         setWeatherTracking={setWeatherTracking}

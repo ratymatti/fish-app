@@ -4,7 +4,6 @@ import Log from '../Log/Log';
 import MapContainer from '../MapContainer/MapContainer';
 import Weather from '../Weather/Weather';
 import './MainContainer.css';
-import SpinningIcon from '../SpinningIcon/SpinningIcon';
 import Auth from '../Auth/Auth';
 
 
@@ -12,7 +11,6 @@ export default function MainContainer(props) {
   const {
     active,
     changeLocation,
-    disabled,
     fishes,
     getCurrentLocation,
     location,
@@ -50,7 +48,6 @@ export default function MainContainer(props) {
                                       active={active}
                                       fishes={fishes} />
                                       }
-      {disabled && <SpinningIcon />}
       {!isLoggedIn && <Auth
                         setIsLoggedIn={setIsLoggedIn}
                         isLoggedIn={isLoggedIn} />}                                                                       
