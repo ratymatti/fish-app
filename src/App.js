@@ -55,24 +55,23 @@ function App() {
     }; 
     getWeather();
   }, [currentUserLocation]);
-
-  async function getDocuments() {
-    try {
-      const data = await getDocs(fishesRef);
-      const filteredData = data.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id
-      }));
-      console.log(filteredData);
-      setFishes(filteredData)
-    } catch(err) {
-      console.error(err);
-    }
-  }    
+   
 
   useEffect(() => {
-    getDocuments();  
-  },[]) 
+    async function getDocuments() {
+      try {
+        const data = await getDocs(fishesRef);
+        const filteredData = data.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id
+        }));
+        setFishes(filteredData)
+      } catch(err) {
+        console.error(err);
+      }
+    }
+    getDocuments(); 
+  },[]); 
 
   return (
     <div className="App">
