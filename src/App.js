@@ -41,8 +41,13 @@ function App() {
     };
     
     getCoords();
-      setDisabled(false);   
   }, [currentUserLocation]);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      setDisabled(false);
+    }
+  },[isLoggedIn])
 
   useEffect(() => {
     async function getWeather() {
