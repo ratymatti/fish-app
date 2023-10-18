@@ -46,18 +46,20 @@ export const sortFishes = (field, fishes, direction) => {
           });
           return [...sortedByWater];
   
-        case 'date':
-          const sortedFishes = [...fishes].sort((fishA, fishB) => {
-            const dateComparison = fishA.date.getTime() - fishB.date.getTime();
-            if (dateComparison === 0) {
-              // If the dates are equal, compare by size
-              return fishA.size - fishB.size;
-            } else {
-              // Otherwise, compare by date
-              return dateComparison;
-            }
-          });
-          return [...sortedFishes];
+          case 'date':
+            const sortedFishes = [...fishes].sort((fishA, fishB) => {
+              // Compare the seconds first
+              const secondsComparison = fishA.date.seconds - fishB.date.seconds;
+          
+              // If the seconds are equal, compare the nanoseconds
+              if (secondsComparison === 0) {
+                return fishA.date.nanoseconds - fishB.date.nanoseconds;
+              }
+          
+              return secondsComparison; // Return the seconds comparison result
+            });
+            return [...sortedFishes];
+          
   
         default:
           return [...fishes];
