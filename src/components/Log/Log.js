@@ -1,9 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './Log.css';
 
-export default function Log({ fishes, sortByField }) {
+export default function Log(props) {
+    const {
+        fishes,
+        sortByField
+    } = props;
+
     const [direction, setDirection] = useState('desc');
-    const [currentField, setCurrentField] = useState('date')
+    const [currentField, setCurrentField] = useState('date');
 
     /**
      * handleClick function that calls sorting function with arguments 'field' (that
@@ -22,7 +27,11 @@ export default function Log({ fishes, sortByField }) {
           setCurrentField(field);
           sortByField(field, 'desc');
         }
-      }  
+      }
+    
+      useEffect(() => {
+        sortByField('date', 'desc');
+      },[])
 
   return (
     <div className='log'>

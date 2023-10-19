@@ -57,7 +57,7 @@ function App() {
         ...doc.data(),
         id: doc.id
       }));
-      setFishes(filteredData)
+      setFishes(sortFishes('date', filteredData, 'desc'));
     } catch(err) {
       console.error(err);
     }
