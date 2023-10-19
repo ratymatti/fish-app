@@ -19,15 +19,15 @@ export default function Log(props) {
 
     function handleClick(field) {
         if (field === currentField) {
-          const newDirection = direction === 'desc' ? 'asc' : 'desc';
-          setDirection(newDirection);
-          sortByField(field, newDirection);
+            const newDirection = direction === 'desc' ? 'asc' : 'desc';
+            setDirection(newDirection);
+            sortByField(field, newDirection);
         } else {
-          setDirection('desc');
-          setCurrentField(field);
-          sortByField(field, 'desc');
+            setDirection('desc');
+            setCurrentField(field);
+            sortByField(field, 'desc');
         }
-      }
+    }
     
       useEffect(() => {
         sortByField('date', 'desc');
@@ -53,6 +53,7 @@ export default function Log(props) {
                         <td>{fish.water}</td>
                         <td>{fish.dateString}</td>
                     </tr>
+                    
                 ))}
             </tbody>   
         </table>
