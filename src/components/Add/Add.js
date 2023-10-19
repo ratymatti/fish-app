@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Select from 'react-select';
 import DatePicker from "react-datepicker";
+import Textarea from 'rc-textarea';
 import "react-datepicker/dist/react-datepicker.css";
 import './Add.css';
 import fetchWeather from '../../modules/fetchWeather/fetchWeather';
@@ -39,6 +40,7 @@ export default function Add(props) {
     const [water, setWater] = useState(null);
     const [catchDate, setCatchDate] = useState(new Date());
     const [error, setError] = useState('');
+    const [comment, setComment] = useState('');
 
     const {
         getDocuments,
@@ -114,6 +116,7 @@ export default function Add(props) {
             species: species,
             cm: cm,
             water: water,
+            comment: comment,
             date: catchDate,
             dateString: savedDate,
             id: new Date().valueOf(),
@@ -129,9 +132,16 @@ export default function Add(props) {
         option: (styles) => ({...styles, color: 'black'})
     };
 
+    const placeholder = "Add comment...";
+
     return (
         <div className='add'>
             <form>
+                <DatePicker
+                    className='options'
+                    selected={catchDate}
+                    dateFormat="dd/MM/yyyy"
+                    onChange={(date) => setCatchDate(date)} />
                 <Select
                     className='options'
                     options={optionsSpecies}
@@ -150,14 +160,16 @@ export default function Add(props) {
                     placeholder='Water'
                     styles={styleOptions}
                     onChange={(selectedWater) => setWater(selectedWater.value)} />
-                <DatePicker
-                    className='options'
-                    selected={catchDate}
-                    dateFormat="dd/MM/yyyy"
-                    onChange={(date) => setCatchDate(date)} />
+                <Textarea
+                    onChange={(e) => setComment(e.target.value)}
+                    placeholder={placeholder}
+                    autoSize={{minRows: 5}} />
+            <div className='submit'>
                 <button
                     type='submit'
                     onClick={handleSubmit}>Submit</button>
+            </div>        
+                
             </form>
             {error && <div className="error">
                 {error}<br></br>
