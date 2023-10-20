@@ -3,25 +3,24 @@ import './WeatherCard.css';
 import RemoveButton from '../RemoveButton/RemoveButton';
 
 export default function WeatherCard(props) {
+  const {
+    data,
+    isRemovable,
+    removeTracking
+  } = props;
 
-    const {
-      data,
-      isRemovable,
-      removeTracking
-    } = props;
-
-    const content = {
-      header: `Current Weather in ${data?.name || ''}`,
-      info: [
-        { text: 'Temperature: ', value: `${data?.temp >= 0 ? '+' : ''}${data?.temp || 0}` },
-        { text: 'Feels Like: ', value: `${data?.feels_like >= 0 ? '+' : ''}${data?.feels_like || 0}` },
-        { text: 'Humidity: ', value: `${data?.humidity || 0}%` },
-        { text: 'Pressure: ', value: `${data?.pressure || 0} hPa` },
-        { text: 'Wind Speed: ' , value: `${data?.wind_speed || 0} m/s` },
-      ],
-      id: data.id,
-      icon: `http://openweathermap.org/img/w/${data.icon}.png` 
-    };  
+  const content = {
+    header: `Current Weather in ${data?.name || ''}`,
+    info: [
+      { text: 'Temperature: ', value: `${data?.temp >= 0 ? '+' : ''}${data?.temp || 0}` },
+      { text: 'Feels Like: ', value: `${data?.feels_like >= 0 ? '+' : ''}${data?.feels_like || 0}` },
+      { text: 'Humidity: ', value: `${data?.humidity || 0}%` },
+      { text: 'Pressure: ', value: `${data?.pressure || 0} hPa` },
+      { text: 'Wind Speed: ' , value: `${data?.wind_speed || 0} m/s` },
+    ],
+    id: data.id,
+    icon: `http://openweathermap.org/img/w/${data.icon}.png` 
+  };  
       
   return (
     <div className='weather-card'>
