@@ -4,7 +4,13 @@ import WeatherCard from '../WeatherCard/WeatherCard';
 import SpinningIcon from '../SpinningIcon/SpinningIcon';
 import Map from '../Map/Map';
 import fetchWeather from '../../modules/fetchWeather/fetchWeather';
-import { collection, getDocs, addDoc } from 'firebase/firestore';
+import {
+  collection, 
+  getDocs,
+  addDoc,
+  deleteDoc,
+  doc
+} from 'firebase/firestore';
 import { db } from '../../config/firebase';
 
 export default function Weather(props) {
@@ -59,7 +65,9 @@ export default function Weather(props) {
     addToTracking();
   };
 
-  function removeTracking(idToRemove) {
+  async function removeTracking(idToRemove) {
+    const weatherDoc = doc(db, 'weather', idToRemove);
+    await deleteDoc(weatherDoc);
     setWeatherTracking([...weatherTracking].filter(card => card.id !== idToRemove));
   };
 
