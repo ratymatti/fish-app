@@ -19,7 +19,10 @@ export default function Header(props) {
             <li><button onClick={() => setActive('Log')}>Log</button></li>
             <li><button onClick={() => setActive('MapContainer')}>Map</button></li>
             <li><button onClick={() => setActive('Weather')}>Weather</button></li>
-            <li>{isLoggedIn && <Auth isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}</li>
+            <li>{isLoggedIn && <Auth
+                                  isLoggedIn={isLoggedIn}
+                                  setIsLoggedIn={setIsLoggedIn}
+                                  setActive={setActive} />}</li>
           </ul>
         </div>  
       }

@@ -18,7 +18,7 @@ export default function MainContainer(props) {
     weather,
     isLoggedIn,
     setIsLoggedIn,
-    getDocuments
+    getDocuments,
     } = props;
 
   return (

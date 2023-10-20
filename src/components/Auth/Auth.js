@@ -7,7 +7,8 @@ import "./Auth.css";
 export default function Auth(props) {
   const {
     setIsLoggedIn,
-    isLoggedIn
+    isLoggedIn,
+    setActive
   } = props;  
 
   async function signInWithGoogle() {
@@ -24,6 +25,7 @@ export default function Auth(props) {
     try {
         await signOut(auth);
         setIsLoggedIn(false);
+        setActive('');
         console.log("signed out")
     } catch(err) {
         console.error(err);
