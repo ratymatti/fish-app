@@ -39,10 +39,6 @@ export default function Weather(props) {
     }
   }
 
-  useEffect(() => {
-    getDocuments(); 
-  },[]); 
-
   async function addToTracking() {
     if (newWeatherLocation.length) {
       const coords = {
@@ -58,18 +54,22 @@ export default function Weather(props) {
       }
     }
       
-  };   
-
-  function handleSelection() {
-    setCurrent('weather');
-    addToTracking();
-  };
-
+  }
+  
   async function removeTracking(idToRemove) {
     const weatherDoc = doc(db, 'weather', idToRemove);
     await deleteDoc(weatherDoc);
     setWeatherTracking([...weatherTracking].filter(card => card.id !== idToRemove));
-  };
+  }
+
+  function handleSelection() {
+    setCurrent('weather');
+    addToTracking();
+  }
+
+  useEffect(() => {
+    getDocuments(); 
+  },[]); 
 
   if (current === 'weather') {
     return (
@@ -87,7 +87,7 @@ export default function Weather(props) {
           <button onClick={() => setCurrent('map')}>Add new</button>                
       </div>
     )
-  };
+  }
 
   if (current === 'map') {
     return (
@@ -101,6 +101,6 @@ export default function Weather(props) {
         <button onClick={() => { handleSelection() }}>Set Weather Tracking</button>
       </div>
     )
-  };  
-};
+  }  
+}
 
