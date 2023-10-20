@@ -79,7 +79,7 @@ export default function Weather(props) {
                           data={weather} />}
           {weatherTracking && weatherTracking.map((card, index) => (
             <WeatherCard 
-              key={index}
+              key={card.id}
               data={card}
               isRemovable={true}
               removeTracking={removeTracking} />  
