@@ -16,8 +16,6 @@ export default function MainContainer(props) {
     location,
     sortByField,
     weather,
-    weatherTracking,
-    setWeatherTracking,
     isLoggedIn,
     setIsLoggedIn,
     getDocuments
@@ -39,9 +37,7 @@ export default function MainContainer(props) {
       {active === 'Weather' && <Weather
                                   weather={weather}
                                   location={location}
-                                  active={active}
-                                  weatherTracking={weatherTracking}
-                                  setWeatherTracking={setWeatherTracking} />
+                                  active={active} />
                                   }
       {active === 'MapContainer' && <MapContainer
                                       center={location}

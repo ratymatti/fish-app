@@ -4,6 +4,7 @@ import WeatherCard from '../WeatherCard/WeatherCard';
 import SpinningIcon from '../SpinningIcon/SpinningIcon';
 import Map from '../Map/Map';
 import fetchWeather from '../../modules/fetchWeather/fetchWeather';
+import { db } from '../../config/firebase';
 import {
   collection, 
   getDocs,
@@ -11,7 +12,6 @@ import {
   deleteDoc,
   doc
 } from 'firebase/firestore';
-import { db } from '../../config/firebase';
 
 export default function Weather(props) {
   const [current, setCurrent] = useState('weather');

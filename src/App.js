@@ -15,7 +15,6 @@ function App() {
   const [location, setLocation] = useState(null);
   const [weather, setWeather] = useState(null);
   const [currentUserLocation, setCurrentUserLocation] = useState(null);
-  const [weatherTracking, setWeatherTracking] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const fishesRef = collection(db, "fishes");
@@ -81,8 +80,6 @@ function App() {
         changeLocation={changeLocation}
         getCurrentLocation={getLocation}
         weather={weather}
-        weatherTracking={weatherTracking}
-        setWeatherTracking={setWeatherTracking}
         isLoggedIn={isLoggedIn}
         setIsLoggedIn={setIsLoggedIn}
         getDocuments={getDocuments} />
