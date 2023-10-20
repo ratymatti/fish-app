@@ -43,3 +43,7 @@ button:hover {
   cursor: pointer;
   opacity: 50%;
 }
+
+button:disabled {
+  color: darkgray;
+}

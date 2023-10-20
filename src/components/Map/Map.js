@@ -12,12 +12,6 @@ const options = {
 };
 
 export default function Map(props) {
-    const { isLoaded } = useLoadScript({
-        googleMapsApiKey: process.env.REACT_APP_API_KEY,
-    });
-    
-    const [markers, setMarkers] = useState([]);
-
     const { 
         active,
         center,
@@ -27,6 +21,12 @@ export default function Map(props) {
         setDisabled,
         setNewWeatherLocation,
     } = props;
+    
+    const { isLoaded } = useLoadScript({
+        googleMapsApiKey: process.env.REACT_APP_API_KEY,
+    });
+    
+    const [markers, setMarkers] = useState([]);
     
     useEffect(() => {
         setMarkers(markerLocations);
@@ -57,7 +57,7 @@ export default function Map(props) {
 
     if (!isLoaded) {
         return (
-            <div className='loading'>
+            <div className='loading-map'>
                 <SpinningIcon />
             </div>
         ) 

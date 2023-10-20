@@ -5,9 +5,7 @@
     justify-content: center;
 }
 
-.loading {
-    z-index: 9;
-    position: absolute;
-    top: 200px;
-    left: 300px;
+.loading-map {
+    display: flex;
+    justify-content: center;
 }
