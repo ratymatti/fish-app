@@ -1,21 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Weather.css';
 import WeatherCard from '../WeatherCard/WeatherCard';
 import SpinningIcon from '../SpinningIcon/SpinningIcon';
 import Map from '../Map/Map';
 import fetchWeather from '../../modules/fetchWeather/fetchWeather';
+import { collection, getDocs, addDoc } from 'firebase/firestore';
+import { db } from '../../config/firebase';
 
 export default function Weather(props) {
   const [current, setCurrent] = useState('weather');
   const [newWeatherLocation, setNewWeatherLocation] = useState([]);
+  const [weatherTracking, setWeatherTracking] = useState([]);
 
   const {
     weather,
     location,
     active,
-    weatherTracking,
-    setWeatherTracking
   } = props;
+
+  const weatherRef = collection(db, "weather");
+
+  async function getDocuments() {
+    try {
+      const data = await getDocs(weatherRef);
+      const filteredData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id
+      }));
+      setWeatherTracking(filteredData);
+    } catch(err) {
+      console.error(err);
+    }
+  }
+
+  useEffect(() => {
+    getDocuments(); 
+  },[]); 
 
   async function addToTracking() {
     if (newWeatherLocation.length) {
@@ -26,7 +46,8 @@ export default function Weather(props) {
       const newWeather = await fetchWeather(coords);
       
       if (newWeather) {
-        setWeatherTracking([...weatherTracking, newWeather]);
+        await addDoc(weatherRef, newWeather);
+        getDocuments();
         setNewWeatherLocation([]); 
       }
     }
