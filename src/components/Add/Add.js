@@ -95,7 +95,7 @@ export default function Add(props) {
 
     async function createFish() {
         const today = new Date();
-        let weather;
+        let weather = { info: "not available" };
 
         if (today.getDate() === catchDate.getDate()) {
             weather = await fetchWeather({

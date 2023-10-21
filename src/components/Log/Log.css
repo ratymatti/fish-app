@@ -7,6 +7,7 @@
 
 table {
     width: 100%;
+    border-spacing: 1px 5px;
 }
 
 th {
@@ -14,6 +15,14 @@ th {
     text-underline-offset: 2px;
 }
 
+td {
+    padding: 5px;
+}
+
 .row {
     background-color: darkcyan;
+}
+
+.row:hover {
+    cursor: pointer;
 }
