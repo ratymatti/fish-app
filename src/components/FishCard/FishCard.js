@@ -1,10 +1,17 @@
 import React from 'react'
 import './FishCard.css';
 
-export default function FishCard() {
+export default function FishCard(props) {
+    const {
+        closeCard,
+        currentFish,    
+    } = props;
+    
   return (
     <div className='fish-card'>
-        <h3>fish card</h3>
+        <div className='fish-card-header'>
+            <h3 onClick={() => closeCard()}>X</h3>
+        </div>
     </div>
   )
 }
