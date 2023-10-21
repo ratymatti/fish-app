@@ -1,1 +1,9 @@
-
+.fish-card {
+    background-color: black;
+    border: 1px solid white;
+    height: 350px;
+    width: 400px;
+    z-index: 10;
+    position: absolute;
+    padding: 10px;
+}
