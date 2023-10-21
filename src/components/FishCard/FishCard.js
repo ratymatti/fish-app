@@ -21,10 +21,10 @@ export default function FishCard(props) {
                     { text: "Catch location: ", value: fish.water }
                 ],
                 weather: [
-                    { text: "Temperature: ", value: `${fish.weather?.temp >= 0 ? '+' : ''}${fish.weather?.temp}` || "not available" },
+                    { text: "Temperature: ", value: `${fish.weather?.temp >= 0 ? '+' : ''}${fish.weather?.temp || "not available"}`  },
                     { text: "Wind direction: ", value: fish.weather?.wind_direction || "not available" },
-                    { text: 'Humidity: ', value: `${fish.weather?.humidity || "not available"}%` },
-                    { text: 'Pressure: ', value: `${fish.weather?.pressure || "not available"} hPa` },
+                    { text: 'Humidity: ', value: `${fish.weather?.humidity || "not available"}${fish.weather.humidity ? '%' : ''}` },
+                    { text: 'Pressure: ', value: `${fish.weather?.pressure || "not available"}${fish.weather.pressure ? ' hPa' : ''}` },
                 ]
             }
             setCardFish(fishData);
