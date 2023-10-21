@@ -16,3 +16,7 @@
 .close-card:hover {
     cursor: pointer;
 }
+
+.fish-data h3 {
+    margin-bottom: 20px;
+}
