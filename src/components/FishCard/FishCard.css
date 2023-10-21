@@ -12,3 +12,7 @@
     display: flex;
     justify-content: end;
 }
+
+.close-card:hover {
+    cursor: pointer;
+}
