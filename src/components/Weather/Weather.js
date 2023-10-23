@@ -10,7 +10,8 @@ import {
   getDocs,
   addDoc,
   deleteDoc,
-  doc
+  doc,
+  updateDoc
 } from 'firebase/firestore';
 
 export default function Weather(props) {
@@ -37,6 +38,21 @@ export default function Weather(props) {
     } catch(err) {
       console.error(err);
     }
+  }
+
+  async function updateWeather() {
+    for (const index in weatherTracking) {
+      console.log(weatherTracking[index])
+      try {
+        const weatherDoc = doc(db, "weather", weatherTracking[index].id);
+        const newWeather = await fetchWeather(weatherTracking[index].coords);
+        console.log(newWeather)
+        await updateDoc(weatherDoc, {...newWeather});
+      } catch(err) {
+        console.error(err);
+      }
+    }
+    getDocuments();
   }
 
   async function addToTracking() {
@@ -68,7 +84,17 @@ export default function Weather(props) {
 
   useEffect(() => {
     getDocuments(); 
-  },[]); 
+  },[]);
+  
+  useEffect(() => {
+    const updateInterval = 3600000;
+    let intervalID = setInterval(() => {
+      updateWeather(); 
+    }, updateInterval);
+    return(() => {
+      clearInterval(intervalID);
+    })
+  },[]);
 
   if (current === 'weather') {
     return (

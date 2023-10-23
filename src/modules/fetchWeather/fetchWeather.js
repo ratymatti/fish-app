@@ -33,6 +33,7 @@ async function fetchWeather(location) {
             console.log('fetched from api' +  currentTime);
             if (response.ok) {
               const data = await response.json();
+              console.log(data)
               const weather = {
                 name: data.name,
                 id: data.id,
@@ -46,7 +47,8 @@ async function fetchWeather(location) {
                 coords: {
                   lat: location.lat,
                   lng: location.lng
-                }
+                },
+                time: currentTime
               }
               return weather;
              

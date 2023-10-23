@@ -17,6 +17,7 @@ export default function WeatherCard(props) {
       { text: 'Humidity: ', value: `${data?.humidity || 0}%` },
       { text: 'Pressure: ', value: `${data?.pressure || 0} hPa` },
       { text: 'Wind Speed: ' , value: `${data?.wind_speed || 0} m/s` },
+      { text: 'updated at ', value: data.time }
     ],
     id: data.id,
     icon: `http://openweathermap.org/img/w/${data.icon}.png` 
