@@ -41,14 +41,22 @@ function App() {
     getCoords();
   }, [currentUserLocation]);
 
+  async function getWeather() {
+    const currentWeather = await fetchWeather(currentUserLocation);
+    setWeather(currentWeather);
+  }
+  
   useEffect(() => {
-    async function getWeather() {
-      const currentWeather = await fetchWeather(currentUserLocation);
-      setWeather(currentWeather);
-    }; 
     getWeather();
-  }, [currentUserLocation]);
-   
+    const updateInterval = 3600000;
+    let intervalID = setInterval(() => {
+      getWeather();
+    }, updateInterval);
+    return(() => {
+      clearInterval(intervalID);
+    })
+  },[currentUserLocation]);
+ 
   async function getDocuments() {
     try {
       const data = await getDocs(fishesRef);

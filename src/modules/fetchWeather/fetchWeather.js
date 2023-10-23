@@ -13,8 +13,24 @@ async function fetchWeather(location) {
 
     if (location) {
         try {
+          function getCurrentTime() {
+            const now = new Date();
+            const minutes = now.getMinutes();
+            const hours = now.getHours();
+          
+            // Ensure that the minutes and hours are displayed with leading zeros if needed
+            const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+            const formattedHours = hours < 10 ? `0${hours}` : hours;
+          
+            const currentTimeString = `${formattedHours}/${formattedMinutes}`;
+            return currentTimeString;
+          }
+          
+          const currentTime = getCurrentTime();
+          
+          
             const response =  await fetch(`${apiUrl}lat=${location.lat}&lon=${location.lng}&appid=${apiKey}&units=${units}`);
-            console.log('fetched from api');
+            console.log('fetched from api' +  currentTime);
             if (response.ok) {
               const data = await response.json();
               const weather = {
@@ -26,9 +42,14 @@ async function fetchWeather(location) {
                 humidity: data.main.humidity,
                 pressure: data.main.pressure,
                 wind_speed: data.wind.speed,
-                wind_direction: data.wind.deg
+                wind_direction: data.wind.deg,
+                coords: {
+                  lat: location.lat,
+                  lng: location.lng
+                }
               }
               return weather;
+             
             }
       
           } catch(err) {

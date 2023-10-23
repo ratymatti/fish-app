@@ -52,8 +52,7 @@ export default function Weather(props) {
         getDocuments();
         setNewWeatherLocation([]); 
       }
-    }
-      
+    } 
   }
   
   async function removeTracking(idToRemove) {
