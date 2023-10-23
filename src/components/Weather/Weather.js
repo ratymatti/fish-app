@@ -42,11 +42,9 @@ export default function Weather(props) {
 
   async function updateWeather() {
     for (let index in weatherTracking) {
-      console.log(weatherTracking[index])
       try {
         const weatherDoc = doc(db, "weather", weatherTracking[index].id);
         const newWeather = await fetchWeather(weatherTracking[index].coords);
-        console.log(newWeather)
         await updateDoc(weatherDoc, {...newWeather});
       } catch(err) {
         console.error(err);
