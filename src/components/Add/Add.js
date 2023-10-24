@@ -7,6 +7,7 @@ import './Add.css';
 import fetchWeather from '../../modules/fetchWeather/fetchWeather';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
+import getCurrentDate from '../../modules/getCurrentDate/getCurrentDate';
 
 const optionsSpecies = [
     { value: 'trout', label: 'Trout' },
@@ -104,12 +105,7 @@ export default function Add(props) {
             })
         }
 
-        
-        const day = catchDate.getDate().toString().padStart(2, '0'); // Ensure two digits with leading zero
-        const month = (catchDate.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
-        const year = catchDate.getFullYear();
-
-        const savedDate = `${day}/${month}/${year}`;
+        const savedDate = `${getCurrentDate()}`;
         
 
         return {

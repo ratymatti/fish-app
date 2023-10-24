@@ -1,3 +1,4 @@
+import getCurrentDate from "../getCurrentDate/getCurrentDate";
 import getCurrentTime from "../getCurrentTime/getCurrentTime";
 /**
  * Function fetchWeather, used for fetching current weather data from 
@@ -15,11 +16,12 @@ async function fetchWeather(location) {
     
     
     const currentTime = getCurrentTime();
+    const currentDate = getCurrentDate();
 
     if (location) {
         try {
             const response =  await fetch(`${apiUrl}lat=${location.lat}&lon=${location.lng}&appid=${apiKey}&units=${units}`);
-            console.log('fetched from api' +  currentTime);
+            console.log(`fetched from api ${currentTime} ${currentDate}`);
             if (response.ok) {
               const data = await response.json();
               const weather = {
@@ -36,7 +38,7 @@ async function fetchWeather(location) {
                   lat: location.lat,
                   lng: location.lng
                 },
-                time: currentTime
+                time: `${currentTime} ${currentDate}`
               }
               return weather;
              
