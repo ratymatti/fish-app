@@ -47,7 +47,10 @@ function App() {
   }
   
   useEffect(() => {
-    getWeather();
+    if (currentUserLocation) {
+      getWeather();
+    }
+    
     const updateInterval = 3600000;
     let intervalID = setInterval(() => {
       getWeather();
