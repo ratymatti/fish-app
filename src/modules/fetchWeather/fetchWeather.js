@@ -1,3 +1,4 @@
+import getCurrentTime from "../getCurrentTime/getCurrentTime";
 /**
  * Function fetchWeather, used for fetching current weather data from 
  * OpenWeatherMap current weather api, used to track current weather situation 
@@ -11,18 +12,7 @@ async function fetchWeather(location) {
     const apiUrl = "https://api.openweathermap.org/data/2.5/weather?";
     const units = 'metric';
 
-    function getCurrentTime() {
-      const now = new Date();
-      const minutes = now.getMinutes();
-      const hours = now.getHours();
     
-      // Ensure that the minutes and hours are displayed with leading zeros if needed
-      const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-      const formattedHours = hours < 10 ? `0${hours}` : hours;
-    
-      const currentTimeString = `${formattedHours}/${formattedMinutes}`;
-      return currentTimeString;
-    }
     
     const currentTime = getCurrentTime();
 
