@@ -1,3 +1,9 @@
+/**
+ * Function getCurrentDate
+ * @description Returns the current date in the format DD/MM/YYYY 
+ * @returns {string} - current date
+ */
+
 function getCurrentDate() {
     const now = new Date();
     
