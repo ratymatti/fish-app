@@ -1,49 +1,51 @@
 .App {
-  text-align: center;
-  
-  margin: 20px;
-  width: 750px;
-  height: 550px;
-  background-color: black;
-  opacity: 75%;
-  color: white;
+    text-align: center;
+
+    margin: 20px;
+    width: 750px;
+    height: 550px;
+    background-color: black;
+    opacity: 75%;
+    color: white;
 }
 
 body {
-  background-color: darkgray;
+    background-color: darkgray;
 }
 
 .header {
-  border-bottom: 1px solid white;
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
+    border-bottom: 1px solid white;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
 }
 
 .header h1 {
-  font-size: 1.5rem;
+    font-size: 1.5rem;
 }
 
 .header li {
-  list-style-type: none;
-  display: inline-block;
-  margin: 0px 10px;
+    list-style-type: none;
+    display: inline-block;
+    margin: 0px 10px;
 }
 
 button {
-  background: none;
-  border: 1px solid white;
-  padding: 5px;
-  color: white;
-  margin: 10px;
+    background: none;
+    border: 2px solid white;
+    padding: 5px;
+    color: white;
+    margin: 10px;
+    font-weight: bold;
 }
 
 button:hover {
-  color: cyan;
-  cursor: pointer;
-  opacity: 50%;
+    color: orange;
+    cursor: pointer;
+    transition: 0.3s ease-in;
+    border: 2px solid orange;
 }
 
 button:disabled {
-  color: darkgray;
+    color: darkgray;
 }
