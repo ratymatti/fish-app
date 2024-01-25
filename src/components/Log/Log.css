@@ -25,7 +25,7 @@ td {
 }
 
 .row {
-    background-color: black;
+    background-color: #3d3d3d;
     transition: background-color 0.3s ease-in-out;
     transition-delay: 0.1s; /* Add a small delay */
 }
@@ -36,7 +36,7 @@ td {
 }
 
 .log table tr:nth-child(even) {
-    background-color: #3d3d3d;
+    background-color: black;
     transition: background-color 0.3s ease-in-out;
     transition-delay: 0.1s; /* Add a small delay */
 }
