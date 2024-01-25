@@ -24,19 +24,21 @@ td {
     color: orange;
 }
 
-.log table tr:nth-child(even) {
-    background-color: #3d3d3d; /* Change this to the color you want */
-}
-
-.log table tr:nth-child(even):hover {
-    background-color: #e6e6e6; /* Change this to the color you want */
-}
-
 .row {
     background-color: black;
+    transition: background-color 0.5s ease; /* Move transition here */
 }
 
 .row:hover {
     cursor: pointer;
+    background-color: #e6e6e6;
+}
+
+.log table tr:nth-child(even) {
+    background-color: #3d3d3d;
+    transition: background-color 0.5s ease; /* Move transition here */
+}
+
+.log table tr:nth-child(even):hover {
     background-color: #e6e6e6;
 }
