@@ -7,22 +7,36 @@
 
 table {
     width: 100%;
-    border-spacing: 1px 5px;
+    border-collapse: collapse;
 }
 
 th {
     text-decoration: underline;
     text-underline-offset: 2px;
+    color: orange;
+    background-color: #000000;
+    padding: 10px;
+    font-weight: bold;
 }
 
 td {
-    padding: 5px;
+    padding: 10px;
+    color: orange;
+}
+
+.log table tr:nth-child(even) {
+    background-color: #3d3d3d; /* Change this to the color you want */
+}
+
+.log table tr:nth-child(even):hover {
+    background-color: #e6e6e6; /* Change this to the color you want */
 }
 
 .row {
-    background-color: darkcyan;
+    background-color: black;
 }
 
 .row:hover {
     cursor: pointer;
+    background-color: #e6e6e6;
 }
