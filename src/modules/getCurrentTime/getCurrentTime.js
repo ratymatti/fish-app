@@ -1,3 +1,10 @@
+/**
+ * Function getCurrentTime
+ * @description Returns the current time in the format HH:MM
+ * @returns current time in format HH:MM as a string
+ */
+ 
+
 function getCurrentTime() {
     const now = new Date();
     const minutes = now.getMinutes();
