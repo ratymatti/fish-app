@@ -9,68 +9,41 @@
  */
 
 export const sortFishes = (field, fishes, direction) => {
+    const fishesCopy = [...fishes];
 
     function sortFishesByField() {
         switch (field) {
+            
             case 'species':
-                const sortedBySpecies = [...fishes].sort((fishA, fishB) => {
+                return fishesCopy.sort((fishA, fishB) => {
                     const speciesComparison = fishB.species.localeCompare(fishA.species);
-
-                    if (speciesComparison === 0) {
-                        // If species are equal, compare by size
-                        return fishA.cm - fishB.cm;
-                    } else {
-                        // Otherwise, compare by species
-                        return speciesComparison;
-                    }
+                    return speciesComparison === 0 ? fishA.cm - fishB.cm : speciesComparison; // If species are equal, compare by size
                 });
-                return [...sortedBySpecies];
 
             case 'cm':
-                return [...fishes.sort((fishA, fishB) => {
-                    return fishA.cm - fishB.cm;
-                })];
+                return fishes.sort((fishA, fishB) => fishA.cm - fishB.cm);
 
             case 'water':
-                const sortedByWater = [...fishes].sort((fishA, fishB) => {
+                return fishesCopy.sort((fishA, fishB) => {
                     const waterComparison = fishB.water.localeCompare(fishA.water);
-                    if (waterComparison === 0) {
-                        // If river is same, compare by size
-                        return fishA.cm - fishB.cm;
-                    } else {
-                        // Otherwise, compare by river
-                        return waterComparison;
-                    }
+                    return waterComparison === 0 ? fishA.cm - fishB.cm : waterComparison; // If water are equal, compare by size
                 });
-                return [...sortedByWater];
-
+                
             case 'date':
-                const sortedFishes = [...fishes].sort((fishA, fishB) => {
-                    // Compare the seconds first
-                    const secondsComparison = fishA.date.seconds - fishB.date.seconds;
+                return fishesCopy.sort((fishA, fishB) => {
+                    const dayA = Math.floor(fishA.date.seconds / (24*60*60)); // Convert seconds 
+                    const dayB = Math.floor(fishB.date.seconds / (24*60*60)); // to days
 
-                    // If the seconds are equal, compare the nanoseconds
-                    if (secondsComparison === 0) {
-                        return fishA.date.nanoseconds - fishB.date.nanoseconds;
-                    }
-
-                    return secondsComparison; // Return the seconds comparison result
+                    const dayComparison = dayA - dayB;
+                    return dayComparison === 0 ? fishA.cm - fishB.cm : dayComparison; // If the days are equal, compare the cm values
                 });
-                return [...sortedFishes];
 
             default:
-                return [...fishes];
+                return fishesCopy;
         }
     }
 
     const result = sortFishesByField();
 
-    if (direction === 'asc') {
-        return result.reverse();
-    }
-
-    if (direction === 'desc') {
-        return result;
-    }
-
+    return direction === 'asc' ? result.reverse() : result; // Reverse the array if the direction is descending
 }
