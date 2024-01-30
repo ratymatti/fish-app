@@ -40,7 +40,7 @@ export default function Map(props) {
                     lat: event.latLng.lat(),
                     lng: event.latLng.lng(),
                 },
-            id: new Date()
+                id: new Date()
             }
         ];
         
@@ -53,7 +53,7 @@ export default function Map(props) {
         if (active === 'Weather') {
             setNewWeatherLocation(selectedLocation);
         }
-    };
+    }
 
     if (!isLoaded) {
         return (
@@ -83,4 +83,4 @@ export default function Map(props) {
                                                 } />)}    
         </GoogleMap>
     )
-};
+}
