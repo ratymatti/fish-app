@@ -37,7 +37,7 @@ export default function FishCard(props) {
         return (
             <div className='fish-card'>
                 <div className='fish-card-header'>
-                    <h3 className='close-card' onClick={() => closeCard()}>X</h3>
+                    <h3 className='close-card' onClick={() => closeCard()}>x</h3>
                 </div>
                 <div className='fish-data'>
                     <h3>{cardFish.header}</h3>
