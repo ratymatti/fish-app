@@ -4,7 +4,7 @@
  * @returns {string} - current date
  */
 
-function getCurrentDate() {
+function getCurrentDateString() {
     const now = new Date();
     
     const day = now.getDate().toString().padStart(2, '0'); // Ensure two digits with leading zero
@@ -16,4 +16,4 @@ function getCurrentDate() {
     return formattedDateString;
 }
 
-export default getCurrentDate;
+export default getCurrentDateString;

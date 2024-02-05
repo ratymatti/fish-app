@@ -4,10 +4,11 @@ import DatePicker from "react-datepicker";
 import Textarea from 'rc-textarea';
 import "react-datepicker/dist/react-datepicker.css";
 import './Add.css';
-import fetchWeather from '../../modules/fetchWeather/fetchWeather';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
-import getCurrentDate from '../../modules/getCurrentDate/getCurrentDate';
+import  fetchWeather from '../../modules/fetchWeather/fetchWeather.js';
+import getCurrentDateString from '../../modules/getCurrentDateString/getCurrentDateString.js';
+import createFish from '../../modules/createFish/createFish.js';
 
 const optionsSpecies = [
     { value: 'trout', label: 'Trout' },
@@ -53,9 +54,9 @@ export default function Add(props) {
 
     const fishesRef = collection(db, "fishes");
 
-    async function onSubmitFish() {
+    async function createNewFish() {
         try {
-            const newFish = await createFish();
+            const newFish = await createFish(species, cm, water, catchDate, comment, fishGeolocation);
             await addDoc(fishesRef, newFish);
         } catch(err) {
             console.error(err);
@@ -72,7 +73,7 @@ export default function Add(props) {
         } else {
 
             setCurrent('loading');
-            onSubmitFish();
+            createNewFish();
             getDocuments();
             await getCurrentLocation();
             setFishGeolocation([]);
@@ -94,35 +95,6 @@ export default function Add(props) {
         }     
     };
 
-    async function createFish() {
-        const today = new Date();
-        let weather = { info: "not available" };
-
-        if (today.getDate() === catchDate.getDate()) {
-            weather = await fetchWeather({
-                lat: fishGeolocation[0].location.lat,
-                lng: fishGeolocation[0].location.lng 
-            })
-        }
-
-        const savedDate = `${getCurrentDate()}`;
-        
-
-        return {
-            species: species,
-            cm: cm,
-            water: water,
-            comment: comment,
-            date: catchDate,
-            dateString: savedDate,
-            id: new Date().valueOf(),
-            location: {
-                lat: fishGeolocation[0].location.lat,
-                lng: fishGeolocation[0].location.lng
-               },
-            weather: weather       
-        }
-    };
 
     const styleOptions = {
         option: (styles) => ({...styles, color: 'black'})

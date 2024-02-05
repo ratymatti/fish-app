@@ -1,4 +1,4 @@
-import getCurrentDate from "../getCurrentDate/getCurrentDate";
+import getCurrentDate from "../getCurrentDateString/getCurrentDateString";
 import getCurrentTime from "../getCurrentTime/getCurrentTime";
 
 /**
