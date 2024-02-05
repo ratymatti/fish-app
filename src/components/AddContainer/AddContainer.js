@@ -11,7 +11,8 @@ export default function AddContainer(props) {
         changeLocation,
         getCurrentLocation,
         location,
-        getDocuments
+        getDocuments,
+        setError
     } = props;
     
     const [current, setCurrent] = useState('map');
@@ -53,6 +54,7 @@ export default function AddContainer(props) {
             <div className='add'>
                 <button className='button' onClick={handleClick}>Edit location</button>
                 <Add
+                    setError={setError}
                     fishGeolocation={fishGeolocation}
                     getCurrentLocation={getCurrentLocation}
                     setCurrent={setCurrent}
