@@ -9,6 +9,7 @@ import { db } from '../../config/firebase';
 import createFish from '../../modules/createFish/createFish.js';
 import validateForm from '../../modules/validateForm/validateForm.js';
 import { optionsSpecies, optionsWater } from '../../modules/options/options.js';
+import Error from '../Error/Error';
 
 const optionsCm = [];
 
@@ -25,7 +26,6 @@ export default function Add(props) {
     const [cm, setCm] = useState(0);
     const [water, setWater] = useState(null);
     const [catchDate, setCatchDate] = useState(new Date());
-    const [error, setError] = useState('');
     const [comment, setComment] = useState('');
 
     const {
@@ -34,6 +34,7 @@ export default function Add(props) {
         getCurrentLocation,
         setCurrent,
         setFishGeolocation,
+        setError
     } = props;
 
     const fishesRef = collection(db, "fishes");
@@ -98,17 +99,12 @@ export default function Add(props) {
                     onChange={(e) => setComment(e.target.value)}
                     placeholder={placeholder}
                     autoSize={{minRows: 5}} />
-            <div className='submit'>
-                <button
-                    type='submit'
-                    onClick={handleSubmit}>Submit</button>
-            </div>        
-                
+                <div className='submit'>
+                    <button
+                        type='submit'
+                        onClick={handleSubmit}>Submit</button>
+                </div>            
             </form>
-            {error && <div className="error">
-                {error}<br></br>
-                <button onClick={() => setError('')}>Close</button>
-            </div>}
         </div>
     )
 };
