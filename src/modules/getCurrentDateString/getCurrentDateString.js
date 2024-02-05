@@ -11,9 +11,7 @@ function getCurrentDateString() {
     const month = (now.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
     const year = now.getFullYear();
 
-    const formattedDateString = `${day}/${month}/${year}`;
-
-    return formattedDateString;
+    return `${day}/${month}/${year}`;
 }
 
 export default getCurrentDateString;
