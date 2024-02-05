@@ -8,30 +8,15 @@ import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import createFish from '../../modules/createFish/createFish.js';
 import validateForm from '../../modules/validateForm/validateForm.js';
-
-const optionsSpecies = [
-    { value: 'trout', label: 'Trout' },
-    { value: 'salmon', label: 'Salmon' },
-    { value: 'grayling', label: 'Grayling' },
-    { value: 'rainbowtrout', label: 'Rainbowtrout' }
-];
-
-const optionsWater = [
-    { value: 'Kitkajoki', label: 'Kitkajoki' },
-    { value: 'Kuusinkijoki', label: 'Kuusinkijoki' },
-    { value: 'Byske', label: 'Byske' },
-    { value: 'Kemijoki', label: 'Kemijoki' },
-    { value: 'Ounasjoki', label: 'Ounasjoki' },
-    { value: 'Other', label: 'Other' },
-];
+import { optionsSpecies, optionsWater } from '../../modules/options/options.js';
 
 const optionsCm = [];
 
 function addCmOptions() {
-    for (let i = 10; i <= 200; i++) {
+    for (let i = 10; i <= 150; i++) {
         optionsCm.push({ value: i, label: `${i} cm` })
     }
-};
+}
 
 addCmOptions();
 
@@ -61,7 +46,6 @@ export default function Add(props) {
             setError(errorMessage);
             return;
         } else {
-
             setCurrent('loading');
             
             try {
@@ -77,7 +61,6 @@ export default function Add(props) {
             setCurrent('map');
         }    
     }
-
 
     const styleOptions = {
         option: (styles) => ({...styles, color: 'black'})
