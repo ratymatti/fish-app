@@ -13,7 +13,7 @@ const options = {
 };
 
 export default function Map(props) {
-    const { 
+    const {
         active,
         center,
         markerLocations,
@@ -22,37 +22,35 @@ export default function Map(props) {
         setDisabled,
         setNewWeatherLocation,
     } = props;
-    
+
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_API_KEY,
     });
-    
+
     const [markers, setMarkers] = useState([]);
-    
+
     useEffect(() => {
         setMarkers(markerLocations);
     }, [markerLocations]);
 
     function handleClick(event) {
-        
-        const selectedLocation = [
-            {
-                location: {
-                    lat: event.latLng.lat(),
-                    lng: event.latLng.lng(),
-                },
-                id: uuidv4()
-            }
-        ];
-        
+
+        const selectedLocation = {
+            location: {
+                lat: event.latLng.lat(),
+                lng: event.latLng.lng(),
+            },
+            id: uuidv4()
+        };
+
 
         if (active === 'AddContainer') {
-            setFishGeolocation(selectedLocation);
-            setDisabled(false); 
+            setFishGeolocation([selectedLocation]);
+            setDisabled(false);
         }
-        
+
         if (active === 'Weather') {
-            setNewWeatherLocation(selectedLocation);
+            setNewWeatherLocation([selectedLocation]);
         }
     }
 
@@ -61,7 +59,7 @@ export default function Map(props) {
             <div className='loading-map'>
                 <SpinningIcon />
             </div>
-        ) 
+        )
     }
 
     return (
@@ -74,14 +72,14 @@ export default function Map(props) {
             }}
             options={options}
         >
-           {isLoaded && markers.map(marker => <MarkerF
-                                                key={marker.id.valueOf()}
-                                                position={
-                                                    {   
-                                                        lat: marker.location.lat,
-                                                        lng: marker.location.lng
-                                                    }
-                                                } />)}    
+            {markers.map(marker => <MarkerF
+                key={marker.id.valueOf()}
+                position={
+                    {
+                        lat: marker.location.lat,
+                        lng: marker.location.lng
+                    }
+                } />)}
         </GoogleMap>
     )
 }
