@@ -11,7 +11,7 @@ export default function Header(props) {
 
   return (
     <div className='header'>
-      <h1>Only Fishes</h1>
+      <h1>Only <span className='fish-logo'>Fishes</span></h1>
       {isLoggedIn && 
         <div className='header-buttons'>
           <ul>
