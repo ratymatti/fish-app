@@ -6,9 +6,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import './Add.css';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
-import  fetchWeather from '../../modules/fetchWeather/fetchWeather.js';
-import getCurrentDateString from '../../modules/getCurrentDateString/getCurrentDateString.js';
 import createFish from '../../modules/createFish/createFish.js';
+import validateForm from '../../modules/validateForm/validateForm.js';
 
 const optionsSpecies = [
     { value: 'trout', label: 'Trout' },
@@ -54,18 +53,9 @@ export default function Add(props) {
 
     const fishesRef = collection(db, "fishes");
 
-    async function createNewFish() {
-        try {
-            const newFish = await createFish(species, cm, water, catchDate, comment, fishGeolocation);
-            await addDoc(fishesRef, newFish);
-        } catch(err) {
-            console.error(err);
-        }
-    }
-
     async function handleSubmit(event) {
         event.preventDefault();
-        const errorMessage = validateForm();
+        const errorMessage = validateForm(species, cm, water, fishGeolocation);
 
         if (errorMessage) {
             setError(errorMessage);
@@ -73,27 +63,20 @@ export default function Add(props) {
         } else {
 
             setCurrent('loading');
-            createNewFish();
+            
+            try {
+                const newFish = await createFish(species, cm, water, catchDate, comment, fishGeolocation);
+                await addDoc(fishesRef, newFish);
+            } catch(err) {
+                console.error(err);
+            }
+
             getDocuments();
             await getCurrentLocation();
             setFishGeolocation([]);
             setCurrent('map');
         }    
-    };
-
-    function validateForm() {
-        if (!species) {
-            return 'Species is required.';
-        } else if (!cm || isNaN(cm) || cm <= 0) {
-            return 'Cm must be greater than 0.';
-        } else if (!water) {
-            return 'Water is required.';
-        } else if (!fishGeolocation) {
-            return 'Location is required.';
-        } else {
-            return null;
-        }     
-    };
+    }
 
 
     const styleOptions = {
