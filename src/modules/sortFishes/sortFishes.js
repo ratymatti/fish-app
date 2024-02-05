@@ -45,5 +45,5 @@ export const sortFishes = (field, fishes, direction) => {
 
     const result = sortFishesByField();
 
-    return direction === 'asc' ? result.reverse() : result; // Reverse the array if the direction is descending
+    return direction === 'desc' ? result : result.reverse(); // Reverse the array if the direction is ascending
 }
