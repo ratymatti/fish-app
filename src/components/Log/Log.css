@@ -5,14 +5,26 @@
     align-items: flex-start;
 }
 
+.table {
+    box-shadow: 5px 5px 5px rgb(0, 0, 0);
+    width: 525px;
+    height: 350px;
+    overflow: scroll;
+}
+
 table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: collapse;   
+}
+
+thead {
+    border-bottom: 1px solid orange;
 }
 
 th {
     text-decoration: underline;
     text-underline-offset: 2px;
+    text-decoration-color: orange;
     color: orange;
     background-color: #000000;
     padding: 10px;
@@ -21,6 +33,9 @@ th {
 
 th:hover {
     cursor: pointer;
+    text-decoration-color: white;
+    color: white;
+    transition: 0.3s ease-in;
 }
 
 td {

@@ -45,28 +45,31 @@ export default function Log(props) {
                             closeCard={closeCard}
                             currentFishID={currentFishID}
                             fishes={fishes} />}
-        <table>
-            <thead>
-                <tr>
-                    <th onClick={() => handleClick('species')}>Species</th>
-                    <th onClick={() => handleClick('cm')}>Length</th>
-                    <th onClick={() => handleClick('water')}>Water</th> 
-                    <th onClick={() => handleClick('date')}>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                {fishes.slice(0).reverse().map(fish => (
-                    
-                    <tr onClick={() => setCurrentFishID(fish.id)} className='row' key={fish.id}>
-                        <td>{fish.species}</td>
-                        <td>{fish.cm}</td>
-                        <td>{fish.water}</td>
-                        <td>{fish.dateString}</td>
+        <div className='table'>
+            <table>
+                <thead>
+                    <tr>
+                        <th onClick={() => handleClick('species')}>Species</th>
+                        <th onClick={() => handleClick('cm')}>Length</th>
+                        <th onClick={() => handleClick('water')}>Water</th> 
+                        <th onClick={() => handleClick('date')}>Date</th>
                     </tr>
-                    
-                ))}
-            </tbody>   
-        </table>
+                </thead>
+                <tbody>
+                    {fishes.slice(0).reverse().map(fish => (
+                        
+                        <tr onClick={() => setCurrentFishID(fish.id)} className='row' key={fish.id}>
+                            <td>{fish.species}</td>
+                            <td>{fish.cm}</td>
+                            <td>{fish.water}</td>
+                            <td>{fish.dateString}</td>
+                        </tr>
+                        
+                    ))}
+                </tbody>   
+            </table>
+        </div>                    
+        
     </div>
   )
 };
