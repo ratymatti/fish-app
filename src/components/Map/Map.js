@@ -3,6 +3,7 @@ import { GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api';
 import './Map.css';
 import { mapStyles } from '../../modules/mapStyles/mapStyles';
 import SpinningIcon from '../SpinningIcon/SpinningIcon';
+import createCoords from '../../modules/createCoords/createCoords';
 
 const options = {
     styles: mapStyles,
