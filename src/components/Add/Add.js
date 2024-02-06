@@ -9,7 +9,7 @@ import { db } from '../../config/firebase';
 import createFish from '../../modules/createFish/createFish.js';
 import validateForm from '../../modules/validateForm/validateForm.js';
 import { optionsSpecies, optionsWater } from '../../modules/options/options.js';
-import Error from '../Error/Error';
+
 
 const optionsCm = [];
 
@@ -48,11 +48,11 @@ export default function Add(props) {
             return;
         } else {
             setCurrent('loading');
-            
+
             try {
                 const newFish = await createFish(species, cm, water, catchDate, comment, fishGeolocation);
                 await addDoc(fishesRef, newFish);
-            } catch(err) {
+            } catch (err) {
                 console.error(err);
             }
 
@@ -60,11 +60,11 @@ export default function Add(props) {
             await getCurrentLocation();
             setFishGeolocation([]);
             setCurrent('map');
-        }    
+        }
     }
 
     const styleOptions = {
-        option: (styles) => ({...styles, color: 'black'})
+        option: (styles) => ({ ...styles, color: 'black' })
     };
 
     const placeholder = "Add comment...";
@@ -72,40 +72,60 @@ export default function Add(props) {
     return (
         <div className='add'>
             <form>
-                <DatePicker
-                    className='options'
-                    selected={catchDate}
-                    dateFormat="dd/MM/yyyy"
-                    onChange={(date) => setCatchDate(date)} />
-                <Select
-                    className='options'
-                    options={optionsSpecies}
-                    placeholder='Species'
-                    styles={styleOptions}
-                    onChange={(selectedSpecies) => setSpecies(selectedSpecies.value)} />
-                <Select
-                    className='options'
-                    options={optionsCm}
-                    placeholder='cm'
-                    styles={styleOptions}
-                    onChange={(selectedCm) => setCm(selectedCm.value)} />
-                <Select
-                    className='options'
-                    options={optionsWater}
-                    placeholder='Water'
-                    styles={styleOptions}
-                    onChange={(selectedWater) => setWater(selectedWater.value)} />
-                <Textarea
-                    onChange={(e) => setComment(e.target.value)}
-                    placeholder={placeholder}
-                    autoSize={{minRows: 5}} />
-                <div className='submit'>
-                    <button
-                        type='submit'
-                        onClick={handleSubmit}>Submit</button>
-                </div>            
+                <div className='select'>
+                    <DatePicker
+                        className='date-option'
+                        selected={catchDate}
+                        dateFormat="dd/MM/yyyy"
+                        onChange={(date) => setCatchDate(date)} />
+                </div>
+                <div className='select'>
+                    <Select
+                        className='options'
+                        options={optionsSpecies}
+                        placeholder='Species'
+                        styles={styleOptions}
+                        onChange={(selectedSpecies) => setSpecies(selectedSpecies.value)} />
+                </div>
+                <div className='select'>
+                    <Select
+                        className='options'
+                        options={optionsCm}
+                        placeholder='cm'
+                        styles={styleOptions}
+                        onChange={(selectedCm) => setCm(selectedCm.value)} />
+                </div>
+                <div className='select'>
+                    <Select
+                        className='options'
+                        options={optionsWater}
+                        placeholder='Water'
+                        styles={styleOptions}
+                        onChange={(selectedWater) => setWater(selectedWater.value)} />
+                </div>
+                <div className='select'>
+                    <Textarea
+                        className='comment-option'
+                        onChange={(e) => setComment(e.target.value)}
+                        placeholder={placeholder}
+                        autoSize={{ minRows: 5 }} />
+                </div>
+                <div className='select'>
+                    <div className='submit'>
+                        <button
+                            className='submit-button'
+                            type='submit'
+                            onClick={handleSubmit}>Submit</button>
+                    </div>
+                </div>
+
+
+
+
+
+
             </form>
         </div>
     )
-};
+}
 
