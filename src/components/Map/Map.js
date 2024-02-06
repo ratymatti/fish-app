@@ -31,14 +31,8 @@ export default function Map(props) {
     }, [markerLocations]);
 
     function handleClick(event) {
-        const selectedLocation = {
-            location: {
-                lat: event.latLng.lat(),
-                lng: event.latLng.lng(),
-            },
-            id: uuidv4()
-        };
-
+        const selectedLocation = createCoords(event);
+        
         if (active === 'AddContainer') {
             setFishGeolocation([selectedLocation]);
             setDisabled(false);
