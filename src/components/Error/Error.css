@@ -1,10 +1,10 @@
 .error {
     z-index: 10;
     position: absolute;
-    top: 50%;
-    left: 40%;
+    top: 30%;
+    left: 39%;
     height: 125px;
-    width: 300px;
+    width: 320px;
     background-color: black;
     display: flex;
     align-items: center;
@@ -19,4 +19,9 @@
 
 .error button {
     margin-bottom: 20px;
+    border: 2px solid white;
+}
+
+.error button:hover {
+    border-color: orange;
 }
