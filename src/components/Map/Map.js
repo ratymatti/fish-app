@@ -3,7 +3,6 @@ import { GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api';
 import './Map.css';
 import { mapStyles } from '../../modules/mapStyles/mapStyles';
 import SpinningIcon from '../SpinningIcon/SpinningIcon';
-import { v4 as uuidv4 } from 'uuid';
 
 const options = {
     styles: mapStyles,
@@ -32,7 +31,7 @@ export default function Map(props) {
 
     function handleClick(event) {
         const selectedLocation = createCoords(event);
-        
+
         if (active === 'AddContainer') {
             setFishGeolocation([selectedLocation]);
             setDisabled(false);
