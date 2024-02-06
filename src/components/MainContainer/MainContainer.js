@@ -39,7 +39,8 @@ export default function MainContainer(props) {
             }
             {active === 'Log' && <Log
                 fishes={fishes}
-                sortByField={sortByField} />
+                sortByField={sortByField}
+                setFreeze={setFreeze} />
             }
             {active === 'Weather' && <Weather
                 weather={weather}

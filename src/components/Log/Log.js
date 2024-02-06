@@ -4,8 +4,8 @@ import FishCard from '../FishCard/FishCard';
 
 export default function Log(props) {
     const {
-        fishes,
-        sortByField
+        fishes, sortByField,
+        setFreeze
     } = props;
 
     const [direction, setDirection] = useState('desc');
@@ -34,6 +34,10 @@ export default function Log(props) {
     useEffect(() => {
         sortByField('date', 'desc');
     }, [])
+
+    useEffect(() => {
+        currentFishID ? setFreeze(true) : setFreeze(false);
+    }, [currentFishID]);
 
     function closeCard() {
         setCurrentFishID(null);
