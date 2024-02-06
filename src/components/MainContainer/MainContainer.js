@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AddContainer from '../AddContainer/AddContainer';
 import Log from '../Log/Log';
 import MapContainer from '../MapContainer/MapContainer';
@@ -10,19 +10,19 @@ import Error from '../Error/Error';
 
 export default function MainContainer(props) {
     const {
-        active,
-        changeLocation,
-        fishes,
-        getCurrentLocation,
-        location,
-        sortByField,
-        weather,
-        isLoggedIn,
-        setIsLoggedIn,
-        getDocuments,
+        active, changeLocation,
+        fishes, getCurrentLocation,
+        location, sortByField,
+        weather, isLoggedIn, 
+        setIsLoggedIn, getDocuments,
+        setFreeze
     } = props;
 
     const [error, setError] = useState('');
+
+    useEffect(() => {
+        error ? setFreeze(true) : setFreeze(false);
+    }, [error]);
 
     return (
         <div className='main-container'>

@@ -8,6 +8,7 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import { db } from './config/firebase';
 import { collection, getDocs } from 'firebase/firestore';
+import Freeze from './components/Freeze/Freeze';
 
 function App() {
     const [active, setActive] = useState('');
@@ -16,6 +17,7 @@ function App() {
     const [weather, setWeather] = useState(null);
     const [currentUserLocation, setCurrentUserLocation] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [freeze, setFreeze] = useState(false);
 
     const fishesRef = collection(db, "fishes");
 
@@ -79,6 +81,7 @@ function App() {
 
     return (
         <div className="App">
+            {freeze && <Freeze />}
             <Header
                 setActive={setActive}
                 isLoggedIn={isLoggedIn}
@@ -93,7 +96,8 @@ function App() {
                 weather={weather}
                 isLoggedIn={isLoggedIn}
                 setIsLoggedIn={setIsLoggedIn}
-                getDocuments={getDocuments} />
+                getDocuments={getDocuments}
+                setFreeze={setFreeze} />
             <Footer />
         </div>
     )
