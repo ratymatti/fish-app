@@ -16,7 +16,8 @@ import fetchWeather from '../fetchWeather/fetchWeather';
 
 async function createFish(species, cm, water, catchDate, comment, fishGeolocation) {
     let weather;
-    if (new Date() === catchDate.getDate()) {
+    
+    if (new Date().getDate() === catchDate.getDate()) {
         weather = await fetchWeather({
             lat: fishGeolocation[0].location.lat,
             lng: fishGeolocation[0].location.lng 
