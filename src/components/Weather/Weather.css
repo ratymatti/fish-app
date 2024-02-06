@@ -1,0 +1,7 @@
+.weather button {
+    border: 2px solid white;
+}
+
+.weather button:hover {
+    border: 2px solid orange;
+}
