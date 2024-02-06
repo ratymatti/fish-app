@@ -14,12 +14,9 @@ const options = {
 
 export default function Map(props) {
     const {
-        active,
-        center,
-        markerLocations,
-        zoom,
-        setFishGeolocation,
-        setDisabled,
+        active, center,
+        markerLocations, zoom,
+        setFishGeolocation, setDisabled,
         setNewWeatherLocation,
     } = props;
 
@@ -34,7 +31,6 @@ export default function Map(props) {
     }, [markerLocations]);
 
     function handleClick(event) {
-
         const selectedLocation = {
             location: {
                 lat: event.latLng.lat(),
@@ -43,13 +39,10 @@ export default function Map(props) {
             id: uuidv4()
         };
 
-
         if (active === 'AddContainer') {
             setFishGeolocation([selectedLocation]);
             setDisabled(false);
-        }
-
-        if (active === 'Weather') {
+        } else if (active === 'Weather') {
             setNewWeatherLocation([selectedLocation]);
         }
     }
