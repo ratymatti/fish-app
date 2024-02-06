@@ -30,47 +30,47 @@ export default function Log(props) {
             sortByField(field, 'desc');
         }
     }
-    
-      useEffect(() => {
+
+    useEffect(() => {
         sortByField('date', 'desc');
-      },[])
+    }, [])
 
     function closeCard() {
         setCurrentFishID(null);
-    }  
+    }
 
-  return (
-    <div className='log'>
-        {currentFishID && <FishCard
-                            closeCard={closeCard}
-                            currentFishID={currentFishID}
-                            fishes={fishes} />}
-        <div className='table'>
-            <table>
-                <thead>
-                    <tr>
-                        <th onClick={() => handleClick('species')}>Species</th>
-                        <th onClick={() => handleClick('cm')}>Length</th>
-                        <th onClick={() => handleClick('water')}>Water</th> 
-                        <th onClick={() => handleClick('date')}>Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {fishes.slice(0).reverse().map(fish => (
-                        
-                        <tr onClick={() => setCurrentFishID(fish.id)} className='row' key={fish.id}>
-                            <td>{fish.species}</td>
-                            <td>{fish.cm}</td>
-                            <td>{fish.water}</td>
-                            <td>{fish.dateString}</td>
+    return (
+        <div className='log'>
+            {currentFishID && <FishCard
+                closeCard={closeCard}
+                currentFishID={currentFishID}
+                fishes={fishes} />}
+            <div className='table'>
+                <table>
+                    <thead>
+                        <tr>
+                            <th onClick={() => handleClick('species')}>Species</th>
+                            <th onClick={() => handleClick('cm')}>Length</th>
+                            <th onClick={() => handleClick('water')}>Water</th>
+                            <th onClick={() => handleClick('date')}>Date</th>
                         </tr>
-                        
-                    ))}
-                </tbody>   
-            </table>
-        </div>                    
-        
-    </div>
-  )
-};
+                    </thead>
+                    <tbody>
+                        {fishes.slice(0).reverse().map(fish => (
+
+                            <tr onClick={() => setCurrentFishID(fish.id)} className='row' key={fish.id}>
+                                <td>{fish.species}</td>
+                                <td>{fish.cm}cm</td>
+                                <td>{fish.water}</td>
+                                <td>{fish.dateString}</td>
+                            </tr>
+
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    )
+}
 
