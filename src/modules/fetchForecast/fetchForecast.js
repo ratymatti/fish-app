@@ -18,7 +18,7 @@ const currentDate = getCurrentDate();
 
 async function fetchForecast(location) {
     const apiUrl = "https://api.openweathermap.org/data/2.5/forecast?";
-    
+
     if (location) {
         try {
             const response = await fetch(`${apiUrl}lat=${location.lat}&lon=${location.lng}&appid=${apiKey}&units=${units}`);
@@ -37,7 +37,7 @@ async function fetchForecast(location) {
                         forecastArray.push(weatherObj);
                     }
                 }
-                
+
                 const weather = {
                     name: data.city.name,
                     id: data.city.id,
@@ -45,10 +45,10 @@ async function fetchForecast(location) {
                     forecastArray: forecastArray
                 }
                 console.log(weather)
-                return weather;   
+                return weather;
             }
 
-        } catch(err) {
+        } catch (err) {
             console.log(err.message);
         }
     }
@@ -67,7 +67,7 @@ function createWeatherObject(data, index) {
         },
         icon: data.list[index].weather[0].icon,
     }
-    return newObject;    
+    return newObject;
 }
 
 export default fetchForecast;
