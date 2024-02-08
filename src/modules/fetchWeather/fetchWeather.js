@@ -9,13 +9,15 @@ import getCurrentTime from "../getCurrentTime/getCurrentTime";
  * @returns object that contains current weather data 
  */
 
-async function fetchWeather(location) {
-    const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
-    const apiUrl = "https://api.openweathermap.org/data/2.5/weather?";
-    const units = 'metric';
+const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
+const units = 'metric';
 
-    const currentTime = getCurrentTime();
-    const currentDate = getCurrentDate();
+const currentTime = getCurrentTime();
+const currentDate = getCurrentDate();
+
+
+async function fetchWeather(location) {
+    const apiUrl = "https://api.openweathermap.org/data/2.5/weather?";
 
     if (location) {
         try {
@@ -25,29 +27,34 @@ async function fetchWeather(location) {
             if (response.ok) {
                 const data = await response.json();
     
-                const weather = {
-                    name: data.name,
-                    id: data.id,
-                    icon: data.weather[0].icon,
-                    temp: data.main.temp,
-                    feels_like: data.main.feels_like,
-                    humidity: data.main.humidity,
-                    pressure: data.main.pressure,
-                    wind_speed: data.wind.speed,
-                    wind_direction: data.wind.deg,
-                    coords: {
-                        lat: location.lat,
-                        lng: location.lng
-                    },
-                    time: `${currentTime} ${currentDate}`
-                }
+                const weather = createWeatherObject(data, location);
                 return weather;
             }
       
-          } catch(err) {
-            console.log(err.message)
-          }
+        } catch(err) {
+            console.log(err.message);
+        }
     }
-};
+}
+
+function createWeatherObject(data, location) {
+    const newObject = {
+        name: data.name,
+        id: data.id,
+        icon: data.weather[0].icon,
+        temp: data.main.temp,
+        feels_like: data.main.feels_like,
+        humidity: data.main.humidity,
+        pressure: data.main.pressure,
+        wind_speed: data.wind.speed,
+        wind_direction: data.wind.deg,
+        coords: {
+            lat: location.lat,
+            lng: location.lng
+        },
+        time: `${currentTime} ${currentDate}`
+    }
+    return newObject;
+}
 
 export default fetchWeather;
