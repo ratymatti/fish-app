@@ -4,6 +4,7 @@ import WeatherCard from '../WeatherCard/WeatherCard';
 import SpinningIcon from '../SpinningIcon/SpinningIcon';
 import Map from '../Map/Map';
 import fetchWeather from '../../modules/fetchWeather/fetchWeather';
+import fetchForecast from '../../modules/fetchForecast/fetchForecast';
 import { db } from '../../config/firebase';
 import {
     collection,
@@ -19,7 +20,7 @@ export default function Weather(props) {
         weather, location,
         active,
     } = props;
-    
+
     const [current, setCurrent] = useState('weather');
     const [newWeatherLocation, setNewWeatherLocation] = useState([]);
     const [weatherTracking, setWeatherTracking] = useState([]);
@@ -79,6 +80,11 @@ export default function Weather(props) {
         addToTracking();
     }
 
+    function testForecast() {
+        const coords = {"lat": 65.96667,"lng": 29.18333};
+        fetchForecast(coords);
+    }
+
     useEffect(() => {
         getDocuments();
     }, []);
@@ -107,6 +113,7 @@ export default function Weather(props) {
                         removeTracking={removeTracking} />
                 ))}
                 <button onClick={() => setCurrent('map')}>Add new tracking</button>
+                <button onClick={() => testForecast()}>test</button>
             </div>
         )
     }
