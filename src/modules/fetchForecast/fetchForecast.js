@@ -1,12 +1,20 @@
 import getCurrentDate from "../getCurrentDateString/getCurrentDateString";
 import getCurrentTime from "../getCurrentTime/getCurrentTime";
 
+/**
+ * Function fetchForecast, used for fetching forecast weather data from
+ * OpenWeatherMap forecast weather api, used to track forecast weather situation
+ * in users current location and locations that user are tracking.
+ * @param {*} location 
+ * @returns object that contains forecast data
+ */
 
 const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
 const units = 'metric';
 
 const currentTime = getCurrentTime();
 const currentDate = getCurrentDate();
+
 
 async function fetchForecast(location) {
     const apiUrl = "https://api.openweathermap.org/data/2.5/forecast?";
