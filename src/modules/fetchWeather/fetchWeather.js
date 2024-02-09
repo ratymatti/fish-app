@@ -54,6 +54,7 @@ function createWeatherObject(data, location, type) {
 }
 
 function getWeatherInfo(data, type) {
+    const currentTimeDate = `${getCurrentDate()} ${getCurrentTime()}`
     return {
         icon: data.weather[0].icon,
         time: type === 'weather' ? currentTimeDate : data.dt_txt,
