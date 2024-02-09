@@ -44,7 +44,7 @@ function App() {
     }, [currentUserLocation]);
 
     async function getWeather() {
-        const currentWeather = await fetchWeather(currentUserLocation);
+        const currentWeather = await fetchWeather(currentUserLocation, "weather");
         setWeather(currentWeather);
     }
 

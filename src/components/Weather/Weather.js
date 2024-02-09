@@ -4,7 +4,6 @@ import WeatherCard from '../WeatherCard/WeatherCard';
 import SpinningIcon from '../SpinningIcon/SpinningIcon';
 import Map from '../Map/Map';
 import fetchWeather from '../../modules/fetchWeather/fetchWeather';
-import fetchForecast from '../../modules/fetchForecast/fetchForecast';
 import { db } from '../../config/firebase';
 import {
     collection,
@@ -44,7 +43,7 @@ export default function Weather(props) {
         for (let index in weatherTracking) {
             try {
                 const weatherDoc = doc(db, "weather", weatherTracking[index].id);
-                const newWeather = await fetchWeather(weatherTracking[index].coords);
+                const newWeather = await fetchWeather(weatherTracking[index].coords, "weather");
                 await updateDoc(weatherDoc, { ...newWeather });
             } catch (err) {
                 console.error(err);
@@ -59,7 +58,7 @@ export default function Weather(props) {
                 lat: newWeatherLocation[0].location.lat,
                 lng: newWeatherLocation[0].location.lng
             }
-            const newWeather = await fetchWeather(coords);
+            const newWeather = await fetchWeather(coords, "weather");
 
             if (newWeather) {
                 await addDoc(weatherRef, newWeather);
@@ -79,11 +78,15 @@ export default function Weather(props) {
         setCurrent('weather');
         addToTracking();
     }
-
-    function testForecast() {
+    /*
+    async function testForecast() {
         const coords = {"lat": 65.96667,"lng": 29.18333};
-        fetchForecast(coords);
+        const weatherResponse = await fetchWeather(coords, 'weather');
+        const forecastResponse = await fetchWeather(coords, 'forecast');
+        console.log(weatherResponse);
+        console.log(forecastResponse);
     }
+    */
 
     useEffect(() => {
         getDocuments();
@@ -113,6 +116,7 @@ export default function Weather(props) {
                         removeTracking={removeTracking} />
                 ))}
                 <button onClick={() => setCurrent('map')}>Add new tracking</button>
+                {/* <button onClick={() => testForecast()}>Test Forecast</button> */}
             </div>
         )
     }
