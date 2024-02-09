@@ -83,6 +83,7 @@ function App() {
         <div className="App">
             {freeze && <Freeze />}
             <Header
+                active={active}
                 setActive={setActive}
                 isLoggedIn={isLoggedIn}
                 setIsLoggedIn={setIsLoggedIn} />
