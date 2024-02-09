@@ -9,18 +9,20 @@ export default function WeatherCard(props) {
     removeTracking
   } = props;
 
+  const source = data?.currentWeather?.weather;
+
   const content = {
     header: `Current Weather in ${data?.name || ''}`,
     info: [
-      { text: 'Temperature: ', value: `${data?.temp >= 0 ? '+' : ''}${data?.temp || 0}` },
-      { text: 'Feels Like: ', value: `${data?.feels_like >= 0 ? '+' : ''}${data?.feels_like || 0}` },
-      { text: 'Humidity: ', value: `${data?.humidity || 0}%` },
-      { text: 'Pressure: ', value: `${data?.pressure || 0} hPa` },
-      { text: 'Wind Speed: ' , value: `${data?.wind_speed || 0} m/s` },
-      { text: 'updated at ', value: data.time }
+      { text: 'Temperature: ', value: `${source.temp >= 0 ? '+' : ''}${source.temp || 0}` },
+      { text: 'Feels Like: ', value: `${source.feels_like >= 0 ? '+' : ''}${source.feels_like || 0}` },
+      { text: 'Humidity: ', value: `${source.humidity || 0}%` },
+      { text: 'Pressure: ', value: `${source.pressure || 0} hPa` },
+      { text: 'Wind Speed: ' , value: `${source.wind_speed || 0} m/s` },
+      { text: 'updated at ', value: data.currentWeather.time }
     ],
     id: data.id,
-    icon: `http://openweathermap.org/img/w/${data.icon}.png` 
+    icon: `http://openweathermap.org/img/w/${data.currentWeather.icon}.png` 
   };  
       
   return (
