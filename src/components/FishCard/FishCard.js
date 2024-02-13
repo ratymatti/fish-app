@@ -3,9 +3,8 @@ import './FishCard.css';
 
 export default function FishCard(props) {
     const {
-        closeCard,
-        currentFishID,
-        fishes    
+        closeCard, currentFishID,
+        fishes
     } = props;
 
     const [cardFish, setCardFish] = useState(null);
@@ -21,7 +20,7 @@ export default function FishCard(props) {
                     { text: "Catch location: ", value: fish.water }
                 ],
                 weather: [
-                    { text: "Temperature: ", value: `${fish.weather?.temp >= 0 ? '+' : ''}${fish.weather?.temp || "not available"}`  },
+                    { text: "Temperature: ", value: `${fish.weather?.temp >= 0 ? '+' : ''}${fish.weather?.temp || "not available"}` },
                     { text: "Wind direction: ", value: fish.weather?.wind_direction || "not available" },
                     { text: 'Humidity: ', value: `${fish.weather?.humidity || "not available"}${fish.weather.humidity ? '%' : ''}` },
                     { text: 'Pressure: ', value: `${fish.weather?.pressure || "not available"}${fish.weather.pressure ? ' hPa' : ''}` },
@@ -30,8 +29,8 @@ export default function FishCard(props) {
             setCardFish(fishData);
         }
         getFishData();
-    },[])
-    
+    }, [currentFishID, fishes])
+
     if (cardFish) {
 
         return (
@@ -41,22 +40,22 @@ export default function FishCard(props) {
                 </div>
                 <div className='fish-data'>
                     <h3>{cardFish.header}</h3>
-                {
-                    cardFish.info.map(({text, value}, index) => (
-                        <h5 key={index}>{text}{value}</h5>
-                    ))
-                }
-                <br></br>
-                {
-                    cardFish.weather.map(({text, value}, index) => (
-                        <h5 key={index}>{text}{value}</h5>
-                    ))
-                }   
+                    {
+                        cardFish.info.map(({ text, value }, index) => (
+                            <h5 key={index}>{text}{value}</h5>
+                        ))
+                    }
+                    <br></br>
+                    {
+                        cardFish.weather.map(({ text, value }, index) => (
+                            <h5 key={index}>{text}{value}</h5>
+                        ))
+                    }
                 </div>
             </div>
-          )
+        )
 
     }
-  
+
 }
 
