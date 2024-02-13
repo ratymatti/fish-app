@@ -21,7 +21,7 @@ async function createFish(species, cm, water, catchDate, comment, fishGeolocatio
         weather = await fetchWeather({
             lat: fishGeolocation[0].location.lat,
             lng: fishGeolocation[0].location.lng 
-        })
+        }, 'weather')
     } else {
         weather = { info: "not available" }
     }
