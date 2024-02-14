@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../config/firebase';
 import { collection, getDocs } from 'firebase/firestore';
+import getLocation from '../modules/getLocation/getLocation';
 
 export const WeatherContext = React.createContext();
 
@@ -26,6 +27,16 @@ export function WeatherProvider({ children }) {
     useEffect(() => {
         getDocuments();
     }, []); // Empty dependency array because this needs to run only once for now
+
+    useEffect(() => {
+        const location = getLocation();
+        const getCurrentWeather = async () => {
+            const currentWeather = await fetchWeather(location, 'weather');
+            setCurrentLocationWeather(currentWeather);
+        }
+        getCurrentWeather();
+        //getDocuments();
+    }, []);
 
     return (
         <WeatherContext.Provider value={{   currentLocationWeather,
