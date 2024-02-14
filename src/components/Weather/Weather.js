@@ -5,9 +5,6 @@ import Map from '../Map/Map';
 import fetchWeather from '../../modules/fetchWeather/fetchWeather';
 import { db } from '../../config/firebase';
 import {
-    collection,
-    addDoc,
-    deleteDoc,
     doc,
     updateDoc
 } from 'firebase/firestore';
@@ -23,8 +20,8 @@ export default function Weather(props) {
     const [newWeatherLocation, setNewWeatherLocation] = useState([]);
 
     const { currentLocationWeather } = React.useContext(WeatherContext);
-    const { weatherTrackings, setWeatherTrackings } = React.useContext(WeatherContext);
-    const { getDocuments, addNewTracking } = React.useContext(WeatherContext);
+    const { weatherTrackings } = React.useContext(WeatherContext);
+    const { getDocuments, addNewTracking, removeFromTracking } = React.useContext(WeatherContext);
 
 
     async function updateWeather() {
@@ -51,27 +48,15 @@ export default function Weather(props) {
         }
     }
 
-    async function removeTracking(idToRemove) {
-        const weatherDoc = doc(db, 'weather', idToRemove);
-        await deleteDoc(weatherDoc);
-        setWeatherTrackings([...weatherTrackings].filter(card => card.id !== idToRemove));
+    function removeTracking(idToRemove) {
+        removeFromTracking(idToRemove);
     }
 
     function handleSelection() {
         setCurrent('weather');
         addToTracking();
     }
-    /*
-    async function testForecast() {
-        const coords = {"lat": 65.96667,"lng": 29.18333};
-        const weatherResponse = await fetchWeather(coords, 'weather');
-        const forecastResponse = await fetchWeather(coords, 'forecast');
-        console.log(weatherResponse);
-        console.log(forecastResponse);
-    }
-    */
-
-
+    
     useEffect(() => {
         const updateInterval = 3600000;
         let intervalID = setInterval(() => {

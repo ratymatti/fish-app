@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../config/firebase';
-import { collection, getDocs, addDoc } from 'firebase/firestore';
+import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
 import getLocation from '../modules/getLocation/getLocation';
 import fetchWeather from '../modules/fetchWeather/fetchWeather';
 
@@ -35,6 +35,13 @@ export function WeatherProvider({ children }) {
         }
     }
 
+    async function removeFromTracking(idToRemove) {
+        const weatherDoc = doc(db, 'weather', idToRemove);
+        await deleteDoc(weatherDoc);
+        getDocuments();
+    
+    }
+
     useEffect(() => {
         getDocuments();
     }, []); // Empty dependency array because this needs to run only once for now
@@ -54,7 +61,8 @@ export function WeatherProvider({ children }) {
                                             weatherTrackings,
                                             setWeatherTrackings,
                                             getDocuments,
-                                            addNewTracking }}>
+                                            addNewTracking,
+                                            removeFromTracking }}>
             {children}
         </WeatherContext.Provider>
     );
