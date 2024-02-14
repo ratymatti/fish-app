@@ -11,14 +11,12 @@ import Error from '../Error/Error';
 export default function MainContainer(props) {
     const {
         active, changeLocation,
-        fishes, getCurrentLocation,
-        location, sortByField,
-        weather, isLoggedIn, 
-        setIsLoggedIn, getDocuments,
+        getCurrentLocation, location,
+        isLoggedIn, setIsLoggedIn,
         setFreeze
     } = props;
 
-    const [error, setError] = useState('');
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         error ? setFreeze(true) : setFreeze(false);
@@ -34,23 +32,18 @@ export default function MainContainer(props) {
                 active={active}
                 setError={setError}
                 changeLocation={changeLocation}
-                getCurrentLocation={getCurrentLocation}
-                getDocuments={getDocuments} />
+                getCurrentLocation={getCurrentLocation} />
             }
             {active === 'Log' && <Log
-                fishes={fishes}
-                sortByField={sortByField}
                 setFreeze={setFreeze} />
             }
             {active === 'Weather' && <Weather
-                weather={weather}
                 location={location}
                 active={active} />
             }
             {active === 'MapContainer' && <MapContainer
                 center={location}
-                active={active}
-                fishes={fishes} />
+                active={active} />
             }
             {!isLoggedIn && <Auth
                 setIsLoggedIn={setIsLoggedIn}
