@@ -9,6 +9,7 @@ import { db } from '../../config/firebase';
 import createFish from '../../modules/createFish/createFish.js';
 import validateForm from '../../modules/validateForm/validateForm.js';
 import { optionsSpecies, optionsWater } from '../../modules/options/options.js';
+import { FishContext } from '../../contexts/FishContext';
 
 
 const optionsCm = [];
@@ -22,45 +23,43 @@ function addCmOptions() {
 addCmOptions();
 
 export default function Add(props) {
+    const {
+        fishGeolocation, getCurrentLocation,
+        setCurrent, setFishGeolocation,
+        setError
+    } = props;
+
     const [species, setSpecies] = useState(null);
     const [cm, setCm] = useState(0);
     const [water, setWater] = useState(null);
     const [catchDate, setCatchDate] = useState(new Date());
     const [comment, setComment] = useState('');
 
-    const {
-        getDocuments,
-        fishGeolocation,
-        getCurrentLocation,
-        setCurrent,
-        setFishGeolocation,
-        setError
-    } = props;
+    const { getDocuments } = React.useContext(FishContext);
 
     const fishesRef = collection(db, "fishes");
 
     async function handleSubmit(event) {
         event.preventDefault();
-        const errorMessage = validateForm(species, cm, water, fishGeolocation);
 
+        const errorMessage = validateForm(species, cm, water, fishGeolocation);
         if (errorMessage) {
             setError(errorMessage);
             return;
-        } else {
-            setCurrent('loading');
-
-            try {
-                const newFish = await createFish(species, cm, water, catchDate, comment, fishGeolocation);
-                await addDoc(fishesRef, newFish);
-            } catch (err) {
-                console.error(err);
-            }
-
-            getDocuments();
-            await getCurrentLocation();
-            setFishGeolocation([]);
-            setCurrent('map');
         }
+
+        setCurrent('loading');
+        try {
+            const newFish = await createFish(species, cm, water, catchDate, comment, fishGeolocation);
+            await addDoc(fishesRef, newFish);
+        } catch (err) {
+            console.error(err);
+        }
+        await getDocuments();
+        await getCurrentLocation();
+        setFishGeolocation([]);
+        setCurrent('map');
+
     }
 
     const styleOptions = {
@@ -118,12 +117,6 @@ export default function Add(props) {
                             onClick={handleSubmit}>Submit</button>
                     </div>
                 </div>
-
-
-
-
-
-
             </form>
         </div>
     )
