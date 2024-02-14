@@ -1,13 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './Weather.css';
 import WeatherCard from '../WeatherCard/WeatherCard';
 import Map from '../Map/Map';
-import fetchWeather from '../../modules/fetchWeather/fetchWeather';
-import { db } from '../../config/firebase';
-import {
-    doc,
-    updateDoc
-} from 'firebase/firestore';
+
 import { WeatherContext } from '../../contexts/WeatherContext';
 
 export default function Weather(props) {
@@ -16,26 +11,16 @@ export default function Weather(props) {
         active
     } = props;
 
+    const {
+        currentLocationWeather,
+        weatherTrackings,
+        addNewTracking,
+        removeFromTracking
+    } = React.useContext(WeatherContext);
+
     const [current, setCurrent] = useState('weather');
     const [newWeatherLocation, setNewWeatherLocation] = useState([]);
 
-    const { currentLocationWeather } = React.useContext(WeatherContext);
-    const { weatherTrackings } = React.useContext(WeatherContext);
-    const { getDocuments, addNewTracking, removeFromTracking } = React.useContext(WeatherContext);
-
-
-    async function updateWeather() {
-        for (let index in weatherTrackings) {
-            try {
-                const weatherDoc = doc(db, "weather", weatherTrackings[index].id);
-                const newWeather = await fetchWeather(weatherTrackings[index].coords, "weather");
-                await updateDoc(weatherDoc, { ...newWeather });
-            } catch (err) {
-                console.error(err);
-            }
-        }
-        getDocuments();
-    }
 
     function addToTracking() {
         if (newWeatherLocation.length) {
@@ -56,16 +41,7 @@ export default function Weather(props) {
         setCurrent('weather');
         addToTracking();
     }
-    
-    useEffect(() => {
-        const updateInterval = 3600000;
-        let intervalID = setInterval(() => {
-            updateWeather();
-        }, updateInterval);
-        return (() => {
-            clearInterval(intervalID);
-        })
-    }, []);
+
 
     if (current === 'weather') {
         return (
