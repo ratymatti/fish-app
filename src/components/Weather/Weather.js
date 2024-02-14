@@ -6,12 +6,12 @@ import fetchWeather from '../../modules/fetchWeather/fetchWeather';
 import { db } from '../../config/firebase';
 import {
     collection,
-    getDocs,
     addDoc,
     deleteDoc,
     doc,
     updateDoc
 } from 'firebase/firestore';
+import { WeatherContext } from '../../contexts/WeatherContext';
 
 export default function Weather(props) {
     const {
@@ -21,29 +21,20 @@ export default function Weather(props) {
 
     const [current, setCurrent] = useState('weather');
     const [newWeatherLocation, setNewWeatherLocation] = useState([]);
-    const [weatherTracking, setWeatherTracking] = useState([]);
-    const [weather, setWeather] = useState(null);
+
+    const { currentLocationWeather } = React.useContext(WeatherContext);
+    const { weatherTrackings, setWeatherTrackings } = React.useContext(WeatherContext);
+    const { getDocuments } = React.useContext(WeatherContext);
+
 
     const weatherRef = collection(db, "weather");
 
-    async function getDocuments() {
-        try {
-            const data = await getDocs(weatherRef);
-            const filteredData = data.docs.map((doc) => ({
-                ...doc.data(),
-                id: doc.id
-            }));
-            setWeatherTracking(filteredData);
-        } catch (err) {
-            console.error(err);
-        }
-    }
 
     async function updateWeather() {
-        for (let index in weatherTracking) {
+        for (let index in weatherTrackings) {
             try {
-                const weatherDoc = doc(db, "weather", weatherTracking[index].id);
-                const newWeather = await fetchWeather(weatherTracking[index].coords, "weather");
+                const weatherDoc = doc(db, "weather", weatherTrackings[index].id);
+                const newWeather = await fetchWeather(weatherTrackings[index].coords, "weather");
                 await updateDoc(weatherDoc, { ...newWeather });
             } catch (err) {
                 console.error(err);
@@ -71,7 +62,7 @@ export default function Weather(props) {
     async function removeTracking(idToRemove) {
         const weatherDoc = doc(db, 'weather', idToRemove);
         await deleteDoc(weatherDoc);
-        setWeatherTracking([...weatherTracking].filter(card => card.id !== idToRemove));
+        setWeatherTrackings([...weatherTrackings].filter(card => card.id !== idToRemove));
     }
 
     function handleSelection() {
@@ -102,9 +93,10 @@ export default function Weather(props) {
     if (current === 'weather') {
         return (
             <div className='weather'>
-                {weather && <WeatherCard
-                    data={weather} />}
-                {weatherTracking && weatherTracking.map((card, index) => (
+                {currentLocationWeather &&
+                    <WeatherCard
+                        data={currentLocationWeather} />}
+                {weatherTrackings && weatherTrackings.map((card) => (
                     <WeatherCard
                         key={card.id}
                         data={card}
