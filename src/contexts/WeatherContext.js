@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../config/firebase';
-import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
+import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import getLocation from '../modules/getLocation/getLocation';
 import fetchWeather from '../modules/fetchWeather/fetchWeather';
 
@@ -35,6 +35,19 @@ export function WeatherProvider({ children }) {
         }
     }
 
+    async function updateWeatherTrackings() {
+        for (let index in weatherTrackings) {
+            try {
+                const weatherDoc = doc(db, "weather", weatherTrackings[index].id);
+                const newWeather = await fetchWeather(weatherTrackings[index].coords, "weather");
+                await updateDoc(weatherDoc, { ...newWeather });
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        getDocuments();
+    }
+
     async function removeFromTracking(idToRemove) {
         const weatherDoc = doc(db, 'weather', idToRemove);
         await deleteDoc(weatherDoc);
@@ -55,12 +68,21 @@ export function WeatherProvider({ children }) {
         getCurrentWeather();
     }, []);
 
+    useEffect(() => {
+        const updateInterval = 3600000;
+        let intervalID = setInterval(() => {
+            updateWeatherTrackings();
+        }, updateInterval);
+        return (() => {
+            clearInterval(intervalID);
+        })
+    }, []);
+
     return (
         <WeatherContext.Provider value={{   currentLocationWeather,
                                             setCurrentLocationWeather,
                                             weatherTrackings,
                                             setWeatherTrackings,
-                                            getDocuments,
                                             addNewTracking,
                                             removeFromTracking }}>
             {children}
