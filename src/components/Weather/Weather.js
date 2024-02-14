@@ -88,14 +88,6 @@ export default function Weather(props) {
     }
     */
 
-    useEffect(() => {
-        const getCurrentWeather = async () => {
-            const currentWeather = await fetchWeather(location, 'weather');
-            setWeather(currentWeather);
-        }
-        getCurrentWeather();
-        getDocuments();
-    }, []);
 
     useEffect(() => {
         const updateInterval = 3600000;
