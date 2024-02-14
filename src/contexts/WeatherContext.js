@@ -5,7 +5,8 @@ import { collection, getDocs } from 'firebase/firestore';
 export const WeatherContext = React.createContext();
 
 export function WeatherProvider({ children }) {
-    const [weather, setWeather] = useState([]);
+    const [currentLocationWeather, setCurrentLocationWeather] = useState(null);
+    const [weatherTrackings, setWeatherTrackings] = useState([]);
 
     const weatherRef = collection(db, "weather");
 
@@ -16,14 +17,18 @@ export function WeatherProvider({ children }) {
                 ...doc.data(),
                 id: doc.id
             }));
-            setWeatherTracking(filteredData);
+            setWeatherTrackings(filteredData);
         } catch (err) {
             console.error(err);
         }
     }
 
     return (
-        <WeatherContext.Provider value={{ weather, setWeather, getDocuments }}>
+        <WeatherContext.Provider value={{   currentLocationWeather,
+                                            setCurrentLocationWeather,
+                                            weatherTrackings,
+                                            setWeatherTrackings,
+                                            getDocuments}}>
             {children}
         </WeatherContext.Provider>
     );
