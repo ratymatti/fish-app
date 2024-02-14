@@ -23,6 +23,10 @@ export function WeatherProvider({ children }) {
         }
     }
 
+    useEffect(() => {
+        getDocuments();
+    }, []); // Empty dependency array because this needs to run only once for now
+
     return (
         <WeatherContext.Provider value={{   currentLocationWeather,
                                             setCurrentLocationWeather,
