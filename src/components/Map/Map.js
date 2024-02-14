@@ -21,15 +21,15 @@ export default function Map(props) {
     } = props;
 
     const { isLoaded } = useLoadScript({
-        googleMapsApiKey: process.env.REACT_APP_API_KEY,
+        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
     });
-
+    
     const [markers, setMarkers] = useState([]);
-
+    
     useEffect(() => {
         setMarkers(markerLocations);
     }, [markerLocations]);
-
+    
     function handleClick(event) {
         const selectedLocation = createCoords(event);
 
