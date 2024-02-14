@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Weather.css';
 import WeatherCard from '../WeatherCard/WeatherCard';
-import SpinningIcon from '../SpinningIcon/SpinningIcon';
 import Map from '../Map/Map';
 import fetchWeather from '../../modules/fetchWeather/fetchWeather';
 import { db } from '../../config/firebase';
@@ -16,13 +15,14 @@ import {
 
 export default function Weather(props) {
     const {
-        weather, location,
-        active,
+        location,
+        active
     } = props;
 
     const [current, setCurrent] = useState('weather');
     const [newWeatherLocation, setNewWeatherLocation] = useState([]);
     const [weatherTracking, setWeatherTracking] = useState([]);
+    const [weather, setWeather] = useState(null);
 
     const weatherRef = collection(db, "weather");
 
@@ -89,6 +89,11 @@ export default function Weather(props) {
     */
 
     useEffect(() => {
+        const getCurrentWeather = async () => {
+            const currentWeather = await fetchWeather(location, 'weather');
+            setWeather(currentWeather);
+        }
+        getCurrentWeather();
         getDocuments();
     }, []);
 
@@ -105,7 +110,6 @@ export default function Weather(props) {
     if (current === 'weather') {
         return (
             <div className='weather'>
-                {!weather && <SpinningIcon />}
                 {weather && <WeatherCard
                     data={weather} />}
                 {weatherTracking && weatherTracking.map((card, index) => (
