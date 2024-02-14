@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../config/firebase';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, addDoc } from 'firebase/firestore';
 import getLocation from '../modules/getLocation/getLocation';
 import fetchWeather from '../modules/fetchWeather/fetchWeather';
 
@@ -25,18 +25,27 @@ export function WeatherProvider({ children }) {
         }
     }
 
+    async function addNewTracking(coords) {
+        const weatherObject = await fetchWeather(coords, 'weather');
+        try {
+            await addDoc(weatherRef, weatherObject);
+            getDocuments();
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
     useEffect(() => {
         getDocuments();
     }, []); // Empty dependency array because this needs to run only once for now
 
     useEffect(() => {
-        const location = getLocation();
         const getCurrentWeather = async () => {
+            const location = await getLocation();
             const currentWeather = await fetchWeather(location, 'weather');
             setCurrentLocationWeather(currentWeather);
         }
         getCurrentWeather();
-        //getDocuments();
     }, []);
 
     return (
@@ -44,7 +53,8 @@ export function WeatherProvider({ children }) {
                                             setCurrentLocationWeather,
                                             weatherTrackings,
                                             setWeatherTrackings,
-                                            getDocuments}}>
+                                            getDocuments,
+                                            addNewTracking }}>
             {children}
         </WeatherContext.Provider>
     );

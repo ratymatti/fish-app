@@ -24,10 +24,7 @@ export default function Weather(props) {
 
     const { currentLocationWeather } = React.useContext(WeatherContext);
     const { weatherTrackings, setWeatherTrackings } = React.useContext(WeatherContext);
-    const { getDocuments } = React.useContext(WeatherContext);
-
-
-    const weatherRef = collection(db, "weather");
+    const { getDocuments, addNewTracking } = React.useContext(WeatherContext);
 
 
     async function updateWeather() {
@@ -43,19 +40,14 @@ export default function Weather(props) {
         getDocuments();
     }
 
-    async function addToTracking() {
+    function addToTracking() {
         if (newWeatherLocation.length) {
             const coords = {
                 lat: newWeatherLocation[0].location.lat,
                 lng: newWeatherLocation[0].location.lng
             }
-            const newWeather = await fetchWeather(coords, "weather");
-
-            if (newWeather) {
-                await addDoc(weatherRef, newWeather);
-                getDocuments();
-                setNewWeatherLocation([]);
-            }
+            addNewTracking(coords);
+            setNewWeatherLocation([]);
         }
     }
 
