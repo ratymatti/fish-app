@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../config/firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import getLocation from '../modules/getLocation/getLocation';
+import fetchWeather from '../modules/fetchWeather/fetchWeather';
 
 export const WeatherContext = React.createContext();
 
