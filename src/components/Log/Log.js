@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import './Log.css';
 import FishCard from '../FishCard/FishCard';
+import { FishContext } from '../../contexts/FishContext';
+import { sortFishes } from '../../modules/sortFishes/sortFishes';
 
 export default function Log(props) {
     const {
-        fishes, sortByField,
         setFreeze
     } = props;
 
     const [direction, setDirection] = useState('desc');
     const [currentField, setCurrentField] = useState('date');
     const [currentFishID, setCurrentFishID] = useState(null);
+
+    const { fishes, setFishes } = React.useContext(FishContext);
 
     /**
      * handleClick function that calls sorting function with arguments 'field' (that
@@ -29,6 +32,11 @@ export default function Log(props) {
             setCurrentField(field);
             sortByField(field, 'desc');
         }
+    }
+
+    function sortByField(field, direction) {
+        const sortedFishes = sortFishes(field, fishes, direction);
+        setFishes(sortedFishes);
     }
 
     useEffect(() => {
