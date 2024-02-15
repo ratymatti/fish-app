@@ -5,22 +5,13 @@ import { FishContext } from '../../contexts/FishContext';
 import { sortFishes } from '../../modules/sortFishes/sortFishes';
 
 export default function Log(props) {
-    const {
-        setFreeze
-    } = props;
+    const { setFreeze } = props;
 
     const [direction, setDirection] = useState('desc');
     const [currentField, setCurrentField] = useState('date');
     const [currentFishID, setCurrentFishID] = useState(null);
 
     const { fishes, setFishes } = React.useContext(FishContext);
-
-    /**
-     * handleClick function that calls sorting function with arguments 'field' (that
-     * user selected) and 'direction' (desc or asc) depending on current direction state
-     * variable.
-     * @param {*} field 
-     */
 
     function handleClick(field) {
         if (field === currentField) {
@@ -39,6 +30,10 @@ export default function Log(props) {
         setFishes(sortedFishes);
     }
 
+    function closeCard() {
+        setCurrentFishID(null);
+    }
+
     useEffect(() => {
         sortByField('date', 'desc');
     }, [])
@@ -47,9 +42,6 @@ export default function Log(props) {
         currentFishID ? setFreeze(true) : setFreeze(false);
     }, [currentFishID]);
 
-    function closeCard() {
-        setCurrentFishID(null);
-    }
 
     return (
         <div className='log'>
@@ -76,12 +68,10 @@ export default function Log(props) {
                                 <td>{fish.water}</td>
                                 <td>{fish.dateString}</td>
                             </tr>
-
                         ))}
                     </tbody>
                 </table>
             </div>
-
         </div>
     )
 }
