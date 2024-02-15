@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import fetchWeather from "../modules/fetchWeather/fetchWeather";
-import { getCurrentDateString } from "../modules/getCurrentDateString/getCurrentDateString";
+import getCurrentDateString from "../modules/getCurrentDateString/getCurrentDateString";
 import { v4 as uuidv4 } from 'uuid';
 
 function useCreateFish() {
@@ -13,7 +13,7 @@ function useCreateFish() {
     const [weather, setWeather] = useState({ info: "not available" });
 
     useEffect(() => {
-        if (catchDate.getDate() === new Date().getDate()) {
+        if (catchDate && catchDate.getDate() === new Date().getDate()) {
             const getWeather = async () => {
                 if (location) {
                     const response = await fetchWeather(location, 'weather');
@@ -41,6 +41,16 @@ function useCreateFish() {
         }
     }
 
+    function setStatesToDefault() {
+        setLocation(null);
+        setCatchDate(null);
+        setSpecies(null);
+        setCm(0);
+        setWater(null);
+        setComment('');
+        setWeather({ info: "not available" });
+    }
+
     return {
         location, setLocation,
         catchDate, setCatchDate,
@@ -48,7 +58,8 @@ function useCreateFish() {
         cm, setCm,
         water, setWater,
         comment, setComment,
-        weather, createFish
+        weather, createFish,
+        setStatesToDefault
     }
 }
 
