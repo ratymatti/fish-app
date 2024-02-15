@@ -55,7 +55,7 @@ export default function Log(props) {
                         <tr>
                             <th onClick={() => handleClick('species')}>Species</th>
                             <th onClick={() => handleClick('cm')}>Length</th>
-                            <th onClick={() => handleClick('water')}>Water</th>
+                            <th onClick={() => handleClick('water')}>Location</th>
                             <th onClick={() => handleClick('date')}>Date</th>
                         </tr>
                     </thead>
