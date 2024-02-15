@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import Select from 'react-select';
 import DatePicker from "react-datepicker";
 import Textarea from 'rc-textarea';
@@ -6,10 +6,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import './Add.css';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
-import createFish from '../../modules/createFish/createFish.js';
 import validateForm from '../../modules/validateForm/validateForm.js';
 import { optionsSpecies, optionsWater } from '../../modules/options/options.js';
 import { FishContext } from '../../contexts/FishContext';
+import { CreateFishContext } from '../../contexts/CreateFishContext.js';
 
 
 const optionsCm = [];
@@ -29,11 +29,15 @@ export default function Add(props) {
         setError
     } = props;
 
-    const [species, setSpecies] = useState(null);
-    const [cm, setCm] = useState(0);
-    const [water, setWater] = useState(null);
-    const [catchDate, setCatchDate] = useState(new Date());
-    const [comment, setComment] = useState('');
+    const {
+        location, setLocation, 
+        catchDate, setCatchDate,
+        species, setSpecies,
+        cm, setCm,
+        water, setWater,
+        setComment, createFish,
+        setStatesToDefault
+    } = React.useContext(CreateFishContext);
 
     const { getDocuments } = React.useContext(FishContext);
 
@@ -42,32 +46,40 @@ export default function Add(props) {
     async function handleSubmit(event) {
         event.preventDefault();
 
-        const errorMessage = validateForm(species, cm, water, fishGeolocation);
+        const errorMessage = validateForm(species, cm, water, location);
         if (errorMessage) {
             setError(errorMessage);
             return;
         }
 
         setCurrent('loading');
+
         try {
-            const newFish = await createFish(species, cm, water, catchDate, comment, fishGeolocation);
-            await Promise.all([
-                addDoc(fishesRef, newFish),
-                getDocuments(),
-                getCurrentLocation()
-            ]);
+            const newFish = createFish();
+            await addDoc(fishesRef, newFish) 
         } catch (err) {
             console.error(err);
         }
-        setFishGeolocation([]);
+        setStatesToDefault();
         setCurrent('map');
+        getDocuments();
+        getCurrentLocation();
+        setFishGeolocation([]);
     }
+
+    useEffect(() => {
+        if (fishGeolocation.length) {
+            setLocation({
+                lat: fishGeolocation[0].location.lat,
+                lng: fishGeolocation[0].location.lng
+            });
+        }
+    }, [fishGeolocation]);
 
     const styleOptions = {
         option: (styles) => ({ ...styles, color: 'black' })
     };
 
-    const placeholder = "Add comment...";
 
     return (
         <div className='add'>
@@ -76,6 +88,7 @@ export default function Add(props) {
                     <DatePicker
                         className='date-option'
                         selected={catchDate}
+                        placeholderText='Select date'
                         dateFormat="dd/MM/yyyy"
                         onChange={(date) => setCatchDate(date)} />
                 </div>
@@ -83,15 +96,16 @@ export default function Add(props) {
                     <Select
                         className='options'
                         options={optionsSpecies}
-                        placeholder='Species'
+                        placeholder='Select species'
                         styles={styleOptions}
+                        label={species}
                         onChange={(selectedSpecies) => setSpecies(selectedSpecies.value)} />
                 </div>
                 <div className='select'>
                     <Select
                         className='options'
                         options={optionsCm}
-                        placeholder='cm'
+                        placeholder='Select lenght'
                         styles={styleOptions}
                         onChange={(selectedCm) => setCm(selectedCm.value)} />
                 </div>
@@ -99,7 +113,7 @@ export default function Add(props) {
                     <Select
                         className='options'
                         options={optionsWater}
-                        placeholder='Water'
+                        placeholder='Select location name'
                         styles={styleOptions}
                         onChange={(selectedWater) => setWater(selectedWater.value)} />
                 </div>
@@ -107,7 +121,7 @@ export default function Add(props) {
                     <Textarea
                         className='comment-option'
                         onChange={(e) => setComment(e.target.value)}
-                        placeholder={placeholder}
+                        placeholder={"Add a comment..."}
                         autoSize={{ minRows: 5 }} />
                 </div>
                 <div className='select'>
