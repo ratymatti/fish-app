@@ -57,7 +57,6 @@ export default function Weather(props) {
                         removeTracking={removeTracking} />
                 ))}
                 <button onClick={() => setCurrent('map')}>Add new tracking</button>
-                {/* <button onClick={() => testForecast()}>Test Forecast</button> */}
             </div>
         )
     }
