@@ -36,15 +36,18 @@ export function WeatherProvider({ children }) {
     }
 
     async function updateWeatherTrackings() {
-        for (let index in weatherTrackings) {
+        const updatePromises = weatherTrackings.map(async (tracking) => {
             try {
-                const weatherDoc = doc(db, "weather", weatherTrackings[index].id);
-                const newWeather = await fetchWeather(weatherTrackings[index].coords, "weather");
+                const weatherDoc = doc(db, "weather", tracking.id);
+                const newWeather = await fetchWeather(tracking.coords, "weather");
                 await updateDoc(weatherDoc, { ...newWeather });
             } catch (err) {
                 console.error(err);
             }
-        }
+        });
+
+        await Promise.all(updatePromises);
+
         getDocuments();
     }
 
@@ -80,12 +83,10 @@ export function WeatherProvider({ children }) {
 
     return (
         <WeatherContext.Provider value={{   currentLocationWeather,
-                                            setCurrentLocationWeather,
                                             weatherTrackings,
-                                            setWeatherTrackings,
                                             addNewTracking,
                                             removeFromTracking }}>
             {children}
         </WeatherContext.Provider>
-    );
+    )
 }
