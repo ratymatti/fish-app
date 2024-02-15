@@ -51,15 +51,16 @@ export default function Add(props) {
         setCurrent('loading');
         try {
             const newFish = await createFish(species, cm, water, catchDate, comment, fishGeolocation);
-            await addDoc(fishesRef, newFish);
+            await Promise.all([
+                addDoc(fishesRef, newFish),
+                getDocuments(),
+                getCurrentLocation()
+            ]);
         } catch (err) {
             console.error(err);
         }
-        await getDocuments();
-        await getCurrentLocation();
         setFishGeolocation([]);
         setCurrent('map');
-
     }
 
     const styleOptions = {
