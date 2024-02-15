@@ -7,6 +7,7 @@ import Weather from '../Weather/Weather';
 import './MainContainer.css';
 import Auth from '../Auth/Auth';
 import Error from '../Error/Error';
+import { CreateFishProvider } from '../../contexts/CreateFishContext';
 
 export default function MainContainer(props) {
     const {
@@ -27,12 +28,15 @@ export default function MainContainer(props) {
             {error && <Error
                 errorMessage={error}
                 setError={setError} />}
-            {active === 'AddContainer' && <AddContainer
-                location={location}
-                active={active}
-                setError={setError}
-                changeLocation={changeLocation}
-                getCurrentLocation={getCurrentLocation} />
+            {active === 'AddContainer' &&
+                <CreateFishProvider>
+                    <AddContainer
+                        location={location}
+                        active={active}
+                        setError={setError}
+                        changeLocation={changeLocation}
+                        getCurrentLocation={getCurrentLocation} />
+                </CreateFishProvider>
             }
             {active === 'Log' && <Log
                 setFreeze={setFreeze} />
