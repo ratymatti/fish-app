@@ -12,6 +12,7 @@ export default function FishCard(props) {
     useEffect(() => {
         async function getFishData() {
             const fish = await fishes.find(fish => fish.id === currentFishID);
+            const source = fish?.weather?.currentWeather?.weather;
             const fishData = {
                 header: fish.species,
                 info: [
@@ -20,10 +21,10 @@ export default function FishCard(props) {
                     { text: "Catch location: ", value: fish.water }
                 ],
                 weather: [
-                    { text: "Temperature: ", value: `${fish.weather?.temp >= 0 ? '+' : ''}${fish.weather?.temp || "not available"}` },
-                    { text: "Wind direction: ", value: fish.weather?.wind_direction || "not available" },
-                    { text: 'Humidity: ', value: `${fish.weather?.humidity || "not available"}${fish.weather.humidity ? '%' : ''}` },
-                    { text: 'Pressure: ', value: `${fish.weather?.pressure || "not available"}${fish.weather.pressure ? ' hPa' : ''}` },
+                    { text: "Temperature: ", value: `${source?.temp >= 0 ? '+' : ''}${source?.temp || "not available"}` },
+                    { text: "Wind direction: ", value: source?.wind_direction || "not available" },
+                    { text: 'Humidity: ', value: `${source?.humidity || "not available"}${source?.humidity ? '%' : ''}` },
+                    { text: 'Pressure: ', value: `${source?.pressure || "not available"}${source?.pressure ? ' hPa' : ''}` },
                 ]
             }
             setCardFish(fishData);
@@ -54,8 +55,6 @@ export default function FishCard(props) {
                 </div>
             </div>
         )
-
     }
-
 }
 
