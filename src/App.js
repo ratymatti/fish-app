@@ -35,7 +35,7 @@ function App() {
 
     return (
         <FishProvider>
-            <WeatherProvider>     
+            <WeatherProvider>
                 <div className="App">
                     {freeze && <Freeze />}
                     <Header
@@ -55,7 +55,6 @@ function App() {
                 </div>
             </WeatherProvider>
         </FishProvider>
-
     )
 }
 
