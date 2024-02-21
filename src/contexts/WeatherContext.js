@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../config/firebase';
 import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import getLocation from '../modules/getLocation/getLocation';
-import fetchWeather from '../modules/fetchWeather/fetchWeather';
+import useFetchWeather from '../hooks/useFetchWeather';
 
 export const WeatherContext = React.createContext();
 
@@ -11,6 +11,8 @@ export function WeatherProvider({ children }) {
     const [weatherTrackings, setWeatherTrackings] = useState([]);
 
     const weatherRef = collection(db, "weather");
+
+    const { fetchWeather } = useFetchWeather();
 
     async function getDocuments() {
         try {
