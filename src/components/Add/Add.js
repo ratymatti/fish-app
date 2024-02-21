@@ -35,8 +35,7 @@ export default function Add(props) {
         species, setSpecies,
         cm, setCm,
         water, setWater,
-        setComment, createFish,
-        setStatesToDefault
+        setComment, createFish
     } = React.useContext(CreateFishContext);
 
     const { getDocuments } = React.useContext(FishContext);
