@@ -1,5 +1,5 @@
-import getCurrentDate from "../getCurrentDateString/getCurrentDateString";
-import getCurrentTime from "../getCurrentTime/getCurrentTime";
+import getCurrentTime from '../modules/getCurrentTime/getCurrentTime';
+import getCurrentDateString from '../modules/getCurrentDateString/getCurrentDateString';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -18,7 +18,7 @@ export function useFetchWeather() {
         const units = 'metric';
         const apiUrl = `https://api.openweathermap.org/data/2.5/${type}?`; // type is either 'weather' or 'forecast'
 
-        const currentTimeDate = `${getCurrentDate()} ${getCurrentTime()}`; // REMOVE THIS LATER;
+        const currentTimeDate = `${getCurrentDateString()} ${getCurrentTime()}`; // REMOVE THIS LATER;
 
         if (location) {
             try {
@@ -56,7 +56,7 @@ export function useFetchWeather() {
     }
 
     function getWeatherInfo(data, type) {
-        const currentTimeDate = `${getCurrentDate()} ${getCurrentTime()}`
+        const currentTimeDate = `${getCurrentDateString()} ${getCurrentTime()}`
         return {
             icon: data.weather[0].icon,
             time: type === 'weather' ? currentTimeDate : data.dt_txt,

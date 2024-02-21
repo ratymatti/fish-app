@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../config/firebase';
 import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import getLocation from '../modules/getLocation/getLocation';
-import useFetchWeather from '../hooks/useFetchWeather';
+import { useFetchWeather } from '../hooks/useFetchWeather';
 
 export const WeatherContext = React.createContext();
 

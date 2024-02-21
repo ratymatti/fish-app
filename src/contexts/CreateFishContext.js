@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import fetchWeather from '../modules/fetchWeather/fetchWeather';
 import getCurrentDateString from '../modules/getCurrentDateString/getCurrentDateString';
 import { v4 as uuidv4 } from 'uuid';
+import { useFetchWeather } from '../hooks/useFetchWeather';
 
 export const CreateFishContext = React.createContext();
 
@@ -13,6 +13,8 @@ export function CreateFishProvider({ children }) {
     const [water, setWater] = useState(null);
     const [comment, setComment] = useState('');
     const [weather, setWeather] = useState({ info: "not available" });
+
+    const { fetchWeather } = useFetchWeather();
 
     useEffect(() => {
         if (catchDate && catchDate.getDate() === new Date().getDate()) {
