@@ -29,7 +29,7 @@ export function CreateFishProvider({ children }) {
     }, [catchDate, location]);
 
     function createFish() {
-        return {
+        const newFish = {
             species: species,
             cm: cm,
             water: water,
@@ -43,6 +43,8 @@ export function CreateFishProvider({ children }) {
                 lng: location.lng
             }
         }
+        setStatesToDefault();
+        return newFish;
     }
 
     function setStatesToDefault() {
@@ -61,8 +63,7 @@ export function CreateFishProvider({ children }) {
                                                 species, setSpecies,
                                                 cm, setCm,
                                                 water, setWater,
-                                                setComment, createFish,
-                                                setStatesToDefault }}>
+                                                setComment, createFish }}>
             {children}
         </CreateFishContext.Provider>
     );

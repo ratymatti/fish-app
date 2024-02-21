@@ -60,7 +60,7 @@ export default function Add(props) {
         } catch (err) {
             console.error(err);
         }
-        setStatesToDefault();
+        
         setCurrent('map');
         getDocuments();
         getCurrentLocation();
