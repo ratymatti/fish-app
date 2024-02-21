@@ -1,18 +1,16 @@
-import { useState, useEffect } from 'react';
 import getCurrentDate from "../getCurrentDateString/getCurrentDateString";
 import getCurrentTime from "../getCurrentTime/getCurrentTime";
 import { v4 as uuidv4 } from 'uuid';
 
-export function useFetchWeather() {
-    const [weather, setWeather] = useState(null);
 
+export function useFetchWeather() {
     /**
- * Function name fetchWeather
- * @description This function fetches weather data from OpenWeatherMap API
- * @param {*} location object {lat: number, lng: number}
- * @param {*} type string 'weather' or 'forecast'
- * @returns object with weather data
- */
+    * Function name fetchWeather
+    * @description This function fetches weather data from OpenWeatherMap API
+    * @param {*} location object {lat: number, lng: number} <-- must be an object with lat and lng properties
+    * @param {*} type string 'weather' or 'forecast'
+    * @returns object with weather data
+    */
 
 
     async function fetchWeather(location, type) {
@@ -85,6 +83,5 @@ export function useFetchWeather() {
         return forecastArray;
     }
 
-
-    return { weather };
+    return { fetchWeather };
 }
