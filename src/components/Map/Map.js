@@ -4,6 +4,7 @@ import './Map.css';
 import { mapStyles } from '../../modules/mapStyles/mapStyles';
 import SpinningIcon from '../SpinningIcon/SpinningIcon';
 import createCoords from '../../modules/createCoords/createCoords';
+import { LocationContext } from '../../contexts/LocationContext';
 
 const options = {
     styles: mapStyles,
@@ -14,10 +15,9 @@ const options = {
 
 export default function Map(props) {
     const {
-        active, center,
-        markerLocations, zoom,
-        setFishGeolocation, setDisabled,
-        setNewWeatherLocation,
+        active, markerLocations,
+        zoom, setFishGeolocation,
+        setDisabled, setNewWeatherLocation
     } = props;
 
     const { isLoaded } = useLoadScript({
@@ -25,6 +25,8 @@ export default function Map(props) {
     });
     
     const [markers, setMarkers] = useState([]);
+
+    const { userLocation } = React.useContext(LocationContext);
     
     useEffect(() => {
         setMarkers(markerLocations);
@@ -52,7 +54,7 @@ export default function Map(props) {
     return (
         <GoogleMap
             zoom={zoom}
-            center={center}
+            center={userLocation}
             mapContainerClassName='map-container'
             onClick={(event) => {
                 handleClick(event);
