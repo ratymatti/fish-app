@@ -14,7 +14,6 @@ function App() {
     const [active, setActive] = useState('');
     const [freeze, setFreeze] = useState(false);
 
-
     return (
         <UserProvider>
             <LocationProvider>
@@ -34,7 +33,6 @@ function App() {
                 </FishProvider>
             </LocationProvider>
         </UserProvider>
-
     )
 }
 
