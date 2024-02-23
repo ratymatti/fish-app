@@ -5,9 +5,6 @@ export const LocationContext = React.createContext();
 export function LocationProvider({ children }) {
     const [location, setLocation] = useState(null);
 
-    function changeLocation(location) {
-        setLocation(location);
-    }
     
     /**
     * Function getLocation
