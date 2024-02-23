@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import AddContainer from '../AddContainer/AddContainer';
 import Log from '../Log/Log';
 import MapContainer from '../MapContainer/MapContainer';
@@ -11,9 +10,9 @@ import { CreateFishProvider } from '../../contexts/CreateFishContext';
 
 export default function MainContainer(props) {
     const {
-        active, changeLocation,
-        getCurrentLocation, location,
-        isLoggedIn, setIsLoggedIn,
+        active, 
+        isLoggedIn,
+        setIsLoggedIn,
         setFreeze
     } = props;
 
@@ -31,22 +30,17 @@ export default function MainContainer(props) {
             {active === 'AddContainer' &&
                 <CreateFishProvider>
                     <AddContainer
-                        location={location}
                         active={active}
-                        setError={setError}
-                        changeLocation={changeLocation}
-                        getCurrentLocation={getCurrentLocation} />
+                        setError={setError} />
                 </CreateFishProvider>
             }
             {active === 'Log' && <Log
                 setFreeze={setFreeze} />
             }
             {active === 'Weather' && <Weather
-                location={location}
                 active={active} />
             }
             {active === 'MapContainer' && <MapContainer
-                center={location}
                 active={active} />
             }
             {!isLoggedIn && <Auth
