@@ -24,9 +24,8 @@ addCmOptions();
 
 export default function Add(props) {
     const {
-        fishGeolocation, getCurrentLocation,
-        setCurrent, setFishGeolocation,
-        setError
+        fishGeolocation, setCurrent,
+        setFishGeolocation, setError
     } = props;
 
     const {
@@ -62,7 +61,6 @@ export default function Add(props) {
         
         setCurrent('map');
         getDocuments();
-        getCurrentLocation();
         setFishGeolocation([]);
     }
 
