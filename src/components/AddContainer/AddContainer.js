@@ -6,12 +6,7 @@ import SpinningIcon from '../SpinningIcon/SpinningIcon';
 import { LocationContext } from '../../contexts/LocationContext';
 
 export default function AddContainer(props) {
-
-    const {
-        active,
-        getDocuments,
-        setError
-    } = props;
+    const { active, getDocuments, setError } = props;
 
     const { userLocation, setUserLocation } = React.useContext(LocationContext);
     
@@ -31,7 +26,7 @@ export default function AddContainer(props) {
         } else {
             setCurrent('map');
         }   
-    };
+    }
 
 
     if (current === 'map' && userLocation) {
@@ -46,7 +41,7 @@ export default function AddContainer(props) {
                 <button className='button' disabled={disabled}  onClick={() => setCurrent('add')}>Select location</button>
             </div>
         )
-    }; 
+    } 
 
     if (current === 'add') {
         return (
@@ -60,7 +55,7 @@ export default function AddContainer(props) {
                     getDocuments={getDocuments} />
             </div>
         )
-    };
+    }
 
     if (current === 'loading') {
         return (
@@ -68,6 +63,6 @@ export default function AddContainer(props) {
                 <SpinningIcon />
             </div> 
         )
-    };
-};
+    }
+}
 
