@@ -4,18 +4,18 @@ import { googleProvider } from '../../config/firebase';
 import { auth } from '../../config/firebase';
 import "./Auth.css";
 
+import { UserContext } from '../../contexts/UserContext';
+
 export default function Auth(props) {
-    const {
-        setIsLoggedIn,
-        isLoggedIn,
-        setActive
-    } = props;
+    const { setActive } = props;
+
+    const { isLoggedIn, setIsLoggedIn } = React.useContext(UserContext);
 
     async function signInWithGoogle() {
         try {
             await signInWithPopup(auth, googleProvider);
             console.log(auth?.currentUser?.email);
-            setIsLoggedIn(true);
+            if (auth.currentUser) setIsLoggedIn(true);
         } catch (err) {
             console.error(err);
         }

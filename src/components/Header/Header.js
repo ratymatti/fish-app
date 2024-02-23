@@ -2,11 +2,12 @@ import React from 'react';
 import './Header.css';
 import Auth from '../Auth/Auth';
 
+import { UserContext } from '../../contexts/UserContext';
+
 export default function Header(props) {
-    const {
-        setActive, isLoggedIn,
-        setIsLoggedIn, active
-    } = props;
+    const { active, setActive } = props;
+
+    const { isLoggedIn } = React.useContext(UserContext);
 
     return (
         <div className='header'>
@@ -44,8 +45,6 @@ export default function Header(props) {
                         </li>
                         <li>{isLoggedIn &&
                             <Auth
-                                isLoggedIn={isLoggedIn}
-                                setIsLoggedIn={setIsLoggedIn}
                                 setActive={setActive} />}
                         </li>
                     </ul>

@@ -6,17 +6,16 @@ import Weather from '../Weather/Weather';
 import './MainContainer.css';
 import Auth from '../Auth/Auth';
 import Error from '../Error/Error';
+
 import { CreateFishProvider } from '../../contexts/CreateFishContext';
+import { UserContext } from '../../contexts/UserContext';
 
 export default function MainContainer(props) {
-    const {
-        active, 
-        isLoggedIn,
-        setIsLoggedIn,
-        setFreeze
-    } = props;
+    const { active, setFreeze } = props;
 
     const [error, setError] = useState(false);
+
+    const { isLoggedIn } = React.useContext(UserContext);
 
     useEffect(() => {
         error ? setFreeze(true) : setFreeze(false);
@@ -43,9 +42,7 @@ export default function MainContainer(props) {
             {active === 'MapContainer' && <MapContainer
                 active={active} />
             }
-            {!isLoggedIn && <Auth
-                setIsLoggedIn={setIsLoggedIn}
-                isLoggedIn={isLoggedIn} />}
+            {!isLoggedIn && <Auth />}
         </div>
     )
 }
