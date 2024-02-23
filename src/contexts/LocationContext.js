@@ -43,8 +43,7 @@ export function LocationProvider({ children }) {
 
     return (
         <LocationContext.Provider value={{  location,
-                                            setLocation,
-                                            changeLocation }}>
+                                            setLocation }}>
             {children}
         </LocationContext.Provider>
     )
