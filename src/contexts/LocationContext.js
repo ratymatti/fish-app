@@ -3,9 +3,8 @@ import React, { useState, useEffect } from "react";
 export const LocationContext = React.createContext();
 
 export function LocationProvider({ children }) {
-    const [location, setLocation] = useState(null);
+    const [userLocation, setUserLocation] = useState(null);
 
-    
     /**
     * Function getLocation
     * @description Returns the users geolocation information, if available
@@ -35,15 +34,18 @@ export function LocationProvider({ children }) {
     useEffect(() => {
         async function getCoords() {
             const coords = await getLocation();
-            setLocation(coords);
+            setUserLocation(coords);
         }
 
-        getCoords();    
+        getCoords();
     }, []);
 
     return (
-        <LocationContext.Provider value={{  location,
-                                            setLocation }}>
+        <LocationContext.Provider value={{
+            userLocation,
+            setUserLocation,
+            getLocation
+        }}>
             {children}
         </LocationContext.Provider>
     )
