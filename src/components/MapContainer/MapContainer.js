@@ -1,21 +1,23 @@
 import React from 'react';
 import Map from '../Map/Map';
 import { FishContext } from '../../contexts/FishContext';
+import { LocationContext } from '../../contexts/LocationContext';
 
 
 export default function MapContainer(props) {
-  const { active, center } = props;
+    const { active } = props;
 
     const { fishes } = React.useContext(FishContext);
-  
-  return (
-    <div className='map-container'>
-      <Map
-        center={center}
-        zoom={10}
-        active={active}
-        markerLocations={fishes} />
-    </div>
-  )
-};
+    const { userLocation } = React.useContext(LocationContext);
+
+    return (
+        <div className='map-container'>
+            <Map
+                center={userLocation}
+                zoom={10}
+                active={active}
+                markerLocations={fishes} />
+        </div>
+    )
+}
 
