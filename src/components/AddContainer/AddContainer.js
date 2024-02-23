@@ -3,17 +3,17 @@ import Map from '../Map/Map';
 import Add from '../Add/Add';
 import './AddContainer.css';
 import SpinningIcon from '../SpinningIcon/SpinningIcon';
+import { LocationContext } from '../../contexts/LocationContext';
 
 export default function AddContainer(props) {
 
     const {
         active,
-        changeLocation,
-        getCurrentLocation,
-        location,
         getDocuments,
         setError
     } = props;
+
+    const { userLocation, setUserLocation } = React.useContext(LocationContext);
     
     const [current, setCurrent] = useState('map');
     const [fishGeolocation, setFishGeolocation] = useState([]);
@@ -21,7 +21,7 @@ export default function AddContainer(props) {
 
     function handleClick() {
         if (fishGeolocation.length) {
-            changeLocation(
+            setUserLocation(
                 {
                     lat: fishGeolocation[0].location.lat,
                     lng: fishGeolocation[0].location.lng
@@ -34,11 +34,10 @@ export default function AddContainer(props) {
     };
 
 
-    if (current === 'map' && location) {
+    if (current === 'map' && userLocation) {
         return (
             <div className='map'>
                 <Map
-                    center={location}
                     zoom={12}
                     active={active}
                     setFishGeolocation={setFishGeolocation}
@@ -56,7 +55,6 @@ export default function AddContainer(props) {
                 <Add
                     setError={setError}
                     fishGeolocation={fishGeolocation}
-                    getCurrentLocation={getCurrentLocation}
                     setCurrent={setCurrent}
                     setFishGeolocation={setFishGeolocation}
                     getDocuments={getDocuments} />
