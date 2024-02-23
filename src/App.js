@@ -8,34 +8,33 @@ import Freeze from './components/Freeze/Freeze';
 import { FishProvider } from './contexts/FishContext';
 import { WeatherProvider } from './contexts/WeatherContext';
 import { LocationProvider } from './contexts/LocationContext';
+import { UserProvider } from './contexts/UserContext';
 
 function App() {
     const [active, setActive] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [freeze, setFreeze] = useState(false);
 
 
     return (
-        <LocationProvider>
-            <FishProvider>
-                <WeatherProvider>
-                    <div className="App">
-                        {freeze && <Freeze />}
-                        <Header
-                            active={active}
-                            setActive={setActive}
-                            isLoggedIn={isLoggedIn}
-                            setIsLoggedIn={setIsLoggedIn} />
-                        <MainContainer
-                            active={active}
-                            isLoggedIn={isLoggedIn}
-                            setIsLoggedIn={setIsLoggedIn}
-                            setFreeze={setFreeze} />
-                        <Footer />
-                    </div>
-                </WeatherProvider>
-            </FishProvider>
-        </LocationProvider>
+        <UserProvider>
+            <LocationProvider>
+                <FishProvider>
+                    <WeatherProvider>
+                        <div className="App">
+                            {freeze && <Freeze />}
+                            <Header
+                                active={active}
+                                setActive={setActive} />
+                            <MainContainer
+                                active={active}
+                                setFreeze={setFreeze} />
+                            <Footer />
+                        </div>
+                    </WeatherProvider>
+                </FishProvider>
+            </LocationProvider>
+        </UserProvider>
+
     )
 }
 
