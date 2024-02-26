@@ -3,15 +3,48 @@ import getCurrentDateString from '../modules/getCurrentDateString/getCurrentDate
 import { v4 as uuidv4 } from 'uuid';
 import { useFetchWeather } from '../hooks/useFetchWeather';
 
-export const CreateFishContext = React.createContext();
+
+interface CreateFishContextType {
+    location: Location | null | undefined;
+    setLocation: (location: Location | null) => void;
+    catchDate: Date | null | undefined;
+    setCatchDate: (date: Date | null) => void;
+    species: string | null | undefined;
+    setSpecies: (species: string | null) => void;
+    cm: number;
+    setCm: (cm: number) => void;
+    water: string | null | undefined;
+    setWater: (water: string | null) => void;
+    comment?: string;
+    setComment: (comment: string) => void;
+    createFish: () => createFishType;  
+}
+
+interface createFishType {
+    species: string | null | undefined;
+    cm: number | null | undefined;
+    water: string | null | undefined;
+    comment?: string | null | undefined;
+    date: Date | null | undefined;
+    dateString: string | null | undefined;
+    id: string | null | undefined;
+    weather: { info: string; }; location: Location; // Look into this
+}
+
+interface Location {
+    lat: number;
+    lng: number;
+}
+
+export const CreateFishContext = React.createContext<CreateFishContextType | undefined>(undefined);
 
 export function CreateFishProvider({ children }) {
-    const [location, setLocation] = useState(null);
-    const [catchDate, setCatchDate] = useState(null);
-    const [species, setSpecies] = useState(null);
-    const [cm, setCm] = useState(0);
-    const [water, setWater] = useState(null);
-    const [comment, setComment] = useState('');
+    const [location, setLocation] = useState<Location | null>();
+    const [catchDate, setCatchDate] = useState<Date | null>();
+    const [species, setSpecies] = useState<string | null>();
+    const [cm, setCm] = useState<number>(0);
+    const [water, setWater] = useState<string | null>();
+    const [comment, setComment] = useState<string>();
     const [weather, setWeather] = useState({ info: "not available" });
 
     const { fetchWeather } = useFetchWeather();
@@ -34,13 +67,13 @@ export function CreateFishProvider({ children }) {
             cm: cm,
             water: water,
             comment: comment,
-            date: catchDate,
+            date: catchDate!,
             dateString: getCurrentDateString(),
             id: uuidv4(),
             weather: weather,
             location: {
-                lat: location.lat,
-                lng: location.lng
+                lat: location!.lat,
+                lng: location!.lng
             }
         }
         setStatesToDefault();
