@@ -3,10 +3,10 @@ import './Header.css';
 import Auth from '../Auth/Auth';
 import HeaderButton from '../HeaderButton/HeaderButton';
 
-import { UserContext } from '../../contexts/UserContext';
+import { UserContext, UserContextType } from '../../contexts/UserContext';
 
 export default function Header() {
-    const { isLoggedIn } = React.useContext(UserContext);
+    const { isLoggedIn }: {isLoggedIn : boolean } = React.useContext(UserContext) as UserContextType;
 
     return (
         <div className='header'>
