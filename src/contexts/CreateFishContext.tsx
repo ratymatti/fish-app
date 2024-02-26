@@ -38,7 +38,7 @@ interface Location {
 
 export const CreateFishContext = React.createContext<CreateFishContextType | undefined>(undefined);
 
-export function CreateFishProvider({ children }) {
+export function CreateFishProvider({ children }: { children: React.ReactNode }) {
     const [location, setLocation] = useState<Location | null>();
     const [catchDate, setCatchDate] = useState<Date | null>();
     const [species, setSpecies] = useState<string | null>();
