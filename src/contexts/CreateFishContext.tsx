@@ -17,10 +17,10 @@ interface CreateFishContextType {
     setWater: (water: string | null) => void;
     comment?: string;
     setComment: (comment: string) => void;
-    createFish: () => createFishType;  
+    createFish: () => FishType;  
 }
 
-interface createFishType {
+export interface FishType {
     species: string | null | undefined;
     cm: number | null | undefined;
     water: string | null | undefined;
