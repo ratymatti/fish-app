@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import Select from 'react-select';
+import Select, { SingleValue } from 'react-select';
 import DatePicker from "react-datepicker";
 import Textarea from 'rc-textarea';
 import "react-datepicker/dist/react-datepicker.css";
@@ -8,11 +8,11 @@ import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import validateForm from '../../modules/validateForm/validateForm.js';
 import { optionsSpecies, optionsWater } from '../../modules/options/options.js';
-import { FishContext } from '../../contexts/FishContext';
-import { CreateFishContext } from '../../contexts/CreateFishContext.js';
+import { FishContext, FishContextType } from '../../contexts/FishContext';
+import { CreateFishContext, CreateFishContextType } from '../../contexts/CreateFishContext';
 
 
-const optionsCm = [];
+const optionsCm: ValueLabelPair[] = [];
 
 function addCmOptions() {
     for (let i = 10; i <= 150; i++) {
@@ -22,7 +22,29 @@ function addCmOptions() {
 
 addCmOptions();
 
-export default function Add(props) {
+interface ValueLabelPair {
+    value: number;
+    label: string;
+}
+
+interface AddProps {
+    fishGeolocation: { location: { lat: number, lng: number } }[];
+    setCurrent: (current: string) => void;
+    setFishGeolocation: (fishGeolocation: any) => void;
+    setError: (error: string) => void;
+}
+
+type OptionTypeString = {
+    label: string | null | undefined;
+    value: string | null | undefined;
+}
+
+type OptionTypeNumber = {
+    label: string | null | undefined;
+    value: number | null | undefined;
+}
+
+export default function Add(props : AddProps) {
     const {
         fishGeolocation, setCurrent,
         setFishGeolocation, setError
@@ -35,13 +57,13 @@ export default function Add(props) {
         cm, setCm,
         water, setWater,
         setComment, createFish
-    } = React.useContext(CreateFishContext);
+    } = React.useContext(CreateFishContext) as CreateFishContextType;
 
-    const { getDocuments } = React.useContext(FishContext);
+    const { getDocuments } = React.useContext(FishContext) as FishContextType;
 
     const fishesRef = collection(db, "fishes");
 
-    async function handleSubmit(event) {
+    async function handleSubmit(event: React.FormEvent<HTMLButtonElement>) {
         event.preventDefault();
 
         const errorMessage = validateForm(species, cm, water, location);
@@ -87,7 +109,7 @@ export default function Add(props) {
                         selected={catchDate}
                         placeholderText='Select date'
                         dateFormat="dd/MM/yyyy"
-                        onChange={(date) => setCatchDate(date)} />
+                        onChange={(date: Date) => setCatchDate(date)} />
                 </div>
                 <div className='select'>
                     <Select
@@ -95,8 +117,9 @@ export default function Add(props) {
                         options={optionsSpecies}
                         placeholder='Select species'
                         styles={styleOptions}
-                        label={species}
-                        onChange={(selectedSpecies) => setSpecies(selectedSpecies.value)} />
+                        onChange={(selectedSpecies: SingleValue<OptionTypeString>) => {
+                            if (selectedSpecies && selectedSpecies.value) setSpecies(selectedSpecies.value);
+                        }} />
                 </div>
                 <div className='select'>
                     <Select
@@ -104,7 +127,9 @@ export default function Add(props) {
                         options={optionsCm}
                         placeholder='Select lenght'
                         styles={styleOptions}
-                        onChange={(selectedCm) => setCm(selectedCm.value)} />
+                        onChange={(selectedCm: SingleValue<OptionTypeNumber>) => {
+                            if (selectedCm && selectedCm.value) setCm(selectedCm.value);
+                        }} />
                 </div>
                 <div className='select'>
                     <Select
@@ -112,7 +137,9 @@ export default function Add(props) {
                         options={optionsWater}
                         placeholder='Select location name'
                         styles={styleOptions}
-                        onChange={(selectedWater) => setWater(selectedWater.value)} />
+                        onChange={(selectedWater: SingleValue<OptionTypeString>) => {
+                            if (selectedWater && selectedWater.value) setWater(selectedWater.value);
+                        }} />
                 </div>
                 <div className='select'>
                     <Textarea
