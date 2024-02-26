@@ -1,12 +1,11 @@
 import React from 'react';
 import './Header.css';
 import Auth from '../Auth/Auth';
+import HeaderButton from '../HeaderButton/HeaderButton';
 
 import { UserContext } from '../../contexts/UserContext';
 
-export default function Header(props) {
-    const { active, setActive } = props;
-
+export default function Header() {
     const { isLoggedIn } = React.useContext(UserContext);
 
     return (
@@ -15,37 +14,20 @@ export default function Header(props) {
             {isLoggedIn &&
                 <div className='header-buttons'>
                     <ul>
+                        <HeaderButton
+                            buttonValue={'AddContainer'}
+                            buttonText={'Add Fish'} />
+                        <HeaderButton
+                            buttonValue={'Log'}
+                            buttonText={'Fishes'} />
+                        <HeaderButton
+                            buttonValue={'MapContainer'}
+                            buttonText={'Map'} />
+                        <HeaderButton
+                            buttonValue={'Weather'}
+                            buttonText={'Weather'} />
                         <li>
-                            <button
-                                onClick={() => setActive('AddContainer')}
-                                className={active === 'AddContainer' ? "active" : ""}>
-                                Add Fish
-                            </button>
-                        </li>
-                        <li>
-                            <button
-                                onClick={() => setActive('Log')}
-                                className={active === 'Log' ? "active" : ""}>
-                                Log
-                            </button>
-                        </li>
-                        <li>
-                            <button
-                                onClick={() => setActive('MapContainer')}
-                                className={active === 'MapContainer' ? "active" : ""}>
-                                Map
-                            </button>
-                        </li>
-                        <li>
-                            <button
-                                onClick={() => setActive('Weather')}
-                                className={active === 'Weather' ? "active" : ""}>
-                                Weather
-                            </button>
-                        </li>
-                        <li>{isLoggedIn &&
-                            <Auth
-                                setActive={setActive} />}
+                            {isLoggedIn && <Auth />}
                         </li>
                     </ul>
                 </div>
