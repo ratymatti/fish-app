@@ -5,10 +5,10 @@ import { auth } from '../../config/firebase';
 import "./Auth.css";
 
 import { UserContext } from '../../contexts/UserContext';
+import { ActiveContext } from '../../contexts/ActiveContext';
 
-export default function Auth(props) {
-    const { setActive } = props;
-
+export default function Auth() {
+    const { setActive } = React.useContext(ActiveContext);
     const { isLoggedIn, setIsLoggedIn } = React.useContext(UserContext);
 
     async function signInWithGoogle() {
