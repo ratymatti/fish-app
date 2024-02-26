@@ -1,0 +1,10 @@
+.active {
+    border: 2px solid orange;
+    color: black;
+    background-color: orange;
+}
+
+.active:hover {
+    background-color: orange;
+    color: black;
+}
