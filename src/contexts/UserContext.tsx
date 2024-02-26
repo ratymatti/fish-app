@@ -7,7 +7,7 @@ export interface UserContextType {
 
 export const UserContext = React.createContext<UserContextType | undefined>(undefined);
 
-export function UserProvider({ children }) {
+export function UserProvider({ children }: { children: React.ReactNode }) {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
     return (
