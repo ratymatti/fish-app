@@ -9,13 +9,13 @@ import Error from '../Error/Error';
 
 import { CreateFishProvider } from '../../contexts/CreateFishContext';
 import { UserContext } from '../../contexts/UserContext';
+import { ActiveContext } from '../../contexts/ActiveContext';
 
-export default function MainContainer(props) {
-    const { active, setFreeze } = props;
-
+export default function MainContainer({ setFreeze }) {
     const [error, setError] = useState(false);
 
     const { isLoggedIn } = React.useContext(UserContext);
+    const { active } = React.useContext(ActiveContext);
 
     useEffect(() => {
         error ? setFreeze(true) : setFreeze(false);
@@ -29,20 +29,17 @@ export default function MainContainer(props) {
             {active === 'AddContainer' &&
                 <CreateFishProvider>
                     <AddContainer
-                        active={active}
                         setError={setError} />
-                </CreateFishProvider>
-            }
-            {active === 'Log' && <Log
-                setFreeze={setFreeze} />
-            }
-            {active === 'Weather' && <Weather
-                active={active} />
-            }
-            {active === 'MapContainer' && <MapContainer
-                active={active} />
-            }
-            {!isLoggedIn && <Auth />}
+                </CreateFishProvider>}
+            {active === 'Log' &&
+                <Log
+                    setFreeze={setFreeze} />}
+            {active === 'Weather' &&
+                <Weather />}
+            {active === 'MapContainer' &&
+                <MapContainer />}
+            {!isLoggedIn &&
+                <Auth />}
         </div>
     )
 }
