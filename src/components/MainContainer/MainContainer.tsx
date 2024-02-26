@@ -9,13 +9,17 @@ import Error from '../Error/Error';
 
 import { CreateFishProvider } from '../../contexts/CreateFishContext';
 import { UserContext } from '../../contexts/UserContext';
-import { ActiveContext } from '../../contexts/ActiveContext';
+import { ActiveContext, ActiveContextType } from '../../contexts/ActiveContext';
 
-export default function MainContainer({ setFreeze }) {
-    const [error, setError] = useState(false);
+interface MainContainerProps {
+    setFreeze: (freeze: boolean) => void;
+}
 
-    const { isLoggedIn } = React.useContext(UserContext);
-    const { active } = React.useContext(ActiveContext);
+export default function MainContainer({ setFreeze }: MainContainerProps) {
+    const [error, setError] = useState<string>('');
+
+    const { isLoggedIn } = React.useContext(UserContext) as { isLoggedIn: boolean };
+    const { active } = React.useContext(ActiveContext) as ActiveContextType;
 
     useEffect(() => {
         error ? setFreeze(true) : setFreeze(false);
