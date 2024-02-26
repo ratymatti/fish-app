@@ -4,19 +4,16 @@ import WeatherCard from '../WeatherCard/WeatherCard';
 import Map from '../Map/Map';
 
 import { WeatherContext } from '../../contexts/WeatherContext';
+import { LocationContext } from '../../contexts/LocationContext';
 
-export default function Weather(props) {
-    const {
-        location,
-        active
-    } = props;
-
+export default function Weather() {
     const {
         currentLocationWeather,
         weatherTrackings,
         addNewTracking,
         removeFromTracking
     } = React.useContext(WeatherContext);
+    const { location } = React.useContext(LocationContext);
 
     const [current, setCurrent] = useState('weather');
     const [newWeatherLocation, setNewWeatherLocation] = useState([]);
@@ -49,10 +46,10 @@ export default function Weather(props) {
                 {currentLocationWeather &&
                     <WeatherCard
                         data={currentLocationWeather} />}
-                {weatherTrackings && weatherTrackings.map((card) => (
+                {weatherTrackings && weatherTrackings.map((weatherObj) => (
                     <WeatherCard
-                        key={card.id}
-                        data={card}
+                        key={weatherObj.id}
+                        data={weatherObj}
                         isRemovable={true}
                         removeTracking={removeTracking} />
                 ))}
@@ -68,8 +65,7 @@ export default function Weather(props) {
                     center={location}
                     zoom={5}
                     markerLocations={newWeatherLocation}
-                    setNewWeatherLocation={setNewWeatherLocation}
-                    active={active} />
+                    setNewWeatherLocation={setNewWeatherLocation} />
                 <button onClick={() => { handleSelection() }}>Set Weather Tracking</button>
             </div>
         )

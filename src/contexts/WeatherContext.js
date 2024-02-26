@@ -59,7 +59,6 @@ export function WeatherProvider({ children }) {
         const weatherDoc = doc(db, 'weather', idToRemove);
         await deleteDoc(weatherDoc);
         getDocuments();
-    
     }
 
     useEffect(() => {
