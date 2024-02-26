@@ -9,30 +9,29 @@ import { FishProvider } from './contexts/FishContext';
 import { WeatherProvider } from './contexts/WeatherContext';
 import { LocationProvider } from './contexts/LocationContext';
 import { UserProvider } from './contexts/UserContext';
+import { ActiveProvider } from './contexts/ActiveContext';
 
 function App() {
-    const [active, setActive] = useState('');
     const [freeze, setFreeze] = useState(false);
 
     return (
-        <UserProvider>
-            <LocationProvider>
-                <FishProvider>
-                    <WeatherProvider>
-                        <div className="App">
-                            {freeze && <Freeze />}
-                            <Header
-                                active={active}
-                                setActive={setActive} />
-                            <MainContainer
-                                active={active}
-                                setFreeze={setFreeze} />
-                            <Footer />
-                        </div>
-                    </WeatherProvider>
-                </FishProvider>
-            </LocationProvider>
-        </UserProvider>
+        <ActiveProvider>
+            <UserProvider>
+                <LocationProvider>
+                    <FishProvider>
+                        <WeatherProvider>
+                            <div className='App'>
+                                {freeze && <Freeze />}
+                                <Header />
+                                <MainContainer
+                                    setFreeze={setFreeze} />
+                                <Footer />
+                            </div>
+                        </WeatherProvider>
+                    </FishProvider>
+                </LocationProvider>
+            </UserProvider>
+        </ActiveProvider>
     )
 }
 
