@@ -7,7 +7,7 @@ export interface ActiveContextType {
 
 export const ActiveContext = createContext<ActiveContextType | undefined>(undefined); 
 
-export function ActiveProvider({children}) {
+export function ActiveProvider({children}: {children: React.ReactNode}) {
     const [active, setActive] = useState<string>('');
 
     return (
