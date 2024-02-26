@@ -14,7 +14,7 @@ export default function Auth() {
     async function signInWithGoogle() {
         try {
             await signInWithPopup(auth, googleProvider);
-            console.log(auth?.currentUser?.email);
+            console.log(auth?.currentUser?.email); // REMOVE THIS LATER
             if (auth.currentUser) setIsLoggedIn(true);
         } catch (err) {
             console.error(err);
