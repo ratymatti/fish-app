@@ -12,7 +12,7 @@ import { UserProvider } from './contexts/UserContext';
 import { ActiveProvider } from './contexts/ActiveContext';
 
 function App() {
-    const [freeze, setFreeze] = useState(false);
+    const [freeze, setFreeze] = useState<boolean>(false);
 
     return (
         <ActiveProvider>
