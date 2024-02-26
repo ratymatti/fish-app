@@ -1,6 +1,6 @@
 # Only Fishes
 
-Only Fishes is a React application that allows users to keep track of fishes he/she catches. The application also provides weather updates based on the user's location.
+Only Fishes is a React application that allows users to keep track of fishes they catch. The application also provides weather updates based on the user's location.
 
 ## Features
 
