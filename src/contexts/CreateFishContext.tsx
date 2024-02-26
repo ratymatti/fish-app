@@ -24,7 +24,7 @@ export interface FishType {
     species: string | null | undefined;
     cm: number | null | undefined;
     water: string | null | undefined;
-    comment?: string | null | undefined;
+    comment?: string;
     date: Date | null | undefined;
     dateString: string | null | undefined;
     id: string | null | undefined;
@@ -99,5 +99,5 @@ export function CreateFishProvider({ children }: { children: React.ReactNode }) 
                                                 setComment, createFish }}>
             {children}
         </CreateFishContext.Provider>
-    );
+    )
 }
