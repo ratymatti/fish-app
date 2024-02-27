@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import './FishCard.css';
 
+
+interface FishCard {
+    header: string;
+    info: { text: string, value: string }[];
+    weather: { text: string, value: string }[];
+}
+
 export default function FishCard(props) {
     const {
         closeCard, currentFishID,
         fishes
     } = props;
 
-    const [cardFish, setCardFish] = useState(null);
+    const [cardFish, setCardFish] = useState<FishCard | null >(null);
 
     useEffect(() => {
         async function getFishData() {
@@ -55,6 +62,8 @@ export default function FishCard(props) {
                 </div>
             </div>
         )
+    } else {
+        return null;
     }
 }
 
