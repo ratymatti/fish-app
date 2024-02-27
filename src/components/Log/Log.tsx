@@ -4,28 +4,50 @@ import FishCard from '../FishCard/FishCard';
 import { FishContext } from '../../contexts/FishContext';
 import { sortFishes } from '../../modules/sortFishes/sortFishes';
 
-export default function Log(props) {
+interface LogProps {
+    setFreeze: (freeze: boolean) => void;
+}
+
+export enum SortDirection {
+    ASC = 'asc',
+    DESC = 'desc'
+}
+
+export enum Field {
+    SPECIES = 'SPECIES',
+    LENGTH = 'LENGTH',
+    LOCATION = 'LOCATION',
+    DATE = 'DATE'
+}
+
+
+export default function Log(props: LogProps) {
     const { setFreeze } = props;
 
-    const [direction, setDirection] = useState('desc');
-    const [currentField, setCurrentField] = useState('date');
-    const [currentFishID, setCurrentFishID] = useState(null);
+    const [direction, setDirection] = useState<SortDirection>(SortDirection.DESC);
+    const [currentField, setCurrentField] = useState<Field>(Field.DATE);
+    const [currentFishID, setCurrentFishID] = useState<string | null | undefined>(null);
 
-    const { fishes, setFishes } = React.useContext(FishContext);
+    const fishContext = React.useContext(FishContext);
 
-    function handleClick(field) {
+    if (!fishContext) {
+        throw new Error("FishContext is undefined");
+    }
+    const { fishes, setFishes } = fishContext;
+
+    function handleClick(field: Field) {
         if (field === currentField) {
-            const newDirection = direction === 'desc' ? 'asc' : 'desc';
+            const newDirection = direction === SortDirection.DESC ? SortDirection.ASC : SortDirection.DESC;
             setDirection(newDirection);
             sortByField(field, newDirection);
         } else {
-            setDirection('desc');
+            setDirection(SortDirection.DESC);
             setCurrentField(field);
-            sortByField(field, 'desc');
+            sortByField(field, SortDirection.DESC);
         }
     }
 
-    function sortByField(field, direction) {
+    function sortByField(field: Field, direction: SortDirection) {
         const sortedFishes = sortFishes(field, fishes, direction);
         setFishes(sortedFishes);
     }
@@ -35,7 +57,7 @@ export default function Log(props) {
     }
 
     useEffect(() => {
-        sortByField('date', 'desc');
+        sortByField(Field.DATE, SortDirection.DESC);
     }, [])
 
     useEffect(() => {
@@ -53,10 +75,10 @@ export default function Log(props) {
                 <table>
                     <thead>
                         <tr>
-                            <th onClick={() => handleClick('species')}>Species</th>
-                            <th onClick={() => handleClick('cm')}>Length</th>
-                            <th onClick={() => handleClick('water')}>Location</th>
-                            <th onClick={() => handleClick('date')}>Date</th>
+                            <th onClick={() => handleClick(Field.SPECIES)}>{Field.SPECIES}</th>
+                            <th onClick={() => handleClick(Field.LENGTH)}>{Field.LENGTH}</th>
+                            <th onClick={() => handleClick(Field.LOCATION)}>{Field.LOCATION}</th>
+                            <th onClick={() => handleClick(Field.DATE)}>{Field.DATE}</th>
                         </tr>
                     </thead>
                     <tbody>
