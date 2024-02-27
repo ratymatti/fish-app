@@ -4,12 +4,12 @@ import { googleProvider } from '../../config/firebase';
 import { auth } from '../../config/firebase';
 import "./Auth.css";
 
-import { UserContext } from '../../contexts/UserContext';
-import { ActiveContext } from '../../contexts/ActiveContext';
+import { UserContext, UserContextType } from '../../contexts/UserContext';
+import { ActiveContext, ActiveContextType, ActiveState } from '../../contexts/ActiveContext';
 
 export default function Auth() {
-    const { setActive } = React.useContext(ActiveContext);
-    const { isLoggedIn, setIsLoggedIn } = React.useContext(UserContext);
+    const { setActive } = React.useContext(ActiveContext) as ActiveContextType;
+    const { isLoggedIn, setIsLoggedIn } = React.useContext(UserContext) as UserContextType;
 
     async function signInWithGoogle() {
         try {
@@ -25,7 +25,7 @@ export default function Auth() {
         try {
             await signOut(auth);
             setIsLoggedIn(false);
-            setActive('');
+            setActive(ActiveState.Empty);
             console.log("signed out")
         } catch (err) {
             console.error(err);
