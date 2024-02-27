@@ -3,6 +3,8 @@ import getCurrentDateString from '../modules/getCurrentDateString/getCurrentDate
 import { v4 as uuidv4 } from 'uuid';
 import { useFetchWeather } from '../hooks/useFetchWeather';
 
+import { Timestamp } from 'firebase/firestore';
+
 
 export interface CreateFishContextType {
     location: Location | null | undefined;
@@ -25,7 +27,7 @@ export interface FishType {
     cm: number | null | undefined;
     water: string | null | undefined;
     comment?: string;
-    date: Date | null | undefined;
+    date: Date | Timestamp | null | undefined;
     dateString: string | null | undefined;
     id: string | null | undefined;
     weather: { info: string; }; location: Location; // Look into this
@@ -62,6 +64,7 @@ export function CreateFishProvider({ children }: { children: React.ReactNode }) 
     }, [catchDate, location]);
 
     function createFish() {
+        
         const newFish = {
             species: species,
             cm: cm,
