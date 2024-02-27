@@ -23,20 +23,38 @@ export interface CreateFishContextType {
 }
 
 export interface FishType {
+    id: string | undefined | null;
     species: string | null | undefined;
     cm: number | null | undefined;
-    water: string | null | undefined;
-    comment?: string;
     date: Date | Timestamp | null | undefined;
     dateString: string | null | undefined;
-    id: string | null | undefined;
-    weather: { info: string; }; location: Location; // Look into this
+    water: string | null | undefined;
+    comment: string | null | undefined;
+    weather: Weather | null | undefined;
+    location: Location | null | undefined;
 }
 
-interface Location {
+export interface Location {
     lat: number;
     lng: number;
 }
+
+export interface Weather {
+    info: string | null | undefined;
+    type: string | null | undefined;
+    name?: string | null | undefined;
+    coords?: Location | null | undefined;
+    forecastArray?: [] | null | undefined;
+    currentWeather?: {
+        weather: {
+            temp: number | null | undefined;
+            wind_direction: string | null | undefined;
+            humidity: number | null | undefined;
+            pressure: number | null | undefined;
+        } | null | undefined;
+    } | null | undefined;
+}
+
 
 export const CreateFishContext = React.createContext<CreateFishContextType | undefined>(undefined);
 
@@ -47,7 +65,7 @@ export function CreateFishProvider({ children }: { children: React.ReactNode }) 
     const [cm, setCm] = useState<number>(0);
     const [water, setWater] = useState<string | null>();
     const [comment, setComment] = useState<string>();
-    const [weather, setWeather] = useState({ info: "not available" });
+    const [weather, setWeather] = useState<Weather>({ info: "not available", type: "not available"});
 
     const { fetchWeather } = useFetchWeather();
 
@@ -64,8 +82,7 @@ export function CreateFishProvider({ children }: { children: React.ReactNode }) 
     }, [catchDate, location]);
 
     function createFish() {
-        
-        const newFish = {
+        const newFish: FishType = {
             species: species,
             cm: cm,
             water: water,
@@ -73,7 +90,14 @@ export function CreateFishProvider({ children }: { children: React.ReactNode }) 
             date: catchDate!,
             dateString: getCurrentDateString(),
             id: uuidv4(),
-            weather: weather,
+            weather: {
+                info: null,
+                type: weather.type || null,
+                name: weather.name || null,
+                coords: weather.coords || null,
+                forecastArray: weather.forecastArray || null,
+                currentWeather: weather.currentWeather || null,
+            },
             location: {
                 lat: location!.lat,
                 lng: location!.lng
@@ -90,7 +114,7 @@ export function CreateFishProvider({ children }: { children: React.ReactNode }) 
         setCm(0);
         setWater(null);
         setComment('');
-        setWeather({ info: "not available" });
+        setWeather({ info: "not available", type: "not available"});
     }
 
     return (
