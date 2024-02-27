@@ -1,9 +1,27 @@
 import React, { useState, useEffect } from "react";
 
-export const LocationContext = React.createContext();
+export interface LocationContextType {
+    userLocation: Location | null | undefined;
+    setUserLocation: (userLocation: Location | null | undefined) => void;
+    getLocation: () => Promise<{ lat: number; lng: number } | undefined>;
+}
 
-export function LocationProvider({ children }) {
-    const [userLocation, setUserLocation] = useState(null);
+interface Location {
+    lat: number;
+    lng: number;
+}
+
+interface Position {
+    coords: {
+        latitude: number;
+        longitude: number;
+    };
+}
+
+export const LocationContext = React.createContext<LocationContextType | undefined>(undefined);
+
+export function LocationProvider({ children }: { children: React.ReactNode }) {
+    const [userLocation, setUserLocation] = useState<Location | null | undefined>();
 
     /**
     * Function getLocation
@@ -11,10 +29,10 @@ export function LocationProvider({ children }) {
     * @returns object that contains users geolocation information, key lat for latitude and lng for longitude
     */
 
-    async function getLocation() {
+    async function getLocation(): Promise<Location | undefined>{
         if (navigator.geolocation) {
             try {
-                const position = await new Promise((resolve, reject) => {
+                const position: Position = await new Promise((resolve, reject) => {
                     navigator.geolocation.getCurrentPosition(resolve, reject);
                 });
 
@@ -24,7 +42,6 @@ export function LocationProvider({ children }) {
 
             } catch (error) {
                 console.error(error);
-                alert(error.message);
             }
         } else {
             alert('Geolocation not available');
