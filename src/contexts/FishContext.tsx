@@ -3,6 +3,10 @@ import { db } from '../config/firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import { sortFishes } from '../modules/sortFishes/sortFishes';
 import { FishType } from './CreateFishContext';
+import { Field, SortDirection } from '../components/Log/Log';
+
+import { Timestamp } from 'firebase/firestore';
+
 
 export interface FishContextType {
     fishes: FishType[];
@@ -23,8 +27,13 @@ export function FishProvider({ children }: { children: React.ReactNode }) {
             const filteredData: FishType[] = data.docs.map((doc) => ({
                 ...doc.data() as FishType,
                 id: doc.id
-            }));
-            setFishes(sortFishes('date', filteredData, 'desc'));
+            })).map((fish) => {
+                return {
+                    ...fish,
+                    date: (fish.date instanceof Timestamp) ? fish.date.toDate() : fish.date
+                } 
+            });
+            setFishes(sortFishes(Field.DATE, filteredData, SortDirection.DESC));
         } catch (err) {
             console.error(err);
         }
