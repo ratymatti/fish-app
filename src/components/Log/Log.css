@@ -29,6 +29,7 @@ th {
     background-color: #000000;
     padding: 10px;
     font-weight: bold;
+    font-size: 13px;
 }
 
 th:hover {
