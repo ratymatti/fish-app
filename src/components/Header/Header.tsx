@@ -4,6 +4,7 @@ import Auth from '../Auth/Auth';
 import HeaderButton from '../HeaderButton/HeaderButton';
 
 import { UserContext, UserContextType } from '../../contexts/UserContext';
+import { ActiveState } from '../../contexts/ActiveContext';
 
 export default function Header() {
     const { isLoggedIn }: {isLoggedIn : boolean } = React.useContext(UserContext) as UserContextType;
@@ -15,17 +16,13 @@ export default function Header() {
                 <div className='header-buttons'>
                     <ul>
                         <HeaderButton
-                            buttonValue={'AddContainer'}
-                            buttonText={'Add Fish'} />
+                            buttonValue={ActiveState.AddFish} />
                         <HeaderButton
-                            buttonValue={'Log'}
-                            buttonText={'Fishes'} />
+                            buttonValue={ActiveState.Fishes} />
                         <HeaderButton
-                            buttonValue={'MapContainer'}
-                            buttonText={'Map'} />
+                            buttonValue={ActiveState.Map} />
                         <HeaderButton
-                            buttonValue={'Weather'}
-                            buttonText={'Weather'} />
+                            buttonValue={ActiveState.Weather} />
                         <li>
                             {isLoggedIn && <Auth />}
                         </li>
