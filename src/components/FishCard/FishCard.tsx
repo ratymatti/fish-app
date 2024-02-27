@@ -1,40 +1,47 @@
 import React, { useEffect, useState } from 'react'
 import './FishCard.css';
+import { FishType } from '../../contexts/CreateFishContext';
 
 
-interface FishCard {
-    header: string;
-    info: { text: string, value: string }[];
-    weather: { text: string, value: string }[];
+interface CardFish {
+    header: string | null | undefined;
+    info: { text: string; value: string }[];
+    weather: { text: string; value: string }[];
 }
 
-export default function FishCard(props) {
+interface FishCardProps {
+    fishes: FishType[];
+    currentFishID: string;
+    closeCard: () => void;
+}
+
+export default function FishCard(props: FishCardProps) {
     const {
         closeCard, currentFishID,
         fishes
     } = props;
 
-    const [cardFish, setCardFish] = useState<FishCard | null >(null);
+    const [cardFish, setCardFish] = useState<CardFish | null>(null);
 
     useEffect(() => {
-        async function getFishData() {
-            const fish = await fishes.find(fish => fish.id === currentFishID);
+        function getFishData() {
+            const fish = fishes.find(fish => fish.id === currentFishID);
             const source = fish?.weather?.currentWeather?.weather;
             const fishData = {
-                header: fish.species,
+                header: fish?.species,
                 info: [
-                    { text: "Length: ", value: `${fish.cm}cm` },
-                    { text: "Catch date: ", value: fish.dateString },
-                    { text: "Catch location: ", value: fish.water }
+                    { text: "Length: ", value: `${fish?.cm || 'not available'}${fish?.cm ? 'cm' : ''}`},
+                    { text: "Catch date: ", value: fish?.dateString || 'not available' },
+                    { text: "Catch location: ", value: fish?.water || 'not available' }
                 ],
                 weather: [
-                    { text: "Temperature: ", value: `${source?.temp >= 0 ? '+' : ''}${source?.temp || "not available"}` },
+                    { text: "Temperature: ", value: `${((source?.temp ? source?.temp : 0) >= 0 ? '+' : '')}${source?.temp ?? "not available"}` },
                     { text: "Wind direction: ", value: source?.wind_direction || "not available" },
                     { text: 'Humidity: ', value: `${source?.humidity || "not available"}${source?.humidity ? '%' : ''}` },
                     { text: 'Pressure: ', value: `${source?.pressure || "not available"}${source?.pressure ? ' hPa' : ''}` },
                 ]
             }
-            setCardFish(fishData);
+            if (fishData) setCardFish(fishData);
         }
         getFishData();
     }, [currentFishID, fishes])
