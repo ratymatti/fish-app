@@ -6,7 +6,7 @@ import SpinningIcon from '../SpinningIcon/SpinningIcon';
 import createCoords from '../../modules/createCoords/createCoords';
 
 import { LocationContext } from '../../contexts/LocationContext';
-import { ActiveContext } from '../../contexts/ActiveContext';
+import { ActiveContext, ActiveState } from '../../contexts/ActiveContext';
 
 const options = {
     styles: mapStyles,
@@ -38,10 +38,10 @@ export default function Map(props) {
     function handleClick(event) {
         const selectedLocation = createCoords(event);
 
-        if (active === 'AddContainer') {
+        if (active === ActiveState.AddFish) {
             setFishGeolocation([selectedLocation]);
             setDisabled(false);
-        } else if (active === 'Weather') {
+        } else if (active === ActiveState.Weather) {
             setNewWeatherLocation([selectedLocation]);
         }
     }
