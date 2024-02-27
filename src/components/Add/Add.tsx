@@ -10,6 +10,7 @@ import validateForm from '../../modules/validateForm/validateForm.js';
 import { optionsSpecies, optionsWater } from '../../modules/options/options.js';
 import { FishContext, FishContextType } from '../../contexts/FishContext';
 import { CreateFishContext, CreateFishContextType } from '../../contexts/CreateFishContext';
+import { CurrentState } from '../AddContainer/AddContainer';
 
 
 const optionsCm: ValueLabelPair[] = [];
@@ -29,7 +30,7 @@ interface ValueLabelPair {
 
 interface AddProps {
     fishGeolocation: { location: { lat: number, lng: number } }[];
-    setCurrent: (current: string) => void;
+    setCurrent: (current: CurrentState) => void;
     setFishGeolocation: (fishGeolocation: any) => void;
     setError: (error: string) => void;
 }
@@ -72,7 +73,7 @@ export default function Add(props : AddProps) {
             return;
         }
 
-        setCurrent('loading');
+        setCurrent(CurrentState.Loading);
 
         try {
             const newFish = createFish();
@@ -81,7 +82,7 @@ export default function Add(props : AddProps) {
             console.error(err);
         }
         
-        setCurrent('map');
+        setCurrent(CurrentState.Map);
         getDocuments();
         setFishGeolocation([]);
     }
