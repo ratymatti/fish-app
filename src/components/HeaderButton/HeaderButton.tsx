@@ -1,14 +1,13 @@
 import React from 'react';
 import './HeaderButton.css';
 
-import { ActiveContext, ActiveContextType } from '../../contexts/ActiveContext';
+import { ActiveContext, ActiveContextType, ActiveState } from '../../contexts/ActiveContext';
 
 interface HeaderButtonProps {
-    buttonValue: string;
-    buttonText: string;
+    buttonValue: ActiveState;
 }
 
-export default function HeaderButton({ buttonValue, buttonText }: HeaderButtonProps) {
+export default function HeaderButton({ buttonValue }: HeaderButtonProps) {
     const { active, setActive } = React.useContext(ActiveContext) as ActiveContextType;
 
     return (
@@ -16,7 +15,7 @@ export default function HeaderButton({ buttonValue, buttonText }: HeaderButtonPr
             <button
                 onClick={() => setActive(buttonValue)}
                 className={active === buttonValue ? 'active' : ''}>
-                {buttonText}
+                {buttonValue}
             </button>
         </li>
     )
