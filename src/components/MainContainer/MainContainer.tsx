@@ -9,7 +9,7 @@ import Error from '../Error/Error';
 
 import { CreateFishProvider } from '../../contexts/CreateFishContext';
 import { UserContext } from '../../contexts/UserContext';
-import { ActiveContext, ActiveContextType } from '../../contexts/ActiveContext';
+import { ActiveContext, ActiveContextType, ActiveState } from '../../contexts/ActiveContext';
 
 interface MainContainerProps {
     setFreeze: (freeze: boolean) => void;
@@ -28,19 +28,19 @@ export default function MainContainer({ setFreeze }: MainContainerProps) {
     return (
         <div className='main-container'>
             {error && <Error
-                errorMessage={error}
+                error={error}
                 setError={setError} />}
-            {active === 'AddContainer' &&
+            {active === ActiveState.AddFish &&
                 <CreateFishProvider>
                     <AddContainer
                         setError={setError} />
                 </CreateFishProvider>}
-            {active === 'Log' &&
+            {active === ActiveState.Fishes &&
                 <Log
                     setFreeze={setFreeze} />}
-            {active === 'Weather' &&
+            {active === ActiveState.Weather &&
                 <Weather />}
-            {active === 'MapContainer' &&
+            {active === ActiveState.Map &&
                 <MapContainer />}
             {!isLoggedIn &&
                 <Auth />}
