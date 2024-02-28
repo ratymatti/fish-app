@@ -11,6 +11,7 @@ import { optionsSpecies, optionsWater } from '../../modules/options/options.js';
 import { FishContext, FishContextType } from '../../contexts/FishContext';
 import { CreateFishContext, CreateFishContextType } from '../../contexts/CreateFishContext';
 import { CurrentState } from '../AddContainer/AddContainer';
+import { LocationObject } from '../../modules/createCoords/createCoords';
 
 
 const optionsCm: ValueLabelPair[] = [];
@@ -29,7 +30,7 @@ interface ValueLabelPair {
 }
 
 interface AddProps {
-    fishGeolocation: { location: { lat: number, lng: number } }[];
+    fishGeolocation: LocationObject[];
     setCurrent: (current: CurrentState) => void;
     setFishGeolocation: (fishGeolocation: any) => void;
     setError: (error: string) => void;
