@@ -1,11 +1,11 @@
 /**
  * Function getCurrentTime
  * @description Returns the current time in the format HH:MM
- * @returns current time in format HH:MM as a string
+ * @returns string
  */
  
 
-function getCurrentTime() {
+export default function getCurrentTime(): string {
     const now = new Date();
     const minutes = now.getMinutes();
     const hours = now.getHours();
@@ -18,7 +18,5 @@ function getCurrentTime() {
 
     return currentTimeString;
 }
-
-export default getCurrentTime;
 
 
