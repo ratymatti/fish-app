@@ -4,7 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 export enum WeatherType {
     WEATHER = 'weather',
-    FORECAST = 'forecast'
+    FORECAST = 'forecast',
+    NOT_SET = 'not set'
 }
 
 enum Time {
@@ -16,7 +17,7 @@ interface Location {
     lng: number;
 }
 
-interface WeatherInfo {
+export interface WeatherInfo {
     icon: string;
     time: string;
     weather: {
@@ -31,8 +32,9 @@ interface WeatherInfo {
 
 export interface WeatherObject {
     type: WeatherType;
-    name: string;
+    name?: string;
     id: string;
+    info?: string;
     coords: Location;
     forecastArray?: WeatherInfo[] | [];
     currentWeather?: WeatherInfo | {};
@@ -87,6 +89,7 @@ export function useFetchWeather() {
             type: type,
             name: source.name,
             id: uuidv4(),
+            info: 'all good!',
             coords: {
                 lat: location.lat,
                 lng: location.lng
