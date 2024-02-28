@@ -25,3 +25,4 @@ yarn-error.log*
 
 # Ignore the firebase.js file
 firebase.js
+firebase.ts
