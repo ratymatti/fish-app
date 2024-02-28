@@ -10,7 +10,7 @@ enum WeatherRef {
     WEATHER = 'weather'
 }
 
-interface WeatherContextType {
+export interface WeatherContextType {
     currentLocationWeather: any;
     weatherTrackings: any[];
     addNewTracking: (coords: { lat: number; lng: number }) => void;
