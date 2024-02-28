@@ -2,7 +2,20 @@
  * Array of objects that contains styling for GoogleMaps -component
  */
 
-export const mapStyles = [
+interface Styler {
+    color?: string;
+    visibility?: string;
+    saturation?: number;
+    lightness?: number;
+}
+
+interface MapStyle {
+    featureType: string;
+    elementType: string;
+    stylers: Styler[];
+}
+
+export const mapStyles: MapStyle[] = [
     {
         "featureType": "administrative",
         "elementType": "labels.text.fill",
