@@ -4,7 +4,7 @@
  * @returns {string} - current date
  */
 
-function getCurrentDateString() {
+export default function getCurrentDateString(): string {
     const now = new Date();
     
     const day = now.getDate().toString().padStart(2, '0'); // Ensure two digits with leading zero
@@ -14,4 +14,3 @@ function getCurrentDateString() {
     return `${day}/${month}/${year}`;
 }
 
-export default getCurrentDateString;
