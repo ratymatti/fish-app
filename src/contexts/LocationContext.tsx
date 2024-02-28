@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 
 export interface LocationContextType {
-    userLocation: Location | null | undefined;
-    setUserLocation: (userLocation: Location | null | undefined) => void;
+    userLocation: UserLocation | null | undefined;
+    setUserLocation: (userLocation: UserLocation | null | undefined) => void;
     getLocation: () => Promise<{ lat: number; lng: number } | undefined>;
 }
 
-interface Location {
+export interface UserLocation {
     lat: number;
     lng: number;
 }
@@ -21,7 +21,7 @@ interface Position {
 export const LocationContext = React.createContext<LocationContextType | undefined>(undefined);
 
 export function LocationProvider({ children }: { children: React.ReactNode }) {
-    const [userLocation, setUserLocation] = useState<Location | null | undefined>();
+    const [userLocation, setUserLocation] = useState<UserLocation | null | undefined>();
 
     /**
     * Function getLocation
@@ -29,7 +29,7 @@ export function LocationProvider({ children }: { children: React.ReactNode }) {
     * @returns object that contains users geolocation information, key lat for latitude and lng for longitude
     */
 
-    async function getLocation(): Promise<Location | undefined>{
+    async function getLocation(): Promise<UserLocation | undefined>{
         if (navigator.geolocation) {
             try {
                 const position: Position = await new Promise((resolve, reject) => {
