@@ -3,20 +3,33 @@ import './Weather.css';
 import WeatherCard from '../WeatherCard/WeatherCard';
 import Map from '../Map/Map';
 
-import { WeatherContext } from '../../contexts/WeatherContext';
-import { LocationContext } from '../../contexts/LocationContext';
+import { WeatherContext, WeatherContextType } from '../../contexts/WeatherContext';
+import { LocationContext, LocationContextType } from '../../contexts/LocationContext';
+
+interface Location {
+    id: string;
+    location: {
+      lat: number;
+      lng: number;
+    };
+}
+
+enum Current {
+    WEATHER = 'weather',
+    MAP = 'map'
+}
 
 export default function Weather() {
     const {
         currentLocationWeather,
         weatherTrackings,
         addNewTracking,
-        removeFromTracking
-    } = React.useContext(WeatherContext);
-    const { location } = React.useContext(LocationContext);
+        removeFromTracking } = React.useContext(WeatherContext) as WeatherContextType;
 
-    const [current, setCurrent] = useState('weather');
-    const [newWeatherLocation, setNewWeatherLocation] = useState([]);
+    const { userLocation } = React.useContext(LocationContext) as LocationContextType;
+
+    const [current, setCurrent] = useState<Current>(Current.WEATHER);
+    const [newWeatherLocation, setNewWeatherLocation] = useState<Location[]>([]);
 
 
     function addToTracking() {
@@ -30,17 +43,17 @@ export default function Weather() {
         }
     }
 
-    function removeTracking(idToRemove) {
+    function removeTracking(idToRemove: string) {
         removeFromTracking(idToRemove);
     }
 
     function handleSelection() {
-        setCurrent('weather');
+        setCurrent(Current.WEATHER);
         addToTracking();
     }
 
 
-    if (current === 'weather') {
+    if (current === Current.WEATHER) {
         return (
             <div className='weather'>
                 {currentLocationWeather &&
@@ -53,16 +66,16 @@ export default function Weather() {
                         isRemovable={true}
                         removeTracking={removeTracking} />
                 ))}
-                <button onClick={() => setCurrent('map')}>Add new tracking</button>
+                <button onClick={() => setCurrent(Current.MAP)}>Add new tracking</button>
             </div>
         )
     }
 
-    if (current === 'map') {
+    if (current === Current.MAP) {
         return (
             <div className='map'>
                 <Map
-                    center={location}
+                    center={userLocation}
                     zoom={5}
                     markerLocations={newWeatherLocation}
                     setNewWeatherLocation={setNewWeatherLocation} />
@@ -70,5 +83,7 @@ export default function Weather() {
             </div>
         )
     }
+
+    else return null;
 }
 
