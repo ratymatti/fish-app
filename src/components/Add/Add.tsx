@@ -68,7 +68,7 @@ export default function Add(props : AddProps) {
     async function handleSubmit(event: React.FormEvent<HTMLButtonElement>) {
         event.preventDefault();
 
-        const errorMessage = validateForm(species, cm, water, location);
+        const errorMessage = validateForm({species, cm, water, location});
         if (errorMessage) {
             setError(errorMessage);
             return;
