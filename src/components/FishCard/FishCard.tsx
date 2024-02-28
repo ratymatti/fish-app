@@ -6,7 +6,7 @@ import { FishType } from '../../contexts/CreateFishContext';
 interface CardFish {
     header: string | null | undefined;
     info: { text: string; value: string }[];
-    weather: { text: string; value: string }[];
+    weather: { text: string; value: string | number }[];
 }
 
 interface FishCardProps {
@@ -26,7 +26,9 @@ export default function FishCard(props: FishCardProps) {
     useEffect(() => {
         function getFishData() {
             const fish = fishes.find(fish => fish.id === currentFishID);
-            const source = fish?.weather?.currentWeather?.weather;
+            const source = fish?.weather?.currentWeather && 'weather' in fish?.weather?.currentWeather 
+                ? fish.weather.currentWeather.weather 
+                : undefined;
             const fishData = {
                 header: fish?.species,
                 info: [
