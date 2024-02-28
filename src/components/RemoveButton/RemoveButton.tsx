@@ -2,15 +2,23 @@ import React, { useState } from 'react';
 import './RemoveButton.css';
 import { BsTrash } from 'react-icons/bs';
 
-export default function RemoveButton(props) {
-    const {
-        content,
-        removeTracking
-    } = props;
-    
-    const [clicked, setClicked] = useState(false);
+interface RemoveButtonProps {
+    content: {
+        header: string;
+        info: { text: string; value: string }[];
+        id: string;
+        icon: string;
+    };
+    removeTracking: (id: string) => void;
 
-    function handleClick(id) {
+}
+
+export default function RemoveButton(props: RemoveButtonProps) {
+    const { content, removeTracking } = props;
+    
+    const [clicked, setClicked] = useState<boolean>(false);
+
+    function handleClick(id: string) {
         removeTracking(id);
         setClicked(false);
     }
