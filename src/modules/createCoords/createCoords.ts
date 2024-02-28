@@ -1,5 +1,13 @@
 import { v4 as uuidv4 } from 'uuid';
 
+export interface LocationObject {
+    location: {
+        lat: number;
+        lng: number;
+    },
+    id: string;
+}
+
 /**
  * Function createCoords
  * used in Map.js to create a new location object
@@ -7,7 +15,7 @@ import { v4 as uuidv4 } from 'uuid';
  * @returns object with key location containing lat and lng properties and a unique id
  */
 
-function createCoords(event) {
+function createCoords(event: any) {
     const newLocationObject = {
         location: {
             lat: event.latLng.lat(),
