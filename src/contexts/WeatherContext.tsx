@@ -3,6 +3,7 @@ import { db } from '../config/firebase';
 import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { WeatherObject, WeatherType, useFetchWeather } from '../hooks/useFetchWeather';
 import { LocationContext, LocationContextType } from './LocationContext';
+import { Location } from '../types/location';
 
 export const WeatherContext = React.createContext<WeatherContextType | undefined>(undefined);
 
@@ -13,16 +14,12 @@ enum WeatherRef {
 export interface WeatherContextType {
     currentLocationWeather: any;
     weatherTrackings: any[];
-    addNewTracking: (coords: { lat: number; lng: number }) => void;
+    addNewTracking: (coords: Location) => void;
     removeFromTracking: (idToRemove: string) => void;
 }
 
-interface Location {
-    lat: number;
-    lng: number;
-}
 
-export function WeatherProvider({ children }: { children: React.ReactNode }) {
+export function WeatherProvider({ children }: { children: React.ReactNode }): JSX.Element {
     const [currentLocationWeather, setCurrentLocationWeather] = useState<WeatherObject | null>(null);
     const [weatherTrackings, setWeatherTrackings] = useState<WeatherObject[]>([]);
 
@@ -32,7 +29,7 @@ export function WeatherProvider({ children }: { children: React.ReactNode }) {
 
     const { fetchWeather } = useFetchWeather();
 
-    async function getDocuments() {
+    async function getDocuments(): Promise<void> {
         try {
             const data = await getDocs(weatherRef);
             const filteredData = data.docs.map((doc) => {
@@ -51,7 +48,7 @@ export function WeatherProvider({ children }: { children: React.ReactNode }) {
         }
     }
 
-    async function addNewTracking(coords: Location) {
+    async function addNewTracking(coords: Location): Promise<void> {
         const weatherObject = await fetchWeather(coords, WeatherType.WEATHER);
         try {
             await addDoc(weatherRef, weatherObject);
@@ -61,7 +58,7 @@ export function WeatherProvider({ children }: { children: React.ReactNode }) {
         }
     }
 
-    async function updateWeatherTrackings() {
+    async function updateWeatherTrackings(): Promise<void> {
         const updatePromises = weatherTrackings.map(async (tracking) => {
             try {
                 const weatherDoc = doc(db, WeatherRef.WEATHER, tracking.id);
@@ -77,7 +74,7 @@ export function WeatherProvider({ children }: { children: React.ReactNode }) {
         getDocuments();
     }
 
-    async function removeFromTracking(idToRemove: string) {
+    async function removeFromTracking(idToRemove: string): Promise<void> {
         const weatherDoc = doc(db, WeatherRef.WEATHER, idToRemove);
         await deleteDoc(weatherDoc);
         getDocuments();
@@ -88,7 +85,7 @@ export function WeatherProvider({ children }: { children: React.ReactNode }) {
     }, []); // Empty dependency array because this needs to run only once for now
 
     useEffect(() => {
-        const getCurrentWeather = async () => {
+        const getCurrentWeather = async (): Promise<void> => {
             try {
                 const location: Location | undefined = await getLocation();
 
