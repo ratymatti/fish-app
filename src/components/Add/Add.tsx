@@ -50,6 +50,10 @@ enum FishRef {
     FISHES = 'fishes'
 }
 
+const styleOptions = {
+    option: (styles) => ({ ...styles, color: 'black' })
+};
+
 export default function Add(props : AddProps): JSX.Element {
     const {
         fishGeolocation, setCurrent,
@@ -99,11 +103,6 @@ export default function Add(props : AddProps): JSX.Element {
             });
         }
     }, [fishGeolocation]);
-
-    const styleOptions = {
-        option: (styles) => ({ ...styles, color: 'black' })
-    };
-
 
     return (
         <div className='add'>
