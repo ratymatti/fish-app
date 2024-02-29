@@ -11,7 +11,7 @@ import { optionsSpecies, optionsWater } from '../../modules/options/options';
 import { FishContext, FishContextType } from '../../contexts/FishContext';
 import { CreateFishContext, CreateFishContextType } from '../../contexts/CreateFishContext';
 import { CurrentState } from '../AddContainer/AddContainer';
-import { LocationObject } from '../../modules/createCoords/createCoords';
+import { LocationObject } from '../../types/location';
 
 
 const optionsCm: ValueLabelPair[] = [];
@@ -32,21 +32,25 @@ interface ValueLabelPair {
 interface AddProps {
     fishGeolocation: LocationObject[];
     setCurrent: (current: CurrentState) => void;
-    setFishGeolocation: (fishGeolocation: any) => void;
+    setFishGeolocation: (fishGeolocation: LocationObject[]) => void;
     setError: (error: string) => void;
 }
 
 type OptionTypeString = {
-    label: string | null | undefined;
-    value: string | null | undefined;
+    label: string;
+    value: string;
 }
 
 type OptionTypeNumber = {
-    label: string | null | undefined;
-    value: number | null | undefined;
+    label: string;
+    value: number;
 }
 
-export default function Add(props : AddProps) {
+enum FishRef {
+    FISHES = 'fishes'
+}
+
+export default function Add(props : AddProps): JSX.Element {
     const {
         fishGeolocation, setCurrent,
         setFishGeolocation, setError
@@ -58,14 +62,13 @@ export default function Add(props : AddProps) {
         species, setSpecies,
         cm, setCm,
         water, setWater,
-        setComment, createFish
-    } = React.useContext(CreateFishContext) as CreateFishContextType;
+        setComment, createFish } = React.useContext(CreateFishContext) as CreateFishContextType;
 
     const { getDocuments } = React.useContext(FishContext) as FishContextType;
 
-    const fishesRef = collection(db, "fishes");
+    const fishesRef = collection(db, FishRef.FISHES);
 
-    async function handleSubmit(event: React.FormEvent<HTMLButtonElement>) {
+    async function handleSubmit(event: React.FormEvent<HTMLButtonElement>): Promise<void>{
         event.preventDefault();
 
         const errorMessage = validateForm({species, cm, water, location});
