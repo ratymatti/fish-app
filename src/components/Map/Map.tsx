@@ -3,10 +3,11 @@ import { GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api';
 import './Map.css';
 import { mapStyles } from '../../modules/mapStyles/mapStyles';
 import SpinningIcon from '../SpinningIcon/SpinningIcon';
-import createCoords, { LocationObject } from '../../modules/createCoords/createCoords';
+import createCoords from '../../modules/createCoords/createCoords';
 
-import { LocationContext, LocationContextType, UserLocation } from '../../contexts/LocationContext';
+import { LocationContext, LocationContextType } from '../../contexts/LocationContext';
 import { ActiveContext, ActiveContextType, ActiveState } from '../../contexts/ActiveContext';
+import { Location, LocationObject } from '../../types/location';
 
 
 const options = {
@@ -14,23 +15,23 @@ const options = {
     disableDefaultUI: true,
     mapTypeControl: true,
     zoomControl: true,
-};
+}
 
 interface MapProps {
-    markerLocations: { id: string; location: { lat: number; lng: number } }[];
+    markerLocations: LocationObject[];
     zoom: number;
     setFishGeolocation?: (value: LocationObject[]) => void;
     setDisabled?: (value: boolean) => void;
     setNewWeatherLocation?: (value: any) => void;
-    center?: UserLocation | undefined | null;
+    center?: Location | null;
 }
 
 interface Marker {
     id: string;
-    location: { lat: number; lng: number };
+    location: Location;
 }
 
-export default function Map(props: MapProps) {
+export default function Map(props: MapProps): JSX.Element {
     const {
         markerLocations,
         zoom, setFishGeolocation,
@@ -46,11 +47,11 @@ export default function Map(props: MapProps) {
     const { userLocation } = React.useContext(LocationContext) as LocationContextType;
     const { active } = React.useContext(ActiveContext) as ActiveContextType;
 
-    let center: UserLocation = { lat: 67.92, lng: 26.5 };
+    let center: Location = { lat: 67.92, lng: 26.5 };
 
     if (userLocation) center = userLocation;
 
-    function handleClick(event: any) {
+    function handleClick(event: any): void{
         const selectedLocation = createCoords(event);
 
         if (active === ActiveState.AddFish) {
