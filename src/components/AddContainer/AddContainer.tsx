@@ -4,7 +4,7 @@ import Add from '../Add/Add';
 import './AddContainer.css';
 import SpinningIcon from '../SpinningIcon/SpinningIcon';
 import { LocationContext, LocationContextType } from '../../contexts/LocationContext';
-import { LocationObject } from '../../modules/createCoords/createCoords';
+import { LocationObject } from '../../types/location';
 
 
 interface AddContainerProps {
@@ -17,7 +17,7 @@ export enum CurrentState {
     Loading = 'loading'
 }
 
-export default function AddContainer(props: AddContainerProps) {
+export default function AddContainer(props: AddContainerProps): JSX.Element | null {
     const { setError } = props;
 
     const [current, setCurrent] = useState<CurrentState>(CurrentState.Map);
@@ -26,7 +26,7 @@ export default function AddContainer(props: AddContainerProps) {
 
     const { userLocation, setUserLocation } = React.useContext(LocationContext) as LocationContextType;
 
-    function handleClick() {
+    function handleClick(): void {
         if (fishGeolocation.length) {
             setUserLocation(
                 {
@@ -34,8 +34,8 @@ export default function AddContainer(props: AddContainerProps) {
                     lng: fishGeolocation[0].location.lng
                 }
             );
-            }    
-            setCurrent(CurrentState.Map);
+        }    
+        setCurrent(CurrentState.Map);
     }
 
 
