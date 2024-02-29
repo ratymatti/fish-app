@@ -3,8 +3,9 @@ import Map from '../Map/Map';
 import { FishContext, FishContextType } from '../../contexts/FishContext';
 import { LocationContext, LocationContextType } from '../../contexts/LocationContext';
 import { FishType } from '../../contexts/CreateFishContext';
+import { Location } from '../../types/location';
 
-export default function MapContainer() {
+export default function MapContainer(): JSX.Element {
     const { fishes } = React.useContext(FishContext) as FishContextType;
     const { userLocation } = React.useContext(LocationContext) as LocationContextType;
 
@@ -16,8 +17,8 @@ export default function MapContainer() {
             return {
                 id: fish.id as string,
                 location: {
-                    lat: (fish.location as { lat: number; lng: number; }).lat,
-                    lng: (fish.location as { lat: number; lng: number; }).lng
+                    lat: (fish.location as Location).lat,
+                    lng: (fish.location as Location).lng
                 }
             }
         });
