@@ -10,7 +10,7 @@ import { LocationObject } from '../../types/location';
 
 export default function createCoords(event: any): LocationObject {
     const newLocationObject = {
-        location: {
+        geolocation: {
             lat: event.latLng.lat(),
             lng: event.latLng.lng(),
         },
