@@ -1,34 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Map from '../Map/Map';
 import { FishContext, FishContextType } from '../../contexts/FishContext';
 import { LocationContext, LocationContextType } from '../../contexts/LocationContext';
 import { FishType } from '../../contexts/CreateFishContext';
 import { Location, LocationObject } from '../../types/location';
 
-const filterAndTransformFishes = (fishes: FishType[]): LocationObject[] => {
-    return fishes
-        .filter(fish => fish.id && fish.location)
+const filterAndTransformFishes = (userFishArr: FishType[]): LocationObject[] => {
+    return userFishArr
+        .filter(fish => fish.id && fish.geolocation)
         .map(fish => ({
             id: fish.id as string,
-            location: {
-                lat: (fish.location as Location).lat,
-                lng: (fish.location as Location).lng
+            geolocation: {
+                lat: (fish.geolocation as Location).lat,
+                lng: (fish.geolocation as Location).lng
             }
         }));
 }
 
 export default function MapContainer(): JSX.Element {
-    const { fishes } = React.useContext(FishContext) as FishContextType;
+    const { userFishArr } = React.useContext(FishContext) as FishContextType;
     const { userLocation } = React.useContext(LocationContext) as LocationContextType;
 
-    const validFishArray: LocationObject[] = filterAndTransformFishes(fishes);
+    const [fishGeolocationArr, setFishGeolocationArr] = useState<LocationObject[]>([]);
+
+    useEffect(() => {
+        const validFishArray: LocationObject[] = filterAndTransformFishes(userFishArr);
+        setFishGeolocationArr(validFishArray);
+    }, [userFishArr]);
 
     return (
         <div className='map-container'>
             <Map
                 center={userLocation}
                 zoom={10}
-                markerLocations={validFishArray} />
+                markerLocations={fishGeolocationArr} />
         </div>
     )
 }
