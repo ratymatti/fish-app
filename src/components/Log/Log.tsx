@@ -33,7 +33,7 @@ export default function Log(props: LogProps) {
     if (!fishContext) {
         throw new Error("FishContext is undefined");
     }
-    const { userFishArr, setUserFishArr } = fishContext;
+    const { userFishArr, setUserFishArr, removeFishObject } = fishContext;
 
     function handleClick(field: Field) {
         if (field === currentField) {
@@ -56,6 +56,11 @@ export default function Log(props: LogProps) {
         setCurrentFishID(null);
     }
 
+    function handleRemove(idToRemove: string) {
+        removeFishObject(idToRemove);
+        closeCard();
+    }
+
     useEffect(() => {
         sortByField(Field.DATE, SortDirection.DESC);
     }, [])
@@ -70,7 +75,8 @@ export default function Log(props: LogProps) {
             {currentFishID && <FishCard
                 closeCard={closeCard}
                 currentFishID={currentFishID}
-                userFishArr={userFishArr} />}
+                userFishArr={userFishArr}
+                handleRemove={handleRemove} />}
             <div className='table'>
                 <table>
                     <thead>
@@ -87,7 +93,7 @@ export default function Log(props: LogProps) {
                             <tr onClick={() => setCurrentFishID(fish.id)} className='row' key={fish.id}>
                                 <td>{fish.species}</td>
                                 <td>{fish.cm}cm</td>
-                                <td>{fish.water}</td>
+                                <td>{fish.locationName}</td>
                                 <td>{fish.dateString}</td>
                             </tr>
                         ))}
