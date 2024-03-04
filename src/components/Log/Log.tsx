@@ -33,7 +33,7 @@ export default function Log(props: LogProps) {
     if (!fishContext) {
         throw new Error("FishContext is undefined");
     }
-    const { fishes, setFishes } = fishContext;
+    const { userFishArr, setUserFishArr } = fishContext;
 
     function handleClick(field: Field) {
         if (field === currentField) {
@@ -48,8 +48,8 @@ export default function Log(props: LogProps) {
     }
 
     function sortByField(field: Field, direction: SortDirection) {
-        const sortedFishes = sortFishes(field, fishes, direction);
-        setFishes(sortedFishes);
+        const sortedFishes = sortFishes(field, userFishArr, direction);
+        setUserFishArr(sortedFishes);
     }
 
     function closeCard() {
@@ -70,7 +70,7 @@ export default function Log(props: LogProps) {
             {currentFishID && <FishCard
                 closeCard={closeCard}
                 currentFishID={currentFishID}
-                fishes={fishes} />}
+                userFishArr={userFishArr} />}
             <div className='table'>
                 <table>
                     <thead>
@@ -82,7 +82,7 @@ export default function Log(props: LogProps) {
                         </tr>
                     </thead>
                     <tbody>
-                        {fishes.slice(0).reverse().map(fish => (
+                        {userFishArr.slice(0).reverse().map(fish => (
 
                             <tr onClick={() => setCurrentFishID(fish.id)} className='row' key={fish.id}>
                                 <td>{fish.species}</td>
