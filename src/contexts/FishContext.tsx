@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../config/firebase';
-import { DocumentSnapshot, collection, getDocs } from 'firebase/firestore';
+import { DocumentSnapshot, collection, deleteDoc, doc, getDocs } from 'firebase/firestore';
 import { sortFishes } from '../modules/sortFishes/sortFishes';
 import { FishType } from './CreateFishContext';
 import { Field, SortDirection } from '../components/Log/Log';
@@ -12,6 +12,7 @@ export interface FishContextType {
     userFishArr: FishType[]; // RENAME THIS TO FishObject
     setUserFishArr: (fishes: FishType[]) => void;
     getDocuments: () => void;
+    removeFishObject: (idToRemove: string) => void;
 }
 
 enum FishRef {
@@ -53,12 +54,18 @@ export function FishProvider({ children }: { children: React.ReactNode }): JSX.E
         }
     }
 
+    async function removeFishObject(idToRemove: string): Promise<void> {
+        const fishDoc = doc(db, FishRef.FISHES, idToRemove);
+        await deleteDoc(fishDoc);
+        getDocuments();
+    }
+
     useEffect(() => {
         getDocuments();
     }, []); // Empty dependency array because this needs to run only once for now
 
     return (
-        <FishContext.Provider value={{ userFishArr, setUserFishArr, getDocuments }}>
+        <FishContext.Provider value={{ userFishArr, setUserFishArr, getDocuments, removeFishObject }}>
             {children}
         </FishContext.Provider>
     )
