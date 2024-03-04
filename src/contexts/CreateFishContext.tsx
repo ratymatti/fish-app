@@ -9,7 +9,7 @@ import { Location } from '../types/location';
 
 export interface CreateFishContextType {
     geolocation: Location | null;
-    setGeolocation: (location: Location | null) => void;
+    setGeolocation: (geolocation: Location | null) => void;
     catchDate: Date | null;
     setCatchDate: (date: Date | null) => void;
     species: string | null;
