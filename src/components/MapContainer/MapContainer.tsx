@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Map from '../Map/Map';
 import { FishContext, FishContextType } from '../../contexts/FishContext';
 import { LocationContext, LocationContextType } from '../../contexts/LocationContext';
-import { FishType } from '../../contexts/CreateFishContext';
 import { Location, LocationObject } from '../../types/location';
+import { FishObject } from '../../types/fish'; 
 
-const filterAndTransformFishes = (userFishArr: FishType[]): LocationObject[] => {
+const filterAndTransformFishes = (userFishArr: FishObject[]): LocationObject[] => {
     return userFishArr
         .filter(fish => fish.id && fish.geolocation)
         .map(fish => ({
