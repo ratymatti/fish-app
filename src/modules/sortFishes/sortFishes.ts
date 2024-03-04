@@ -27,7 +27,7 @@ export const sortFishes = (field: Field, userFishArr: FishType[], direction: Sor
 
             case Field.LOCATION:
                 return fishesCopy.sort((fishA, fishB) => {
-                    const waterComparison = (fishB.water || '').localeCompare(fishA.water || '') ?? 0;
+                    const waterComparison = (fishB.locationName || '').localeCompare(fishA.locationName || '') ?? 0;
                     return waterComparison === 0 ? (fishB.cm ?? 0) - (fishA.cm ?? 0) : waterComparison;
                 });
 
