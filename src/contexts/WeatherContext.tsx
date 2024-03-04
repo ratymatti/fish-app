@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../config/firebase';
 import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
-import { WeatherObject, WeatherType, useFetchWeather } from '../hooks/useFetchWeather';
+import { useFetchWeather } from '../hooks/useFetchWeather';
+import { WeatherObject, WeatherType } from '../types/weather';
 import { LocationContext, LocationContextType } from './LocationContext';
 import { Location } from '../types/location';
 
@@ -13,7 +14,7 @@ enum WeatherRef {
 
 export interface WeatherContextType {
     currentLocationWeather: any;
-    weatherTrackings: any[];
+    weatherTrackings: WeatherObject[];
     addNewTracking: (coords: Location) => void;
     removeFromTracking: (idToRemove: string) => void;
 }
