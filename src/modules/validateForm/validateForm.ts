@@ -5,7 +5,7 @@
  *  are provided correctly
  * @param {*} species 
  * @param {*} cm 
- * @param {*} water 
+ * @param {*} locationName 
  * @param {*} fishGeolocation 
  * @returns string or null
  */
@@ -13,19 +13,19 @@
 interface ValidateFormParams {
     species: string | null | undefined;
     cm: number | null | undefined;
-    water: string | null | undefined;
+    locationName: string | null | undefined;
     geolocation: {
         lat: number;
         lng: number;
     } | null | undefined;
 }
 
-function validateForm({species, cm, water, geolocation}: ValidateFormParams): string | null {
+function validateForm({species, cm, locationName, geolocation}: ValidateFormParams): string | null {
     if (!species) return 'Species is required';
         
     if (!cm || isNaN(cm) || cm <= 0) return 'Length must be greater than 0';
     
-    if (!water) return 'Location is required.';
+    if (!locationName) return 'Location is required.';
     
     if (!geolocation) return 'Geolocation is required.';
     
