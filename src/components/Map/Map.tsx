@@ -28,7 +28,7 @@ interface MapProps {
 
 interface Marker {
     id: string;
-    location: Location;
+    geolocation: Location;
 }
 
 export default function Map(props: MapProps): JSX.Element {
@@ -88,8 +88,8 @@ export default function Map(props: MapProps): JSX.Element {
                 key={marker.id.valueOf()}
                 position={
                     {
-                        lat: marker.location?.lat,
-                        lng: marker.location?.lng
+                        lat: marker.geolocation?.lat,
+                        lng: marker.geolocation?.lng
                     }
                 } />)}
         </GoogleMap>
