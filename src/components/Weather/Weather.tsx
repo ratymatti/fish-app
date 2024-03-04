@@ -8,7 +8,7 @@ import { LocationContext, LocationContextType } from '../../contexts/LocationCon
 
 interface Location {
     id: string;
-    location: {
+    geolocation: {
       lat: number;
       lng: number;
     };
@@ -35,8 +35,8 @@ export default function Weather() {
     function addToTracking() {
         if (newWeatherLocation.length) {
             const coords = {
-                lat: newWeatherLocation[0].location.lat,
-                lng: newWeatherLocation[0].location.lng
+                lat: newWeatherLocation[0].geolocation.lat,
+                lng: newWeatherLocation[0].geolocation.lng
             }
             addNewTracking(coords);
             setNewWeatherLocation([]);
