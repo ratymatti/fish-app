@@ -49,6 +49,6 @@ export interface Position {
  */
 
 export interface LocationObject {
-    location: Location,
+    geolocation: Location,
     id: string;
 }
