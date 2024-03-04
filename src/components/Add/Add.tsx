@@ -65,7 +65,7 @@ export default function Add(props : AddProps): JSX.Element {
         catchDate, setCatchDate,
         species, setSpecies,
         cm, setCm,
-        water, setWater,
+        locationName, setLocationName,
         setComment, createFish } = React.useContext(CreateFishContext) as CreateFishContextType;
 
     const { getDocuments } = React.useContext(FishContext) as FishContextType;
@@ -75,7 +75,8 @@ export default function Add(props : AddProps): JSX.Element {
     async function handleSubmit(event: React.FormEvent<HTMLButtonElement>): Promise<void>{
         event.preventDefault();
 
-        const errorMessage = validateForm({species, cm, water, geolocation});
+        const errorMessage = validateForm({species, cm, locationName, geolocation});
+        
         if (errorMessage) {
             setError(errorMessage);
             return;
@@ -141,8 +142,8 @@ export default function Add(props : AddProps): JSX.Element {
                         options={optionsWater}
                         placeholder='Select location name'
                         styles={styleOptions}
-                        onChange={(selectedWater: SingleValue<OptionTypeString>) => {
-                            if (selectedWater && selectedWater.value) setWater(selectedWater.value);
+                        onChange={(selectedLocationName: SingleValue<OptionTypeString>) => {
+                            if (selectedLocationName && selectedLocationName.value) setLocationName(selectedLocationName.value);
                         }} />
                 </div>
                 <div className='select'>
