@@ -8,8 +8,8 @@ import { Location } from '../types/location';
 
 
 export interface CreateFishContextType {
-    location: Location | null;
-    setLocation: (location: Location | null) => void;
+    geolocation: Location | null;
+    setGeolocation: (location: Location | null) => void;
     catchDate: Date | null;
     setCatchDate: (date: Date | null) => void;
     species: string | null;
@@ -32,7 +32,7 @@ export interface FishType {
     water: string | null | undefined;
     comment: string | null | undefined;
     weather: WeatherObject | null | undefined;
-    location: Location | null | undefined;
+    geolocation: Location | null | undefined;
 }
 
 const defaultWeather: WeatherObject = {
@@ -49,7 +49,7 @@ export const CreateFishContext = React.createContext<CreateFishContextType | und
 
 export function CreateFishProvider({ children }: { children: React.ReactNode }): JSX.Element {
 
-    const [location, setLocation] = useState<Location | null>(null);
+    const [geolocation, setGeolocation] = useState<Location | null>(null);
     const [catchDate, setCatchDate] = useState<Date | null>(null);
     const [species, setSpecies] = useState<string | null>(null);
     const [cm, setCm] = useState<number | null>(null);
@@ -80,9 +80,9 @@ export function CreateFishProvider({ children }: { children: React.ReactNode }):
                 forecastArray: weather.forecastArray || [],
                 currentWeather: weather.currentWeather || {},
             },
-            location: {
-                lat: location!.lat,
-                lng: location!.lng
+            geolocation: {
+                lat: geolocation!.lat,
+                lng: geolocation!.lng
             }
         }
         setStatesToDefault();
@@ -90,7 +90,7 @@ export function CreateFishProvider({ children }: { children: React.ReactNode }):
     }
 
     function setStatesToDefault(): void {
-        setLocation(null);
+        setGeolocation(null);
         setCatchDate(null);
         setSpecies(null);
         setCm(null);
@@ -102,17 +102,17 @@ export function CreateFishProvider({ children }: { children: React.ReactNode }):
     useEffect(() => {
         if (catchDate && catchDate.getDate() === new Date().getDate()) {
             const getWeather = async () => {
-                if (location) {
-                    const response = await fetchWeather(location, WeatherType.WEATHER);
+                if (geolocation) {
+                    const response = await fetchWeather(geolocation, WeatherType.WEATHER);
                     if (response) setWeather(response);
                 }
             }
             getWeather();    
         }
-    }, [catchDate, location]);
+    }, [catchDate, geolocation]);
 
     return (
-        <CreateFishContext.Provider value={{    location, setLocation,
+        <CreateFishContext.Provider value={{    geolocation, setGeolocation,
                                                 catchDate, setCatchDate,
                                                 species, setSpecies,
                                                 cm, setCm,
