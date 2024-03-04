@@ -1,48 +1,12 @@
 import getCurrentTime from '../modules/getCurrentTime/getCurrentTime';
 import getCurrentDateString from '../modules/getCurrentDateString/getCurrentDateString';
 import { v4 as uuidv4 } from 'uuid';
-
-export enum WeatherType {
-    WEATHER = 'weather',
-    FORECAST = 'forecast',
-    NOT_SET = 'not set'
-}
-
-enum Time {
-    TIME = '12:00:00'
-}
-
-interface Location {
-    lat: number;
-    lng: number;
-}
-
-export interface WeatherInfo {
-    icon: string;
-    time: string;
-    weather: {
-        temp: number;
-        feels_like: number;
-        humidity: number;
-        pressure: number;
-        wind_speed: number;
-        wind_direction: number;
-    };
-} // LOOK INTO THIS
-
-export interface WeatherObject {
-    type: WeatherType;
-    name?: string;
-    id: string;
-    info?: string;
-    coords: Location;
-    forecastArray?: WeatherInfo[] | [];
-    currentWeather?: WeatherInfo | {};
-
-}
+import { Location } from '../types/location';
+import { Time, WeatherType } from '../types/weather';
+import { WeatherInfo, WeatherObject } from '../types/weather';
 
 
-export function useFetchWeather() {
+export function useFetchWeather(): { fetchWeather: (location: Location, type: WeatherType) => Promise<WeatherObject | undefined> }{
 
     /**
     * Function name fetchWeather
@@ -53,7 +17,7 @@ export function useFetchWeather() {
     */
 
 
-    async function fetchWeather(location: Location, type: WeatherType) {
+    async function fetchWeather(location: Location, type: WeatherType): Promise<WeatherObject | undefined>{
         const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
         const units = 'metric';
         const apiUrl = `https://api.openweathermap.org/data/2.5/${type}?`;
