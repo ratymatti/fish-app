@@ -5,14 +5,14 @@ import { FishType } from '../../contexts/CreateFishContext';
  * Sorts an array of fish objects based on the selected field and direction.
  * 
  * @param {string} field - The field to sort the fish objects by (e.g., 'species', 'cm', 'water', 'date').
- * @param {Array} fishes - The array of fish objects to be sorted.
+ * @param {Array} userFishArr - The array of fish objects to be sorted.
  * @param {string} direction - The sorting direction ('asc' for ascending, 'desc' for descending).
  * 
  * @returns {Array} - The sorted array of fish objects.
  */
 
-export const sortFishes = (field: Field, fishes: FishType[], direction: SortDirection): FishType[] => {
-    const fishesCopy = [...fishes];
+export const sortFishes = (field: Field, userFishArr: FishType[], direction: SortDirection): FishType[] => {
+    const fishesCopy = [...userFishArr];
 
     function sortFishesByField() {
         switch (field) {
@@ -23,7 +23,7 @@ export const sortFishes = (field: Field, fishes: FishType[], direction: SortDire
                 });
 
             case Field.LENGTH:
-                return fishes.sort((fishA, fishB) => (fishA.cm ?? 0) - (fishB.cm ?? 0));
+                return fishesCopy.sort((fishA, fishB) => (fishA.cm ?? 0) - (fishB.cm ?? 0));
 
             case Field.LOCATION:
                 return fishesCopy.sort((fishA, fishB) => {
