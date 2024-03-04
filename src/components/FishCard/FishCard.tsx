@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './FishCard.css';
-import { FishType } from '../../contexts/CreateFishContext';
+import { FishObject } from '../../types/fish';
 
 
 interface CardFish {
@@ -10,7 +10,7 @@ interface CardFish {
 }
 
 interface FishCardProps {
-    userFishArr: FishType[];
+    userFishArr: FishObject[];
     currentFishID: string;
     closeCard: () => void;
     handleRemove: (idToRemove: string) => void;
