@@ -13,28 +13,30 @@ interface FishCardProps {
     userFishArr: FishType[];
     currentFishID: string;
     closeCard: () => void;
+    handleRemove: (idToRemove: string) => void;
 }
 
 export default function FishCard(props: FishCardProps) {
     const {
         closeCard, currentFishID,
-        userFishArr
+        userFishArr, handleRemove
     } = props;
 
     const [cardFish, setCardFish] = useState<CardFish | null>(null);
 
+
     useEffect(() => {
         function getFishData() {
             const fish = userFishArr.find(fish => fish.id === currentFishID);
-            const source = fish?.weather?.currentWeather && 'weather' in fish?.weather?.currentWeather 
-                ? fish.weather.currentWeather.weather 
+            const source = fish?.weather?.currentWeather && 'weather' in fish?.weather?.currentWeather
+                ? fish.weather.currentWeather.weather
                 : undefined;
             const fishData = {
                 header: fish?.species,
                 info: [
-                    { text: "Length: ", value: `${fish?.cm || 'not available'}${fish?.cm ? 'cm' : ''}`},
+                    { text: "Length: ", value: `${fish?.cm || 'not available'}${fish?.cm ? 'cm' : ''}` },
                     { text: "Catch date: ", value: fish?.dateString || 'not available' },
-                    { text: "Catch location: ", value: fish?.water || 'not available' }
+                    { text: "Catch location: ", value: fish?.locationName || 'not available' }
                 ],
                 weather: [
                     { text: "Temperature: ", value: `${((source?.temp ? source?.temp : 0) >= 0 ? '+' : '')}${source?.temp ?? "not available"}` },
@@ -68,6 +70,8 @@ export default function FishCard(props: FishCardProps) {
                             <h5 key={index}>{text}{value}</h5>
                         ))
                     }
+                    <br></br>
+                    <button onClick={() => handleRemove(currentFishID)}>delete</button>
                 </div>
             </div>
         )
