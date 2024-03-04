@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import getCurrentDateString from '../modules/getCurrentDateString/getCurrentDateString';
 import { v4 as uuidv4 } from 'uuid';
-import { WeatherObject, WeatherType, useFetchWeather } from '../hooks/useFetchWeather';
+import { useFetchWeather } from '../hooks/useFetchWeather';
 
-import { Timestamp } from 'firebase/firestore';
 import { Location } from '../types/location';
+import { FishObject } from '../types/fish';
+import { WeatherObject, WeatherType } from '../types/weather'; 
 
 
 export interface CreateFishContextType {
@@ -20,19 +21,7 @@ export interface CreateFishContextType {
     setLocationName: (locationName: string | null) => void;
     comment?: string;
     setComment: (comment: string) => void;
-    createFish: () => FishType;  
-}
-
-export interface FishType {
-    id: string | undefined | null;
-    species: string | null | undefined;
-    cm: number | null | undefined;
-    date: Date | Timestamp | null | undefined;
-    dateString: string | null | undefined;
-    locationName: string | null | undefined;
-    comment: string | null | undefined;
-    weather: WeatherObject | null | undefined;
-    geolocation: Location | null | undefined;
+    createFish: () => FishObject;  
 }
 
 const defaultWeather: WeatherObject = {
@@ -60,10 +49,10 @@ export function CreateFishProvider({ children }: { children: React.ReactNode }):
     const { fetchWeather } = useFetchWeather();
 
     
-    function createFish(): FishType {
+    function createFish(): FishObject {
         const newID = uuidv4();
 
-        const newFish: FishType = {
+        const newFish: FishObject = {
             species: species,
             cm: cm,
             locationName: locationName,
