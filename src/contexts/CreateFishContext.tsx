@@ -16,8 +16,8 @@ export interface CreateFishContextType {
     setSpecies: (species: string | null) => void;
     cm: number | null;
     setCm: (cm: number) => void;
-    water: string | null;
-    setWater: (water: string | null) => void;
+    locationName: string | null;
+    setLocationName: (locationName: string | null) => void;
     comment?: string;
     setComment: (comment: string) => void;
     createFish: () => FishType;  
@@ -29,7 +29,7 @@ export interface FishType {
     cm: number | null | undefined;
     date: Date | Timestamp | null | undefined;
     dateString: string | null | undefined;
-    water: string | null | undefined;
+    locationName: string | null | undefined;
     comment: string | null | undefined;
     weather: WeatherObject | null | undefined;
     geolocation: Location | null | undefined;
@@ -53,7 +53,7 @@ export function CreateFishProvider({ children }: { children: React.ReactNode }):
     const [catchDate, setCatchDate] = useState<Date | null>(null);
     const [species, setSpecies] = useState<string | null>(null);
     const [cm, setCm] = useState<number | null>(null);
-    const [water, setWater] = useState<string | null>(null);
+    const [locationName, setLocationName] = useState<string | null>(null);
     const [comment, setComment] = useState<string | null>(null);
     const [weather, setWeather] = useState<WeatherObject>(defaultWeather);
 
@@ -66,7 +66,7 @@ export function CreateFishProvider({ children }: { children: React.ReactNode }):
         const newFish: FishType = {
             species: species,
             cm: cm,
-            water: water,
+            locationName: locationName,
             comment: comment,
             date: catchDate!,
             dateString: getCurrentDateString(),
@@ -94,7 +94,7 @@ export function CreateFishProvider({ children }: { children: React.ReactNode }):
         setCatchDate(null);
         setSpecies(null);
         setCm(null);
-        setWater(null);
+        setLocationName(null);
         setComment(null);
         setWeather(defaultWeather);
     }
@@ -116,7 +116,7 @@ export function CreateFishProvider({ children }: { children: React.ReactNode }):
                                                 catchDate, setCatchDate,
                                                 species, setSpecies,
                                                 cm, setCm,
-                                                water, setWater,
+                                                locationName, setLocationName,
                                                 setComment, createFish }}>
             {children}
         </CreateFishContext.Provider>
