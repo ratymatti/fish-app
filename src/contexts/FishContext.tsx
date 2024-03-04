@@ -9,8 +9,8 @@ import { Timestamp } from 'firebase/firestore';
 
 
 export interface FishContextType {
-    fishes: FishType[];
-    setFishes: (fishes: FishType[]) => void;
+    userFishArr: FishType[]; // RENAME THIS TO FishObject
+    setUserFishArr: (fishes: FishType[]) => void;
     getDocuments: () => void;
 }
 
@@ -32,11 +32,11 @@ const convertDateToInstance = (fish: FishType): FishType => {
         date: fish.date instanceof Timestamp ? fish.date.toDate() : fish.date,
     };
 };
-
+// UserFishContext?
 export const FishContext = React.createContext<FishContextType | undefined>(undefined);
 
 export function FishProvider({ children }: { children: React.ReactNode }): JSX.Element {
-    const [fishes, setFishes] = useState<FishType[]>([]);
+    const [userFishArr, setUserFishArr] = useState<FishType[]>([]);  
 
     const fishesRef = collection(db, FishRef.FISHES);
 
@@ -47,7 +47,7 @@ export function FishProvider({ children }: { children: React.ReactNode }): JSX.E
             const filteredData: FishType[] = data.docs
                 .map(transformDocToFish)
                 .map(convertDateToInstance);
-            setFishes(sortFishes(Field.DATE, filteredData, SortDirection.DESC));
+            setUserFishArr(sortFishes(Field.DATE, filteredData, SortDirection.DESC));
         } catch (err) {
             console.error(err);
         }
@@ -58,7 +58,7 @@ export function FishProvider({ children }: { children: React.ReactNode }): JSX.E
     }, []); // Empty dependency array because this needs to run only once for now
 
     return (
-        <FishContext.Provider value={{ fishes, setFishes, getDocuments }}>
+        <FishContext.Provider value={{ userFishArr, setUserFishArr, getDocuments }}>
             {children}
         </FishContext.Provider>
     )
