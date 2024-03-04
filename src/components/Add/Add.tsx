@@ -61,7 +61,7 @@ export default function Add(props : AddProps): JSX.Element {
     } = props;
 
     const {
-        location, setLocation, 
+        geolocation, setGeolocation, 
         catchDate, setCatchDate,
         species, setSpecies,
         cm, setCm,
@@ -75,7 +75,7 @@ export default function Add(props : AddProps): JSX.Element {
     async function handleSubmit(event: React.FormEvent<HTMLButtonElement>): Promise<void>{
         event.preventDefault();
 
-        const errorMessage = validateForm({species, cm, water, location});
+        const errorMessage = validateForm({species, cm, water, geolocation});
         if (errorMessage) {
             setError(errorMessage);
             return;
@@ -97,9 +97,9 @@ export default function Add(props : AddProps): JSX.Element {
 
     useEffect(() => {
         if (fishGeolocation.length) {
-            setLocation({
-                lat: fishGeolocation[0].location.lat,
-                lng: fishGeolocation[0].location.lng
+            setGeolocation({
+                lat: fishGeolocation[0].geolocation.lat,
+                lng: fishGeolocation[0].geolocation.lng
             });
         }
     }, [fishGeolocation]);
