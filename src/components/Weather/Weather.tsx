@@ -5,21 +5,15 @@ import Map from '../Map/Map';
 
 import { WeatherContext, WeatherContextType } from '../../contexts/WeatherContext';
 import { LocationContext, LocationContextType } from '../../contexts/LocationContext';
+import { LocationObject } from '../../types/location';
 
-interface Location {
-    id: string;
-    geolocation: {
-      lat: number;
-      lng: number;
-    };
-}
 
 enum Current {
     WEATHER = 'weather',
     MAP = 'map'
 }
 
-export default function Weather() {
+export default function Weather(): JSX.Element | null {
     const {
         currentLocationWeather,
         weatherTrackings,
@@ -29,7 +23,7 @@ export default function Weather() {
     const { userLocation } = React.useContext(LocationContext) as LocationContextType;
 
     const [current, setCurrent] = useState<Current>(Current.WEATHER);
-    const [newWeatherLocation, setNewWeatherLocation] = useState<Location[]>([]);
+    const [newWeatherLocation, setNewWeatherLocation] = useState<LocationObject[]>([]);
 
 
     function addToTracking() {
@@ -58,7 +52,8 @@ export default function Weather() {
             <div className='weather'>
                 {currentLocationWeather &&
                     <WeatherCard
-                        data={currentLocationWeather} />}
+                        data={currentLocationWeather}
+                        isRemovable={false} />}
                 {weatherTrackings && weatherTrackings.map((weatherObj) => (
                     <WeatherCard
                         key={weatherObj.id}
