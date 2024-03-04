@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../config/firebase';
 import { DocumentSnapshot, collection, deleteDoc, doc, getDocs } from 'firebase/firestore';
 import { sortFishes } from '../modules/sortFishes/sortFishes';
-import { FishType } from './CreateFishContext';
+import { FishObject } from '../types/fish';
 import { Field, SortDirection } from '../components/Log/Log';
 
 import { Timestamp } from 'firebase/firestore';
 
 
 export interface FishContextType {
-    userFishArr: FishType[]; // RENAME THIS TO FishObject
-    setUserFishArr: (fishes: FishType[]) => void;
+    userFishArr: FishObject[]; 
+    setUserFishArr: (fishes: FishObject[]) => void;
     getDocuments: () => void;
     removeFishObject: (idToRemove: string) => void;
 }
@@ -19,15 +19,15 @@ enum FishRef {
     FISHES = 'fishes'
 }
 
-const transformDocToFish = (doc: DocumentSnapshot): FishType => {
-    const data = doc.data() as FishType;
+const transformDocToFish = (doc: DocumentSnapshot): FishObject => {
+    const data = doc.data() as FishObject;
     return {
         ...data,
         id: doc.id,
     };
 };
 
-const convertDateToInstance = (fish: FishType): FishType => {
+const convertDateToInstance = (fish: FishObject): FishObject => {
     return {
         ...fish,
         date: fish.date instanceof Timestamp ? fish.date.toDate() : fish.date,
@@ -37,7 +37,7 @@ const convertDateToInstance = (fish: FishType): FishType => {
 export const FishContext = React.createContext<FishContextType | undefined>(undefined);
 
 export function FishProvider({ children }: { children: React.ReactNode }): JSX.Element {
-    const [userFishArr, setUserFishArr] = useState<FishType[]>([]);  
+    const [userFishArr, setUserFishArr] = useState<FishObject[]>([]);  
 
     const fishesRef = collection(db, FishRef.FISHES);
 
@@ -45,7 +45,7 @@ export function FishProvider({ children }: { children: React.ReactNode }): JSX.E
     async function getDocuments(): Promise<void> {
         try {
             const data = await getDocs(fishesRef);
-            const filteredData: FishType[] = data.docs
+            const filteredData: FishObject[] = data.docs
                 .map(transformDocToFish)
                 .map(convertDateToInstance);
             setUserFishArr(sortFishes(Field.DATE, filteredData, SortDirection.DESC));
