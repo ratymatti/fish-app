@@ -10,10 +10,9 @@ interface RemoveButtonProps {
         icon: string;
     };
     removeTracking: (id: string) => void;
-
 }
 
-export default function RemoveButton(props: RemoveButtonProps) {
+export default function RemoveButton(props: RemoveButtonProps): JSX.Element {
     const { content, removeTracking } = props;
     
     const [clicked, setClicked] = useState<boolean>(false);
