@@ -30,8 +30,8 @@ export default function AddContainer(props: AddContainerProps): JSX.Element | nu
         if (fishGeolocation.length) {
             setUserLocation(
                 {
-                    lat: fishGeolocation[0].location.lat,
-                    lng: fishGeolocation[0].location.lng
+                    lat: fishGeolocation[0].geolocation.lat,
+                    lng: fishGeolocation[0].geolocation.lng
                 }
             );
         }    
