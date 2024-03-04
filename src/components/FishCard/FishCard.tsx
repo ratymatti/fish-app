@@ -10,7 +10,7 @@ interface CardFish {
 }
 
 interface FishCardProps {
-    fishes: FishType[];
+    userFishArr: FishType[];
     currentFishID: string;
     closeCard: () => void;
 }
@@ -18,14 +18,14 @@ interface FishCardProps {
 export default function FishCard(props: FishCardProps) {
     const {
         closeCard, currentFishID,
-        fishes
+        userFishArr
     } = props;
 
     const [cardFish, setCardFish] = useState<CardFish | null>(null);
 
     useEffect(() => {
         function getFishData() {
-            const fish = fishes.find(fish => fish.id === currentFishID);
+            const fish = userFishArr.find(fish => fish.id === currentFishID);
             const source = fish?.weather?.currentWeather && 'weather' in fish?.weather?.currentWeather 
                 ? fish.weather.currentWeather.weather 
                 : undefined;
@@ -46,7 +46,7 @@ export default function FishCard(props: FishCardProps) {
             if (fishData) setCardFish(fishData);
         }
         getFishData();
-    }, [currentFishID, fishes])
+    }, [currentFishID, userFishArr])
 
     if (cardFish) {
 
