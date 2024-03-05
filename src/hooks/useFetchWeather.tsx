@@ -11,9 +11,9 @@ export function useFetchWeather(): { fetchWeather: (location: Location, type: We
     /**
     * Function name fetchWeather
     * @description This function fetches weather data from OpenWeatherMap API
-    * @param {*} location object {lat: number, lng: number} <-- must be an object with lat and lng properties
-    * @param {*} type string 'weather' or 'forecast'
-    * @returns object with weather data
+    * @param {Location} location object {lat: number, lng: number} <-- must be an object with lat and lng properties
+    * @param {WeatherType} type string 'weather' or 'forecast'
+    * @returns {WeatherObject} - object with weather data
     */
 
 
