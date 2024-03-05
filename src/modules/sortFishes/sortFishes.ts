@@ -1,4 +1,4 @@
-import { Field, SortDirection } from '../../components/Log/Log';
+import { Field, SortDirection } from '../../hooks/useSorting';
 import { FishObject } from '../../types/fish';
 
 /**
@@ -15,11 +15,12 @@ export const sortFishes = (field: Field, userFishArr: FishObject[], direction: S
     const fishesCopy = [...userFishArr];
 
     function sortFishesByField() {
+        
         switch (field) {
             case Field.SPECIES:
                 return fishesCopy.sort((fishA, fishB) => {
                     const speciesComparison = (fishB.species || '').localeCompare(fishA.species || '') ?? 0;
-                    return speciesComparison === 0 ? (fishB.cm ?? 0) - (fishA.cm ?? 0) : speciesComparison;
+                    return speciesComparison === 0 ? (fishA.cm ?? 0) - (fishB.cm ?? 0) : speciesComparison;
                 });
 
             case Field.LENGTH:
@@ -28,7 +29,7 @@ export const sortFishes = (field: Field, userFishArr: FishObject[], direction: S
             case Field.LOCATION:
                 return fishesCopy.sort((fishA, fishB) => {
                     const waterComparison = (fishB.locationName || '').localeCompare(fishA.locationName || '') ?? 0;
-                    return waterComparison === 0 ? (fishB.cm ?? 0) - (fishA.cm ?? 0) : waterComparison;
+                    return waterComparison === 0 ? (fishA.cm ?? 0) - (fishB.cm ?? 0) : waterComparison;
                 });
 
             case Field.DATE:
