@@ -3,6 +3,7 @@ import './Log.css';
 import FishCard from '../FishCard/FishCard';
 import { FishContext } from '../../contexts/FishContext';
 import { sortFishes } from '../../modules/sortFishes/sortFishes';
+import FishRow from '../FishRow/FishRow';
 
 interface LogProps {
     setFreeze: (freeze: boolean) => void;
@@ -26,7 +27,7 @@ export default function Log(props: LogProps) {
 
     const [direction, setDirection] = useState<SortDirection>(SortDirection.DESC);
     const [currentField, setCurrentField] = useState<Field>(Field.DATE);
-    const [currentFishID, setCurrentFishID] = useState<string | null | undefined>(null);
+    const [currentFishID, setCurrentFishID] = useState<string | null>(null);
 
     const fishContext = React.useContext(FishContext);
 
@@ -89,13 +90,10 @@ export default function Log(props: LogProps) {
                     </thead>
                     <tbody>
                         {userFishArr.slice(0).reverse().map(fish => (
-
-                            <tr onClick={() => setCurrentFishID(fish.id)} className='row' key={fish.id}>
-                                <td>{fish.species}</td>
-                                <td>{fish.cm}cm</td>
-                                <td>{fish.locationName}</td>
-                                <td>{fish.dateString}</td>
-                            </tr>
+                            <FishRow
+                                key={fish.id}
+                                fish={fish}
+                                setCurrentFishID={setCurrentFishID} />
                         ))}
                     </tbody>
                 </table>
