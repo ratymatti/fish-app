@@ -3,7 +3,7 @@ import { db } from '../config/firebase';
 import { DocumentSnapshot, collection, deleteDoc, doc, getDocs } from 'firebase/firestore';
 import { sortFishes } from '../modules/sortFishes/sortFishes';
 import { FishObject } from '../types/fish';
-import { Field, SortDirection } from '../components/Log/Log';
+import { Field, SortDirection } from '../hooks/useSorting';
 
 import { Timestamp } from 'firebase/firestore';
 
