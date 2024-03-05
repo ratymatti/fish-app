@@ -4,6 +4,7 @@ import FishCard from '../FishCard/FishCard';
 import { FishContext } from '../../contexts/FishContext';
 import { sortFishes } from '../../modules/sortFishes/sortFishes';
 import FishRow from '../FishRow/FishRow';
+import TheadRows from '../TheadRows/TheadRows';
 
 interface LogProps {
     setFreeze: (freeze: boolean) => void;
@@ -81,12 +82,7 @@ export default function Log(props: LogProps) {
             <div className='table'>
                 <table>
                     <thead>
-                        <tr>
-                            <th onClick={() => handleClick(Field.SPECIES)}>{Field.SPECIES}</th>
-                            <th onClick={() => handleClick(Field.LENGTH)}>{Field.LENGTH}</th>
-                            <th onClick={() => handleClick(Field.LOCATION)}>{Field.LOCATION}</th>
-                            <th onClick={() => handleClick(Field.DATE)}>{Field.DATE}</th>
-                        </tr>
+                        <TheadRows handleClick={handleClick} />
                     </thead>
                     <tbody>
                         {userFishArr.slice(0).reverse().map(fish => (
