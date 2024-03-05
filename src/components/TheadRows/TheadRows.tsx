@@ -1,12 +1,9 @@
 import React from 'react'
-import { Field } from '../Log/Log'
+import useSorting, { Field } from '../../hooks/useSorting';
 
-interface TheadRowsProps {
-    handleClick: (field: Field) => void;
-}
 
-export default function TheadRows(props: TheadRowsProps): JSX.Element {
-    const { handleClick } = props;
+export default function TheadRows(): JSX.Element {
+    const { handleClick } = useSorting();
 
     return (
         <tr>
