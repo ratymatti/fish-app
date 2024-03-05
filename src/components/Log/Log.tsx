@@ -2,32 +2,18 @@ import React, { useState, useEffect } from 'react'
 import './Log.css';
 import FishCard from '../FishCard/FishCard';
 import { FishContext } from '../../contexts/FishContext';
-import { sortFishes } from '../../modules/sortFishes/sortFishes';
+
 import FishRow from '../FishRow/FishRow';
 import TheadRows from '../TheadRows/TheadRows';
+import useSorting, { Field, SortDirection } from '../../hooks/useSorting';
 
 interface LogProps {
     setFreeze: (freeze: boolean) => void;
 }
 
-export enum SortDirection {
-    ASC = 'asc',
-    DESC = 'desc'
-}
-
-export enum Field {
-    SPECIES = 'SPECIES',
-    LENGTH = 'LENGTH',
-    LOCATION = 'LOCATION',
-    DATE = 'DATE'
-}
-
-
 export default function Log(props: LogProps) {
     const { setFreeze } = props;
 
-    const [direction, setDirection] = useState<SortDirection>(SortDirection.DESC);
-    const [currentField, setCurrentField] = useState<Field>(Field.DATE);
     const [currentFishID, setCurrentFishID] = useState<string | null>(null);
 
     const fishContext = React.useContext(FishContext);
@@ -35,24 +21,9 @@ export default function Log(props: LogProps) {
     if (!fishContext) {
         throw new Error("FishContext is undefined");
     }
-    const { userFishArr, setUserFishArr, removeFishObject } = fishContext;
+    const { userFishArr, removeFishObject } = fishContext;
 
-    function handleClick(field: Field) {
-        if (field === currentField) {
-            const newDirection = direction === SortDirection.DESC ? SortDirection.ASC : SortDirection.DESC;
-            setDirection(newDirection);
-            sortByField(field, newDirection);
-        } else {
-            setDirection(SortDirection.DESC);
-            setCurrentField(field);
-            sortByField(field, SortDirection.DESC);
-        }
-    }
-
-    function sortByField(field: Field, direction: SortDirection) {
-        const sortedFishes = sortFishes(field, userFishArr, direction);
-        setUserFishArr(sortedFishes);
-    }
+    const { sortByField } = useSorting();
 
     function closeCard() {
         setCurrentFishID(null);
@@ -82,7 +53,7 @@ export default function Log(props: LogProps) {
             <div className='table'>
                 <table>
                     <thead>
-                        <TheadRows handleClick={handleClick} />
+                        <TheadRows />
                     </thead>
                     <tbody>
                         {userFishArr.slice(0).reverse().map(fish => (
