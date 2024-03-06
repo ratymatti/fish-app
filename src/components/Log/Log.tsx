@@ -1,54 +1,43 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import './Log.css';
 import FishCard from '../FishCard/FishCard';
 import { FishContext } from '../../contexts/FishContext';
-
 import FishRow from '../FishRow/FishRow';
 import TheadRows from '../TheadRows/TheadRows';
 import useSorting, { Field, SortDirection } from '../../hooks/useSorting';
+import useFishCard from '../../hooks/useFishCard';
 
 interface LogProps {
     setFreeze: (freeze: boolean) => void;
 }
 
-export default function Log(props: LogProps) {
+export default function Log(props: LogProps): JSX.Element {
     const { setFreeze } = props;
-
-    const [currentFishID, setCurrentFishID] = useState<string | null>(null);
 
     const fishContext = React.useContext(FishContext);
 
     if (!fishContext) {
         throw new Error("FishContext is undefined");
     }
-    const { userFishArr, removeFishObject } = fishContext;
+    const { userFishArr, cardFish } = fishContext;
 
     const { sortByField } = useSorting();
 
-    function closeCard() {
-        setCurrentFishID(null);
-    }
-
-    function handleRemove(idToRemove: string) {
-        removeFishObject(idToRemove);
-        closeCard();
-    }
+    const { handleFishRowClick, closeCard, handleRemove } = useFishCard();
 
     useEffect(() => {
         sortByField(Field.DATE, SortDirection.DESC);
     }, [])
 
     useEffect(() => {
-        currentFishID ? setFreeze(true) : setFreeze(false);
-    }, [currentFishID]);
-
+        cardFish ? setFreeze(true) : setFreeze(false);
+    }, [cardFish]);
 
     return (
         <div className='log'>
-            {currentFishID && <FishCard
+            {cardFish && <FishCard
+                cardFish={cardFish}
                 closeCard={closeCard}
-                currentFishID={currentFishID}
-                userFishArr={userFishArr}
                 handleRemove={handleRemove} />}
             <div className='table'>
                 <table>
@@ -60,7 +49,7 @@ export default function Log(props: LogProps) {
                             <FishRow
                                 key={fish.id}
                                 fish={fish}
-                                setCurrentFishID={setCurrentFishID} />
+                                handleFishRowClick={handleFishRowClick} />
                         ))}
                     </tbody>
                 </table>
