@@ -8,15 +8,6 @@
     padding: 10px;
 }
 
-.fish-card-header {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.close-card:hover {
-    cursor: pointer;
-}
-
 .fish-data h3 {
     margin-bottom: 20px;
 }
