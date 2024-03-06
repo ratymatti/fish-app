@@ -3,6 +3,7 @@ import './WeatherCard.css';
 import RemoveButton from '../RemoveButton/RemoveButton';
 import { WeatherObject } from '../../types/weather';
 import CardHeader from '../CardHeader/CardHeader';
+import CardInfoRow from '../CardInfoRow/CardInfoRow';
 
 interface WeatherCardProps {
     data: WeatherObject;
@@ -63,7 +64,10 @@ export default function WeatherCard(props: WeatherCardProps): JSX.Element {
                     alt="Weather icon" />
             </div>
             {cardInfo.info.map(({ text, value }, index) => (
-                <h5 key={index}>{text}{value}</h5>
+                <CardInfoRow
+                    key={index}
+                    text={text}
+                    value={value} />
             ))}
             {isRemovable && <RemoveButton
                 removeTracking={removeTracking!}
