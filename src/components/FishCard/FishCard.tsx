@@ -3,6 +3,7 @@ import './FishCard.css';
 import { CardFish } from '../../types/fish';
 import FishCardHeader from '../FishCardHeader/FishCardHeader';
 import FishCardInfoRow from '../FishCardInfoRow/FishCardInfoRow';
+import CardHeader from '../CardHeader/CardHeader';
 
 interface FishCardProps {
     cardFish: CardFish | null;
@@ -13,13 +14,13 @@ interface FishCardProps {
 export default function FishCard(props: FishCardProps): JSX.Element | null {
     const { cardFish, closeCard, handleRemove } = props;
 
-    if (cardFish) {
+    if (cardFish && cardFish.header) {
 
         return (
             <div className='fish-card'>
                 <FishCardHeader closeCard={closeCard} />
                 <div className='fish-data'>
-                    <h3>{cardFish.header}</h3>
+                    <CardHeader text={cardFish.header} />
                     {
                         cardFish.info.map(({ text, value }, index) => (
                             <FishCardInfoRow
