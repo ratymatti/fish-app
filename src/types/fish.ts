@@ -24,3 +24,10 @@ export interface FishObject {
     weather: WeatherObject | null;
     geolocation: Location | null;
 }
+
+export interface CardFish {
+    header: string | null | undefined;
+    info: { text: string; value: string }[];
+    weather: { text: string; value: string | number }[];
+    id: string;
+}
