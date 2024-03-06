@@ -1,6 +1,8 @@
 import React from 'react'
 import './FishCard.css';
 import { CardFish } from '../../types/fish';
+import FishCardHeader from '../FishCardHeader/FishCardHeader';
+import FishCardInfoRow from '../FishCardInfoRow/FishCardInfoRow';
 
 interface FishCardProps {
     cardFish: CardFish | null;
@@ -15,20 +17,24 @@ export default function FishCard(props: FishCardProps): JSX.Element | null {
 
         return (
             <div className='fish-card'>
-                <div className='fish-card-header'>
-                    <h3 className='close-card' onClick={() => closeCard()}>x</h3>
-                </div>
+                <FishCardHeader closeCard={closeCard} />
                 <div className='fish-data'>
                     <h3>{cardFish.header}</h3>
                     {
                         cardFish.info.map(({ text, value }, index) => (
-                            <h5 key={index}>{text}{value}</h5>
+                            <FishCardInfoRow
+                                key={index}
+                                text={text}
+                                value={value} />
                         ))
                     }
                     <br></br>
                     {
                         cardFish.weather.map(({ text, value }, index) => (
-                            <h5 key={index}>{text}{value}</h5>
+                            <FishCardInfoRow 
+                                key={index}
+                                text={text}
+                                value={value} />
                         ))
                     }
                     <br></br>
