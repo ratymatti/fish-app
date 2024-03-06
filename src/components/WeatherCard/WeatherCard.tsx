@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './WeatherCard.css';
 import RemoveButton from '../RemoveButton/RemoveButton';
 import { WeatherObject } from '../../types/weather';
+import CardHeader from '../CardHeader/CardHeader';
 
 interface WeatherCardProps {
     data: WeatherObject;
@@ -54,7 +55,7 @@ export default function WeatherCard(props: WeatherCardProps): JSX.Element {
     
     return (
         <div className='weather-card'>
-            <h3>{cardInfo.header}</h3>
+            <CardHeader text={cardInfo.header} />
             <div id="icon">
                 <img
                     id="wicon"
