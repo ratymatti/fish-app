@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../config/firebase';
 import { DocumentSnapshot, collection, deleteDoc, doc, getDocs } from 'firebase/firestore';
 import { sortFishes } from '../modules/sortFishes/sortFishes';
-import { FishObject } from '../types/fish';
+import { FishObject, CardFish } from '../types/fish';
 import { Field, SortDirection } from '../hooks/useSorting';
 
 import { Timestamp } from 'firebase/firestore';
@@ -13,6 +13,8 @@ export interface FishContextType {
     setUserFishArr: (fishes: FishObject[]) => void;
     getDocuments: () => void;
     removeFishObject: (idToRemove: string) => void;
+    cardFish: CardFish | null;
+    setCardFish: (fish: CardFish | null) => void;
 }
 
 enum FishRef {
@@ -37,7 +39,8 @@ const convertDateToInstance = (fish: FishObject): FishObject => {
 export const FishContext = React.createContext<FishContextType | undefined>(undefined);
 
 export function FishProvider({ children }: { children: React.ReactNode }): JSX.Element {
-    const [userFishArr, setUserFishArr] = useState<FishObject[]>([]);  
+    const [userFishArr, setUserFishArr] = useState<FishObject[]>([]);
+    const [cardFish, setCardFish] = useState<CardFish | null>(null);
 
     const fishesRef = collection(db, FishRef.FISHES);
 
@@ -65,7 +68,14 @@ export function FishProvider({ children }: { children: React.ReactNode }): JSX.E
     }, []); // Empty dependency array because this needs to run only once for now
 
     return (
-        <FishContext.Provider value={{ userFishArr, setUserFishArr, getDocuments, removeFishObject }}>
+        <FishContext.Provider value={{
+            userFishArr,
+            setUserFishArr,
+            getDocuments,
+            removeFishObject,
+            cardFish,
+            setCardFish
+        }}>
             {children}
         </FishContext.Provider>
     )
