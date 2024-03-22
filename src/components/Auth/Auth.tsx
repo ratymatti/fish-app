@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { signInWithPopup, signOut } from "firebase/auth";
 import { googleProvider } from '../../config/firebase';
 import { auth } from '../../config/firebase';
@@ -6,16 +6,29 @@ import "./Auth.css";
 
 import { UserContext, UserContextType } from '../../contexts/UserContext';
 import { ActiveContext, ActiveContextType, ActiveState } from '../../contexts/ActiveContext';
+import { useAuth } from '../../hooks/useAuth';
 
 export default function Auth() {
     const { setActive } = React.useContext(ActiveContext) as ActiveContextType;
     const { isLoggedIn, setIsLoggedIn } = React.useContext(UserContext) as UserContextType;
 
+    const { authenticateUser, response } = useAuth();
+
     async function signInWithGoogle() {
         try {
             await signInWithPopup(auth, googleProvider);
-            console.log(auth?.currentUser?.email); // REMOVE THIS LATER
-            if (auth.currentUser) setIsLoggedIn(true);
+
+            const idToken: string | undefined = await auth.currentUser?.getIdToken();
+
+            if (!idToken || !auth.currentUser?.displayName || !auth.currentUser?.email ) throw new Error('User not authenticated');
+
+            if (auth.currentUser) {
+                const name: string = auth.currentUser.displayName!;
+                const email: string = auth.currentUser.email!;
+
+                authenticateUser({ name, email, idToken });
+            }
+            
         } catch (err) {
             console.error(err);
         }
@@ -31,6 +44,12 @@ export default function Auth() {
             console.error(err);
         }
     }
+
+    useEffect(() => {
+        if (response?.ok) {
+            setIsLoggedIn(true);
+        }
+    }, [response])
 
     return (
         <div className='auth'>
