@@ -14,7 +14,6 @@ interface FetchFishData {
 }
 
 export function useFetchFish(): FetchFish {
-
     const rootUrl = 'http://localhost:8080/fish';
 
     async function fetchFishData({ endpoint, method, body }: FetchFishData): Promise<any> {
