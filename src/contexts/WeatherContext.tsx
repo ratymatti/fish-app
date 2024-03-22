@@ -28,7 +28,7 @@ export function WeatherProvider({ children }: { children: React.ReactNode }): JS
 
     const { getLocation } = React.useContext(LocationContext) as LocationContextType;
 
-    const { fetchWeather } = useFetchWeather();
+    const { fetchWeather, fetchWeatherFromBackend } = useFetchWeather();
 
     async function getDocuments(): Promise<void> {
         try {
@@ -50,13 +50,15 @@ export function WeatherProvider({ children }: { children: React.ReactNode }): JS
     }
 
     async function addNewTracking(coords: Location): Promise<void> {
+        await fetchWeatherFromBackend(coords);
+        /*
         const weatherObject = await fetchWeather(coords, WeatherType.WEATHER);
         try {
             await addDoc(weatherRef, weatherObject);
             getDocuments();
         } catch (err) {
             console.error(err);
-        }
+        }*/
     }
 
     async function updateWeatherTrackings(): Promise<void> {

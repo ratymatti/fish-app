@@ -4,10 +4,17 @@ import { v4 as uuidv4 } from 'uuid';
 import { Location } from '../types/location';
 import { Time, WeatherType } from '../types/weather';
 import { WeatherInfo, WeatherObject } from '../types/weather';
+import React from 'react';
+import { UserContext, UserContextType } from '../contexts/UserContext';
 
+interface FetchWeather {
+    fetchWeather: (location: Location, type: WeatherType) => Promise<WeatherObject | undefined>;
+    fetchWeatherFromBackend: (location: Location) => Promise<WeatherObject | null>;
+}
 
-export function useFetchWeather(): { fetchWeather: (location: Location, type: WeatherType) => Promise<WeatherObject | undefined> }{
+export function useFetchWeather(): FetchWeather {
 
+    const { userId } = React.useContext(UserContext) as UserContextType;
     /**
     * Function name fetchWeather
     * @description This function fetches weather data from OpenWeatherMap API
@@ -15,6 +22,35 @@ export function useFetchWeather(): { fetchWeather: (location: Location, type: We
     * @param {WeatherType} type string 'weather' or 'forecast'
     * @returns {WeatherObject} - object with weather data
     */
+
+    async function fetchWeatherFromBackend(location: Location): Promise<WeatherObject | null>{
+
+        const apiUrl = `http://localhost:8080/weather/${userId}/${location.lat}/${location.lng}`;
+
+        if (!location) throw new Error('Location is required');
+
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(location)
+            });
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data);
+            }
+        } catch (err) {
+            if (err instanceof Error) {
+                console.log(err.message);
+            } else {
+                console.log(err);
+            }
+        }
+
+        return null;
+    }
 
 
     async function fetchWeather(location: Location, type: WeatherType): Promise<WeatherObject | undefined>{
@@ -92,5 +128,5 @@ export function useFetchWeather(): { fetchWeather: (location: Location, type: We
         return forecastArray;
     }
 
-    return { fetchWeather };
+    return { fetchWeather, fetchWeatherFromBackend };
 }
