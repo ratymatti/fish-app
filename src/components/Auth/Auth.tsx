@@ -10,7 +10,7 @@ import { useAuth } from '../../hooks/useAuth';
 
 export default function Auth() {
     const { setActive } = React.useContext(ActiveContext) as ActiveContextType;
-    const { isLoggedIn, setIsLoggedIn } = React.useContext(UserContext) as UserContextType;
+    const { isLoggedIn, setIsLoggedIn, setUserId } = React.useContext(UserContext) as UserContextType;
 
     const { authenticateUser, response } = useAuth();
 
@@ -25,7 +25,13 @@ export default function Auth() {
                 return;
             }
 
-            authenticateUser({ idToken });
+            const userId = await authenticateUser({ idToken });
+
+            if (userId) {
+                setIsLoggedIn(true);
+                setUserId(userId);
+            }
+
         } catch (err) {
             console.error(err);
         }
@@ -35,6 +41,7 @@ export default function Auth() {
         try {
             await signOut(auth);
             setIsLoggedIn(false);
+            setUserId('');
             setActive(ActiveState.Empty);
             console.log("signed out")
         } catch (err) {
