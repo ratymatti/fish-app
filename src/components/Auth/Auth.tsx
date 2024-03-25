@@ -20,15 +20,12 @@ export default function Auth() {
 
             const idToken: string | undefined = await auth.currentUser?.getIdToken();
 
-            if (!idToken || !auth.currentUser?.displayName || !auth.currentUser?.email ) throw new Error('User not authenticated');
-
-            if (auth.currentUser) {
-                const name: string = auth.currentUser.displayName!;
-                const email: string = auth.currentUser.email!;
-
-                authenticateUser({ name, email, idToken });
+            if (!idToken) {
+                console.error('User not authenticated');
+                return;
             }
-            
+
+            authenticateUser({ idToken });
         } catch (err) {
             console.error(err);
         }
@@ -46,7 +43,7 @@ export default function Auth() {
     }
 
     useEffect(() => {
-        if (response?.ok) {
+        if (response) {
             setIsLoggedIn(true);
         }
     }, [response])
@@ -54,11 +51,13 @@ export default function Auth() {
     return (
         <div className='auth'>
             {isLoggedIn ?
-                <button
-                    onClick={logOut}>Sign Out</button> :
-                <button
-                    onClick={signInWithGoogle}>Sign In With Google</button>
-            }
+                <button onClick={logOut}>
+                    Sign Out
+                </button>
+            :
+                <button onClick={signInWithGoogle}>
+                    Sign In With Google
+                </button>}
         </div>
     )
 }
