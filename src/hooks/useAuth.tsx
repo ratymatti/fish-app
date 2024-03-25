@@ -29,6 +29,7 @@ export function useAuth() {
         try {
             const response = await fetch(urlToFetch, config);
             setResponse(response.ok);
+            return response;
         } catch (err) {
             console.error(err);
         }
@@ -40,7 +41,12 @@ export function useAuth() {
         const body = {
             idToken: idToken
         }
-        fetchUserAuth({ endpoint, method, body });
+        const response = await fetchUserAuth({ endpoint, method, body });
+
+        if (response && response.ok) {
+            const userId = await response.text();
+            return userId;
+        }  
     }
 
     return { authenticateUser, response }
