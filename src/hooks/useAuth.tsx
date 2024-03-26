@@ -29,25 +29,20 @@ export function useAuth() {
         try {
             const response = await fetch(urlToFetch, config);
             setResponse(response.ok);
-            return response;
         } catch (err) {
             console.error(err);
         }
     }
 
-    async function authenticateUser({ idToken }: IdToken ) {
+    function authenticateUser({ idToken }: IdToken ) {
         const endpoint = 'authenticate';
         const method = 'POST';
         const body = {
             idToken: idToken
         }
-        const response = await fetchUserAuth({ endpoint, method, body });
-
-        if (response && response.ok) {
-            const userId = await response.text();
-            return userId;
-        }  
+        fetchUserAuth({ endpoint, method, body });
     }
+
 
     return { authenticateUser, response }
 }

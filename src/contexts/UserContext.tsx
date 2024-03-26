@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useIdToken } from '../hooks/useIdToken';
 
 export interface UserContextType {
     isLoggedIn: boolean;
@@ -9,6 +10,14 @@ export const UserContext = React.createContext<UserContextType | undefined>(unde
 
 export function UserProvider({ children }: { children: React.ReactNode }): JSX.Element {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+    const { idToken } = useIdToken();
+
+    useEffect(() => {
+        if (idToken) {
+            setIsLoggedIn(true);
+        }
+    }, [idToken]);
 
     return (
         <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>

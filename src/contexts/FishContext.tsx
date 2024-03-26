@@ -6,10 +6,12 @@ import { FishObject, CardFish } from '../types/fish';
 import { Field, SortDirection } from '../hooks/useSorting';
 
 import { Timestamp } from 'firebase/firestore';
+import { useFetchFish } from '../hooks/useFetchFish';
+import { useIdToken } from '../hooks/useIdToken';
 
 
 export interface FishContextType {
-    userFishArr: FishObject[]; 
+    userFishArr: FishObject[];
     setUserFishArr: (fishes: FishObject[]) => void;
     getDocuments: () => void;
     removeFishObject: (idToRemove: string) => void;
@@ -35,18 +37,25 @@ const convertDateToInstance = (fish: FishObject): FishObject => {
         date: fish.date instanceof Timestamp ? fish.date.toDate() : fish.date,
     };
 };
-// UserFishContext?
+
 export const FishContext = React.createContext<FishContextType | undefined>(undefined);
 
 export function FishProvider({ children }: { children: React.ReactNode }): JSX.Element {
     const [userFishArr, setUserFishArr] = useState<FishObject[]>([]);
     const [cardFish, setCardFish] = useState<CardFish | null>(null);
 
+    const { idToken } = useIdToken();
+    const { fetchFishData } = useFetchFish();
+
     const fishesRef = collection(db, FishRef.FISHES);
 
 
     async function getDocuments(): Promise<void> {
         try {
+            if (idToken !== null) {
+                const data = await fetchFishData({ idToken });
+                console.log(data);
+            }
             const data = await getDocs(fishesRef);
             const filteredData: FishObject[] = data.docs
                 .map(transformDocToFish)
@@ -63,9 +72,13 @@ export function FishProvider({ children }: { children: React.ReactNode }): JSX.E
         getDocuments();
     }
 
+
     useEffect(() => {
-        getDocuments();
-    }, []); // Empty dependency array because this needs to run only once for now
+        if (idToken !== null) {
+            console.log("calling getDocuments" + idToken)
+            getDocuments();
+        }
+    }, [idToken]); // Empty dependency array because this needs to run only once for now
 
     return (
         <FishContext.Provider value={{

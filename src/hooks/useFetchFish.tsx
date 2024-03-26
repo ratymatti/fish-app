@@ -4,37 +4,35 @@
  */
 
 interface FetchFish {
-    fetchFishData: (data: FetchFishData) => Promise<any>
+    fetchFishData: (data: IdToken) => Promise<any>
 }
 
-interface FetchFishData {
-    endpoint: string;
-    method: string;
-    body: string;
+interface IdToken {
+    idToken: string;
 }
 
 export function useFetchFish(): FetchFish {
-    const rootUrl = 'http://localhost:8080/fish';
+    const urlToFetch = 'http://localhost:8080/user/fishes';
 
-    async function fetchFishData({ endpoint, method, body }: FetchFishData): Promise<any> {
+    async function fetchFishData({ idToken }: IdToken): Promise<any> {
         const config: RequestInit = {
-            method,
+            method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body)
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${idToken}`
+            }
         }
-
-        const urlToFetch = `${rootUrl}/${endpoint}`;
 
         try {
             const response = await fetch(urlToFetch, config);
             const data = await response.json();
+            console.log(data)
             return data;
         } catch (err) {
             console.error(err);
             return null;
         }
     }
+
     return { fetchFishData }
 }
