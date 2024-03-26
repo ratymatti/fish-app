@@ -10,7 +10,7 @@ import { useAuth } from '../../hooks/useAuth';
 
 export default function Auth() {
     const { setActive } = React.useContext(ActiveContext) as ActiveContextType;
-    const { isLoggedIn, setIsLoggedIn, setUserId } = React.useContext(UserContext) as UserContextType;
+    const { isLoggedIn, setIsLoggedIn } = React.useContext(UserContext) as UserContextType;
 
     const { authenticateUser, response } = useAuth();
 
@@ -18,19 +18,14 @@ export default function Auth() {
         try {
             await signInWithPopup(auth, googleProvider);
 
-            const idToken: string | undefined = await auth.currentUser?.getIdToken();
+            const idToken = await auth.currentUser?.getIdToken();
 
             if (!idToken) {
                 console.error('User not authenticated');
                 return;
             }
 
-            const userId = await authenticateUser({ idToken });
-
-            if (userId) {
-                setIsLoggedIn(true);
-                setUserId(userId);
-            }
+            authenticateUser({ idToken });
 
         } catch (err) {
             console.error(err);
@@ -41,7 +36,6 @@ export default function Auth() {
         try {
             await signOut(auth);
             setIsLoggedIn(false);
-            setUserId('');
             setActive(ActiveState.Empty);
             console.log("signed out")
         } catch (err) {
@@ -53,7 +47,8 @@ export default function Auth() {
         if (response) {
             setIsLoggedIn(true);
         }
-    }, [response])
+    }, [response]);
+
 
     return (
         <div className='auth'>
