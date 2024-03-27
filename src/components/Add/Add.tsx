@@ -12,6 +12,8 @@ import { FishContext, FishContextType } from '../../contexts/FishContext';
 import { CreateFishContext, CreateFishContextType } from '../../contexts/CreateFishContext';
 import { CurrentState } from '../AddContainer/AddContainer';
 import { LocationObject } from '../../types/location';
+import { useSaveFish } from '../../hooks/useSaveFish';
+import { useIdToken } from '../../hooks/useIdToken';
 
 
 const optionsCm: ValueLabelPair[] = [];
@@ -64,18 +66,21 @@ export default function Add(props : AddProps): JSX.Element {
         geolocation, setGeolocation, 
         catchDate, setCatchDate,
         species, setSpecies,
-        cm, setCm,
+        length, setLength,
         locationName, setLocationName,
-        setComment, createFish } = React.useContext(CreateFishContext) as CreateFishContextType;
+        setComment, createNewFish } = React.useContext(CreateFishContext) as CreateFishContextType;
 
     const { getDocuments } = React.useContext(FishContext) as FishContextType;
+    const { saveFishData } = useSaveFish();
+
+    const { idToken } = useIdToken();
 
     const fishesRef = collection(db, FishRef.FISHES);
 
     async function handleSubmit(event: React.FormEvent<HTMLButtonElement>): Promise<void>{
         event.preventDefault();
 
-        const errorMessage = validateForm({species, cm, locationName, geolocation});
+        const errorMessage = validateForm({species, length, locationName, geolocation, catchDate});
         
         if (errorMessage) {
             setError(errorMessage);
@@ -85,7 +90,8 @@ export default function Add(props : AddProps): JSX.Element {
         setCurrent(CurrentState.Loading);
 
         try {
-            const newFish = createFish();
+            const newFish = createNewFish();
+            if (idToken !== null) saveFishData({ idToken, newFish });
             await addDoc(fishesRef, newFish) 
         } catch (err) {
             console.error(err);
@@ -133,7 +139,7 @@ export default function Add(props : AddProps): JSX.Element {
                         placeholder='Select lenght'
                         styles={styleOptions}
                         onChange={(selectedCm: SingleValue<OptionTypeNumber>) => {
-                            if (selectedCm && selectedCm.value) setCm(selectedCm.value);
+                            if (selectedCm && selectedCm.value) setLength(selectedCm.value);
                         }} />
                 </div>
                 <div className='select'>
