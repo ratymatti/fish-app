@@ -4,16 +4,14 @@ import DatePicker from "react-datepicker";
 import Textarea from 'rc-textarea';
 import "react-datepicker/dist/react-datepicker.css";
 import './Add.css';
-import { collection, addDoc } from 'firebase/firestore';
-import { db } from '../../config/firebase';
 import validateForm from '../../modules/validateForm/validateForm';
 import { optionsSpecies, optionsWater } from '../../modules/options/options';
-import { FishContext, FishContextType } from '../../contexts/FishContext';
 import { CreateFishContext, CreateFishContextType } from '../../contexts/CreateFishContext';
 import { CurrentState } from '../AddContainer/AddContainer';
 import { LocationObject } from '../../types/location';
 import { useSaveFish } from '../../hooks/useSaveFish';
 import { useIdToken } from '../../hooks/useIdToken';
+import { FishContext, FishContextType } from '../../contexts/FishContext';
 
 
 const optionsCm: ValueLabelPair[] = [];
@@ -48,9 +46,6 @@ type OptionTypeNumber = {
     value: number;
 }
 
-enum FishRef {
-    FISHES = 'fishes'
-}
 
 const styleOptions = {
     option: (styles) => ({ ...styles, color: 'black' })
@@ -70,12 +65,13 @@ export default function Add(props : AddProps): JSX.Element {
         locationName, setLocationName,
         setComment, createNewFish } = React.useContext(CreateFishContext) as CreateFishContextType;
 
-    const { getDocuments } = React.useContext(FishContext) as FishContextType;
+    const { updateUserFishArr } = React.useContext(FishContext) as FishContextType;
+    
     const { saveFishData } = useSaveFish();
 
     const { idToken } = useIdToken();
 
-    const fishesRef = collection(db, FishRef.FISHES);
+    
 
     async function handleSubmit(event: React.FormEvent<HTMLButtonElement>): Promise<void>{
         event.preventDefault();
@@ -93,15 +89,14 @@ export default function Add(props : AddProps): JSX.Element {
             const newFish = createNewFish();
             if (idToken !== null) {
                const savedFish = await saveFishData({ idToken, newFish });
-               console.log(savedFish);
+               updateUserFishArr(savedFish);
             }
-            await addDoc(fishesRef, newFish) 
+            
         } catch (err) {
             console.error(err);
         }
         
         setCurrent(CurrentState.Map);
-        getDocuments();
         setFishGeolocation([]);
     }
 
