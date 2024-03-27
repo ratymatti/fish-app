@@ -1,5 +1,4 @@
-import { Timestamp } from "firebase/firestore";
-import { WeatherObject } from "./weather";
+
 import { Location } from "./location";
 
 /**
@@ -7,22 +6,19 @@ import { Location } from "./location";
  * @description Interface for the fish objects stored in the database
  * Used in:
  *      FishContext.tsx,
- *      CreateFishContext.tsx,
  *      sortFishes.ts,
  *      FishCard.tsx,
  *      MapContainer.tsx
  */
 
 export interface FishObject {
-    id: string | null;
-    species: string | null;
-    cm: number | null;
-    date: Date | Timestamp | null;
-    dateString: string | null;
-    locationName: string | null;
+    id: string;
+    species: string;
+    length: number;
+    date: string;
+    locationName: string;
     comment: string | null;
-    weather: WeatherObject | null;
-    geolocation: Location | null;
+    geolocation: Location;
 }
 
 export interface CardFish {
