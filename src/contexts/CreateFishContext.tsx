@@ -1,11 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import getCurrentDateString from '../modules/getCurrentDateString/getCurrentDateString';
-import { v4 as uuidv4 } from 'uuid';
-import { useFetchWeather } from '../hooks/useFetchWeather';
+import React, { useState } from 'react';
 
 import { Location } from '../types/location';
-import { FishObject } from '../types/fish';
-import { WeatherObject, WeatherType } from '../types/weather'; 
+import { NewFishObject } from '../types/fish';
 
 
 export interface CreateFishContextType {
@@ -15,23 +11,15 @@ export interface CreateFishContextType {
     setCatchDate: (date: Date | null) => void;
     species: string | null;
     setSpecies: (species: string | null) => void;
-    cm: number | null;
-    setCm: (cm: number) => void;
+    length: number | null;
+    setLength: (cm: number) => void;
     locationName: string | null;
     setLocationName: (locationName: string | null) => void;
     comment?: string;
     setComment: (comment: string) => void;
-    createFish: () => FishObject;  
+    createNewFish: () => NewFishObject;  
 }
 
-const defaultWeather: WeatherObject = {
-    info: "not available",
-    type: WeatherType.NOT_SET,
-    coords: { lat: 0, lng: 0 },
-    currentWeather: {},
-    forecastArray: [],
-    name: 'not set',
-    id: 'not set'};
 
 
 export const CreateFishContext = React.createContext<CreateFishContextType | undefined>(undefined);
@@ -41,34 +29,20 @@ export function CreateFishProvider({ children }: { children: React.ReactNode }):
     const [geolocation, setGeolocation] = useState<Location | null>(null);
     const [catchDate, setCatchDate] = useState<Date | null>(null);
     const [species, setSpecies] = useState<string | null>(null);
-    const [cm, setCm] = useState<number | null>(null);
+    const [length, setLength] = useState<number | null>(null);
     const [locationName, setLocationName] = useState<string | null>(null);
     const [comment, setComment] = useState<string | null>(null);
-    const [weather, setWeather] = useState<WeatherObject>(defaultWeather);
 
-    const { fetchWeather } = useFetchWeather();
+    // It's safe to assert these values non-null because createNewFish
+    // is only called when all values are set
 
-    
-    function createFish(): FishObject {
-        const newID = uuidv4();
-
-        const newFish: FishObject = {
-            species: species,
-            cm: cm,
-            locationName: locationName,
-            comment: comment,
-            date: catchDate!,
-            dateString: getCurrentDateString(),
-            id: newID,
-            weather: {
-                info: 'all good',
-                id: newID,
-                type: weather.type,
-                name: weather.name,
-                coords: weather.coords || null,
-                forecastArray: weather.forecastArray || [],
-                currentWeather: weather.currentWeather || {},
-            },
+    function createNewFish(): NewFishObject {
+        const newFish: NewFishObject = {
+            species: species!,
+            length: length!,
+            locationName: locationName!,
+            comment: comment!,
+            date: catchDate!.toISOString(),
             geolocation: {
                 lat: geolocation!.lat,
                 lng: geolocation!.lng
@@ -82,31 +56,19 @@ export function CreateFishProvider({ children }: { children: React.ReactNode }):
         setGeolocation(null);
         setCatchDate(null);
         setSpecies(null);
-        setCm(null);
+        setLength(null);
         setLocationName(null);
         setComment(null);
-        setWeather(defaultWeather);
     }
 
-    useEffect(() => {
-        if (catchDate && catchDate.getDate() === new Date().getDate()) {
-            const getWeather = async () => {
-                if (geolocation) {
-                    const response = await fetchWeather(geolocation, WeatherType.WEATHER);
-                    if (response) setWeather(response);
-                }
-            }
-            getWeather();    
-        }
-    }, [catchDate, geolocation]);
 
     return (
         <CreateFishContext.Provider value={{    geolocation, setGeolocation,
                                                 catchDate, setCatchDate,
                                                 species, setSpecies,
-                                                cm, setCm,
+                                                length, setLength,
                                                 locationName, setLocationName,
-                                                setComment, createFish }}>
+                                                setComment, createNewFish }}>
             {children}
         </CreateFishContext.Provider>
     )
