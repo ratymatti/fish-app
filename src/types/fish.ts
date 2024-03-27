@@ -31,3 +31,12 @@ export interface CardFish {
     weather: { text: string; value: string | number }[];
     id: string;
 }
+
+export interface NewFishObject {
+    species: string;
+    length: number;
+    date: string;
+    locationName: string;
+    comment: string;
+    geolocation: Location;
+}
