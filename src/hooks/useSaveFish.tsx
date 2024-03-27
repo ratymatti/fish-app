@@ -29,7 +29,11 @@ export function useSaveFish(): SaveFish {
 
         try {
             const response = await fetch(urlToFetch, config);
-            console.log(response)
+            
+            if (response.ok) {
+                const data = await response.json();
+                return data;
+            }
         } catch (err) {
             console.error(err);
         }
