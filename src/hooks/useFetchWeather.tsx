@@ -4,17 +4,14 @@ import { v4 as uuidv4 } from 'uuid';
 import { Location } from '../types/location';
 import { Time, WeatherType } from '../types/weather';
 import { WeatherInfo, WeatherObject } from '../types/weather';
-import React from 'react';
-import { UserContext, UserContextType } from '../contexts/UserContext';
 
 interface FetchWeather {
     fetchWeather: (location: Location, type: WeatherType) => Promise<WeatherObject | undefined>;
-    fetchWeatherFromBackend: (location: Location) => Promise<WeatherObject | null>;
+    //fetchWeatherFromBackend: (location: Location) => Promise<WeatherObject | null>;
 }
 
 export function useFetchWeather(): FetchWeather {
 
-    const { userId } = React.useContext(UserContext) as UserContextType;
     /**
     * Function name fetchWeather
     * @description This function fetches weather data from OpenWeatherMap API
@@ -23,6 +20,7 @@ export function useFetchWeather(): FetchWeather {
     * @returns {WeatherObject} - object with weather data
     */
 
+    /*
     async function fetchWeatherFromBackend(location: Location): Promise<WeatherObject | null>{
 
         const apiUrl = `http://localhost:8080/weather/${userId}/${location.lat}/${location.lng}`;
@@ -51,7 +49,7 @@ export function useFetchWeather(): FetchWeather {
 
         return null;
     }
-
+*/
 
     async function fetchWeather(location: Location, type: WeatherType): Promise<WeatherObject | undefined>{
         const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
@@ -128,5 +126,5 @@ export function useFetchWeather(): FetchWeather {
         return forecastArray;
     }
 
-    return { fetchWeather, fetchWeatherFromBackend };
+    return { fetchWeather };
 }
