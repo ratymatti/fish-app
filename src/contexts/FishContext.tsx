@@ -14,12 +14,19 @@ export interface FishContextType {
 }
 
 
-const convertStringToDate = (fish: FishObject): FishObject => {
+const convertISOStringToDate = (fish: FishObject): FishObject => {
     return {
         ...fish,
         date: new Date(fish.date)
     };
-};
+}
+
+const createDateString = (date: Date): string => {
+    const day = String((date).getDate()).padStart(2, '0');
+    const month = String((date).getMonth() + 1).padStart(2, '0');
+    const year = (date).getFullYear();
+    return `${day}/${month}/${year}`;
+}
 
 export const FishContext = React.createContext<FishContextType | undefined>(undefined);
 
@@ -32,6 +39,7 @@ export function FishProvider({ children }: { children: React.ReactNode }): JSX.E
 
     function updateUserFishArr(newFish: FishObject): void {
         newFish.date = new Date(newFish.date);
+        newFish.dateString = createDateString(newFish.date);
         setUserFishArr((prev) => prev ? [...prev, newFish] : [newFish]);
     }
 
@@ -41,7 +49,9 @@ export function FishProvider({ children }: { children: React.ReactNode }): JSX.E
                 try {
                     const fishes = await fetchFishData({ idToken });
                     if (fishes.length) {
-                        const updatedFishes = fishes.map((fish: FishObject) => convertStringToDate(fish));
+                        const updatedFishes = fishes
+                            .map((fish: FishObject) => convertISOStringToDate(fish))
+                            .map((fish: FishObject) => ({ ...fish, dateString: createDateString(fish.date as Date) }));
                         setUserFishArr(updatedFishes);
                     }
                 } catch (err) {
