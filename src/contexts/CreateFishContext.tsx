@@ -17,7 +17,7 @@ export interface CreateFishContextType {
     setLocationName: (locationName: string | null) => void;
     comment?: string;
     setComment: (comment: string) => void;
-    createNewFish: () => NewFishObject;  
+    createNewFish: () => NewFishObject;
 }
 
 
@@ -43,6 +43,7 @@ export function CreateFishProvider({ children }: { children: React.ReactNode }):
             locationName: locationName!,
             comment: comment!,
             date: catchDate!.toISOString(),
+            dateString: createDateString(catchDate!),
             geolocation: {
                 lat: geolocation!.lat,
                 lng: geolocation!.lng
@@ -61,14 +62,23 @@ export function CreateFishProvider({ children }: { children: React.ReactNode }):
         setComment(null);
     }
 
+    function createDateString(date: Date): string {
+        const day = String((date as Date).getDate()).padStart(2, '0');
+        const month = String((date as Date).getMonth() + 1).padStart(2, '0');
+        const year = (date as Date).getFullYear();
+        return `${day}/${month}/${year}`;
+    }
+
 
     return (
-        <CreateFishContext.Provider value={{    geolocation, setGeolocation,
-                                                catchDate, setCatchDate,
-                                                species, setSpecies,
-                                                length, setLength,
-                                                locationName, setLocationName,
-                                                setComment, createNewFish }}>
+        <CreateFishContext.Provider value={{
+            geolocation, setGeolocation,
+            catchDate, setCatchDate,
+            species, setSpecies,
+            length, setLength,
+            locationName, setLocationName,
+            setComment, createNewFish
+        }}>
             {children}
         </CreateFishContext.Provider>
     )
