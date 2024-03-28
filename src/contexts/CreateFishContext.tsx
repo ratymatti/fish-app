@@ -43,7 +43,6 @@ export function CreateFishProvider({ children }: { children: React.ReactNode }):
             locationName: locationName!,
             comment: comment!,
             date: catchDate!.toISOString(),
-            dateString: createDateString(catchDate!),
             geolocation: {
                 lat: geolocation!.lat,
                 lng: geolocation!.lng
@@ -60,13 +59,6 @@ export function CreateFishProvider({ children }: { children: React.ReactNode }):
         setLength(null);
         setLocationName(null);
         setComment(null);
-    }
-
-    function createDateString(date: Date): string {
-        const day = String((date as Date).getDate()).padStart(2, '0');
-        const month = String((date as Date).getMonth() + 1).padStart(2, '0');
-        const year = (date as Date).getFullYear();
-        return `${day}/${month}/${year}`;
     }
 
 
