@@ -15,16 +15,17 @@ export interface FishObject {
     id: string;
     species: string;
     length: number;
-    date: string;
+    date: string | Date;
     locationName: string;
     comment: string | null;
     geolocation: Location;
+    dateString: string | null;
 }
 
 export interface CardFish {
     header: string | null | undefined;
     info: { text: string; value: string }[];
-    weather: { text: string; value: string | number }[];
+   // weather: { text: string; value: string | number }[];
     id: string;
 }
 
