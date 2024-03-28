@@ -15,7 +15,7 @@ export default function FishRow(props: FishRowProps): JSX.Element {
             <td>{fish.species}</td>
             <td>{fish.length}cm</td>
             <td>{fish.locationName}</td>
-            <td>{fish.date}</td>
+            <td>{fish.dateString}</td>
         </tr>
     )
 }
