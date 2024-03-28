@@ -11,11 +11,11 @@ export default function FishRow(props: FishRowProps): JSX.Element {
     const { fish, handleFishRowClick } = props;
 
     return (
-        <tr onClick={() => handleFishRowClick(fish.id!)} className='row' key={fish.id}>
+        <tr onClick={() => handleFishRowClick(fish.id)} className='row' key={fish.id}>
             <td>{fish.species}</td>
-            <td>{fish.cm}cm</td>
+            <td>{fish.length}cm</td>
             <td>{fish.locationName}</td>
-            <td>{fish.dateString}</td>
+            <td>{fish.date}</td>
         </tr>
     )
 }
