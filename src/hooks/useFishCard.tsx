@@ -10,34 +10,27 @@ interface FishCardHook {
 }
 
 export default function useFishCard(): FishCardHook {
-
     const fishContext = React.useContext(FishContext) as FishContextType;
 
-    if (!fishContext) {
-        throw new Error("FishContext is undefined");
-    }
-
-    const { userFishArr, removeFishObject, setCardFish } = fishContext;
+    if (!fishContext) throw new Error("FishContext is undefined");
+    
+    const { userFishArr, setCardFish } = fishContext;
 
     function transformToCardFish(fish: FishObject): CardFish | null {
         if (fish) {
-            const source = fish?.weather?.currentWeather && 'weather' in fish?.weather?.currentWeather
-                ? fish.weather.currentWeather.weather
-                : undefined;
-                
             const fishData = {
                 header: fish.species,
-                id: fish.id as string,
+                id: fish.id,
                 info: [
-                    { text: "Length: ", value: `${fish.cm || 'not available'}${fish.cm ? 'cm' : ''}` },
-                    { text: "Catch date: ", value: fish.dateString || 'not available' },
-                    { text: "Catch location: ", value: fish.locationName || 'not available' }
-                ],
+                    { text: "Length: ", value: `${fish.length} cm` },
+                    { text: "Catch date: ", value: fish.dateString! },
+                    { text: "Catch location: ", value: fish.locationName }
+                ], 
                 weather: [
-                    { text: "Temperature: ", value: `${((source?.temp ? source?.temp : 0) >= 0 ? '+' : '')}${source?.temp ?? "not available"}` },
-                    { text: "Wind direction: ", value: source?.wind_direction || "not available" },
-                    { text: 'Humidity: ', value: `${source?.humidity || "not available"}${source?.humidity ? '%' : ''}` },
-                    { text: 'Pressure: ', value: `${source?.pressure || "not available"}${source?.pressure ? ' hPa' : ''}` },
+                    { text: "Temperature: ", value: "coming soon" },
+                    { text: "Wind direction: ", value: "coming soon" },
+                    { text: 'Humidity: ', value: "coming soon" },
+                    { text: 'Pressure: ', value: "coming soon" },
                 ]
             }
             return fishData;
@@ -45,24 +38,18 @@ export default function useFishCard(): FishCardHook {
         return null;
     }
 
+    const closeCard = (): void => setCardFish(null);
+
     function handleFishRowClick(id: string): void {
         const fish = userFishArr.find(fish => fish.id === id);
         const cardFishObject = transformToCardFish(fish!);
         setCardFish(cardFishObject);
     }
 
-    function closeCard(): void {
-        setCardFish(null);
-    }
-
     function handleRemove(idToRemove: string): void {
-        removeFishObject(idToRemove);
+        // removeFishObject(idToRemove);
         closeCard();
     }
 
-    return {
-        handleFishRowClick,
-        closeCard,
-        handleRemove
-    }
+    return { handleFishRowClick, closeCard, handleRemove }
 }
