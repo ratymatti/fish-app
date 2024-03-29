@@ -14,30 +14,26 @@ interface FishCardProps {
 export default function FishCard(props: FishCardProps): JSX.Element | null {
     const { cardFish, closeCard, handleRemove } = props;
 
-    if (cardFish && cardFish.header) {
+    if (cardFish) {
 
         return (
             <div className='fish-card'>
                 <FishCardHeader closeCard={closeCard} />
                 <div className='fish-data'>
                     <CardHeader text={cardFish.header} />
-                    {
-                        cardFish.info.map(({ text, value }, index) => (
+                    { cardFish.info.map(({ text, value }, index) => (
                             <CardInfoRow
                                 key={index}
                                 text={text}
                                 value={value} />
-                        ))
-                    }
+                        )) }
                     <br></br>
-                    {
-                        cardFish.weather.map(({ text, value }, index) => (
+                    { cardFish.weather.map(({ text, value }, index) => (
                             <CardInfoRow 
                                 key={index}
                                 text={text}
                                 value={value} />
-                        ))
-                    }
+                        )) }
                     <br></br>
                     <button onClick={() => handleRemove(cardFish.id!)}>delete</button>
                 </div>
