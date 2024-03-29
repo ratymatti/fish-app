@@ -23,9 +23,9 @@ export interface FishObject {
 }
 
 export interface CardFish {
-    header: string | null | undefined;
+    header: string;
     info: { text: string; value: string }[];
-   // weather: { text: string; value: string | number }[];
+    weather: { text: string; value: string | number }[];
     id: string;
 }
 
