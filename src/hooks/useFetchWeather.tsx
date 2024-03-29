@@ -4,40 +4,37 @@ import { v4 as uuidv4 } from 'uuid';
 import { Location } from '../types/location';
 import { Time, WeatherType } from '../types/weather';
 import { WeatherInfo, WeatherObject } from '../types/weather';
+import { useIdToken } from './useIdToken';
 
 interface FetchWeather {
-    fetchWeather: (location: Location, type: WeatherType) => Promise<WeatherObject | undefined>;
-    //fetchWeatherFromBackend: (location: Location) => Promise<WeatherObject | null>;
+    fetchCurrent: (location: Location) => Promise<WeatherObject | null>;
 }
 
 export function useFetchWeather(): FetchWeather {
 
-    /**
-    * Function name fetchWeather
-    * @description This function fetches weather data from OpenWeatherMap API
-    * @param {Location} location object {lat: number, lng: number} <-- must be an object with lat and lng properties
-    * @param {WeatherType} type string 'weather' or 'forecast'
-    * @returns {WeatherObject} - object with weather data
-    */
+    const { idToken } = useIdToken();
 
-    /*
-    async function fetchWeatherFromBackend(location: Location): Promise<WeatherObject | null>{
+    const rootUrl = 'http://localhost:8080/weather';
 
-        const apiUrl = `http://localhost:8080/weather/${userId}/${location.lat}/${location.lng}`;
 
-        if (!location) throw new Error('Location is required');
+    async function fetchWeatherFromBackend({ endpoint, method, body }): Promise<WeatherObject | null> {
+        const urlToFetch = `${rootUrl}${endpoint}`;
+
+        const config: RequestInit = {
+            method,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${idToken}`
+            },
+            body: JSON.stringify(body)
+        }
 
         try {
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(location)
-            });
+            const response = await fetch(urlToFetch, config);
             if (response.ok) {
                 const data = await response.json();
                 console.log(data);
+                return data;
             }
         } catch (err) {
             if (err instanceof Error) {
@@ -46,39 +43,16 @@ export function useFetchWeather(): FetchWeather {
                 console.log(err);
             }
         }
-
         return null;
     }
-*/
 
-    async function fetchWeather(location: Location, type: WeatherType): Promise<WeatherObject | undefined>{
-        const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
-        const units = 'metric';
-        const apiUrl = `https://api.openweathermap.org/data/2.5/${type}?`;
-
-        const currentTimeDate = `${getCurrentDateString()} ${getCurrentTime()}`; // REMOVE THIS LATER;
-
-        if (location) {
-            try {
-                const response = await fetch(`${apiUrl}lat=${location.lat}&lon=${location.lng}&appid=${apiKey}&units=${units}`);
-                console.log(`fetched from api ${currentTimeDate}`); // REMOVE THIS LATER
-
-                if (response.ok) {
-                    const data = await response.json();
-
-                    const weather = createWeatherObject(data, location, type);
-                    return weather;
-                }
-
-            } catch (err) {
-                if (err instanceof Error) {
-                    console.log(err.message);
-                } else {
-                    console.log(err);
-                }
-            }
-        }
+    function fetchCurrent(location: Location) {
+        const endpoint = '/fetch/current';
+        const method = 'POST';
+        const body = location;
+        return fetchWeatherFromBackend({ endpoint, method, body });
     }
+
 
     function createWeatherObject(data: any, location: Location, type: WeatherType) {
         const source = type === WeatherType.WEATHER ? data : data.city;
@@ -126,5 +100,5 @@ export function useFetchWeather(): FetchWeather {
         return forecastArray;
     }
 
-    return { fetchWeather };
+    return { fetchCurrent };
 }
