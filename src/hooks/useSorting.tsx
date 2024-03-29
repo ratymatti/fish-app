@@ -22,17 +22,13 @@ interface SortingHook {
 
 
 export default function useSorting(): SortingHook {
-    const [direction, setDirection] = useState<SortDirection>(SortDirection.DESC);
-    const [currentField, setCurrentField] = useState<Field>(Field.DATE);
-
     const fishContext = React.useContext(FishContext);
-
-    if (!fishContext) {
-        throw new Error("FishContext is undefined");
-    }
+    if (!fishContext) throw new Error("FishContext is undefined");
 
     const { userFishArr, setUserFishArr } = fishContext;
 
+    const [direction, setDirection] = useState<SortDirection>(SortDirection.DESC);
+    const [currentField, setCurrentField] = useState<Field>(Field.DATE);
 
     function handleClick(field: Field) {
         if (field === currentField) {
@@ -47,7 +43,7 @@ export default function useSorting(): SortingHook {
     }
 
     function sortByField(field: Field, direction: SortDirection) {
-        const sortedFishes = sortFishes(field, userFishArr, direction);
+        const sortedFishes = sortFishes({field, userFishArr, direction});
         setUserFishArr(sortedFishes);
     }
 

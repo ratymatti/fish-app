@@ -11,25 +11,31 @@ import { FishObject } from '../../types/fish';
  * @returns {Array} - The sorted array of fish objects.
  */
 
-export const sortFishes = (field: Field, userFishArr: FishObject[], direction: SortDirection): FishObject[] => {
+interface SortFishes {
+    field : Field;
+    userFishArr : FishObject[];
+    direction : SortDirection;
+}
+
+export const sortFishes = ({field, userFishArr, direction}: SortFishes): FishObject[] => {
     const fishesCopy = [...userFishArr];
 
     function sortFishesByField() {
-        
+
         switch (field) {
             case Field.SPECIES:
                 return fishesCopy.sort((fishA, fishB) => {
                     const speciesComparison = (fishB.species || '').localeCompare(fishA.species || '') ?? 0;
-                    return speciesComparison === 0 ? (fishA.cm ?? 0) - (fishB.cm ?? 0) : speciesComparison;
+                    return speciesComparison === 0 ? (fishA.length ?? 0) - (fishB.length ?? 0) : speciesComparison;
                 });
 
             case Field.LENGTH:
-                return fishesCopy.sort((fishA, fishB) => (fishA.cm ?? 0) - (fishB.cm ?? 0));
+                return fishesCopy.sort((fishA, fishB) => (fishA.length ?? 0) - (fishB.length ?? 0));
 
             case Field.LOCATION:
                 return fishesCopy.sort((fishA, fishB) => {
                     const waterComparison = (fishB.locationName || '').localeCompare(fishA.locationName || '') ?? 0;
-                    return waterComparison === 0 ? (fishA.cm ?? 0) - (fishB.cm ?? 0) : waterComparison;
+                    return waterComparison === 0 ? (fishA.length ?? 0) - (fishB.length ?? 0) : waterComparison;
                 });
 
             case Field.DATE:
@@ -37,7 +43,7 @@ export const sortFishes = (field: Field, userFishArr: FishObject[], direction: S
                     const dateA = fishA.date instanceof Date ? fishA.date.getTime() : 0;
                     const dateB = fishB.date instanceof Date ? fishB.date.getTime() : 0;
                     const dayComparison = dateA - dateB;
-                    return dayComparison === 0 ? (fishA.cm ?? 0) - (fishB.cm ?? 0) : dayComparison;
+                    return dayComparison === 0 ? (fishA.length ?? 0) - (fishB.length ?? 0) : dayComparison;
                 });
 
             default:
