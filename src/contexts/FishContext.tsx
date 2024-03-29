@@ -8,6 +8,7 @@ import { useIdToken } from '../hooks/useIdToken';
 
 export interface FishContextType {
     userFishArr: FishObject[];
+    setUserFishArr: (fishes: FishObject[]) => void;
     cardFish: CardFish | null;
     setCardFish: (fish: CardFish | null) => void;
     updateUserFishArr: (newFish: FishObject) => void;
@@ -17,7 +18,7 @@ export interface FishContextType {
 const convertISOStringToDate = (fish: FishObject): FishObject => {
     return {
         ...fish,
-        date: new Date(fish.date)
+        date: new Date(fish.date as string)
     };
 }
 
@@ -65,6 +66,7 @@ export function FishProvider({ children }: { children: React.ReactNode }): JSX.E
     return (
         <FishContext.Provider value={{
             userFishArr,
+            setUserFishArr,
             cardFish,
             setCardFish,
             updateUserFishArr
