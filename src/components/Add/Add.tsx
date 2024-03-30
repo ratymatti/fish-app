@@ -87,11 +87,10 @@ export default function Add(props : AddProps): JSX.Element {
 
         try {
             const newFish = createNewFish();
-            if (idToken !== null) {
+            if (idToken) {
                const savedFish = await saveFishData({ idToken, newFish });
                updateUserFishArr(savedFish);
             }
-            
         } catch (err) {
             console.error(err);
         }
