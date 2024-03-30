@@ -37,7 +37,7 @@ export interface WeatherInfo {
     time: string;
     weather: {
         temp: number;
-        feels_like: number;
+        feelsLike: number;
         humidity: number;
         pressure: number;
         wind_speed: number;

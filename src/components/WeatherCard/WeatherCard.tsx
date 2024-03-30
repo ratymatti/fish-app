@@ -27,7 +27,7 @@ function createCardData(data: WeatherObject): CardInfo | null {
             header: `Current Weather in ${data.name}`,
             info: [
                 { text: 'Temperature: ', value: `${source.temp >= 0 ? '+' : ''}${source.temp || 0}` },
-                { text: 'Feels Like: ', value: `${source.feels_like >= 0 ? '+' : ''}${source.feels_like || 0}` },
+                { text: 'Feels Like: ', value: `${source.feelsLike >= 0 ? '+' : ''}${source.feelsLike || 0}` },
                 { text: 'Humidity: ', value: `${source.humidity || 0}%` },
                 { text: 'Pressure: ', value: `${source.pressure || 0} hPa` },
                 { text: 'Wind Speed: ', value: `${source.wind_speed || 0} m/s` },
