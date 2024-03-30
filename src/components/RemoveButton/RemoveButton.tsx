@@ -9,16 +9,16 @@ interface RemoveButtonProps {
         id: string;
         icon: string;
     };
-    removeTracking: (id: string) => void;
+    removeFromTracking: (id: string) => void;
 }
 
 export default function RemoveButton(props: RemoveButtonProps): JSX.Element {
-    const { content, removeTracking } = props;
+    const { content, removeFromTracking } = props;
     
     const [clicked, setClicked] = useState<boolean>(false);
 
-    function handleClick(id: string) {
-        removeTracking(id);
+    function handleClick(currentID: string) {
+        removeFromTracking(currentID);
         setClicked(false);
     }
 
@@ -28,13 +28,15 @@ export default function RemoveButton(props: RemoveButtonProps): JSX.Element {
                 {clicked === false && <BsTrash
                     onClick={() => setClicked(true)} />}
             </div>
-            {clicked === true && (
+            {clicked && (
                 <div className='remove-buttons'>
                     <p>Are you sure?</p>
-                    <button
-                        onClick={() => handleClick(content.id)}>Yes</button>
-                    <button
-                        onClick={() => setClicked(false)}>No</button>
+                    <button onClick={() => handleClick(content.id)}>
+                        Yes
+                    </button>
+                    <button onClick={() => setClicked(false)}>
+                        No
+                    </button>
                 </div>
             )}
         </div>
