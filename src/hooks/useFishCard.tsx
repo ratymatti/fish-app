@@ -46,7 +46,7 @@ export default function useFishCard(): FishCardHook {
         setCardFish(cardFishObject);
     }
 
-    function handleRemove(idToRemove: string): void {
+    function handleRemove(/*idToRemove: string*/): void {
         // removeFishObject(idToRemove);
         closeCard();
     }
