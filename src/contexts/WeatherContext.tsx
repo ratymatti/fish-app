@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../config/firebase';
 import { collection, getDocs, /*addDoc,*/ deleteDoc, doc } from 'firebase/firestore';
 import { useFetchWeather } from '../hooks/useFetchWeather';
-import { WeatherObject, WeatherType } from '../types/weather';
+import { WeatherObject } from '../types/weather';
 import { LocationContext, LocationContextType } from './LocationContext';
 import { Location } from '../types/location';
+import { useIdToken } from '../hooks/useIdToken';
+import { useFetchDelete } from '../hooks/useFetchDelete';
 
 export const WeatherContext = React.createContext<WeatherContextType | undefined>(undefined);
 
@@ -28,7 +30,10 @@ export function WeatherProvider({ children }: { children: React.ReactNode }): JS
 
     const { getLocation } = React.useContext(LocationContext) as LocationContextType;
 
-    const { fetchCurrent } = useFetchWeather();
+    const { fetchCurrentWeather } = useFetchWeather();
+    const { fetchRemoveWeather } = useFetchDelete();
+
+    const { idToken } = useIdToken();
 
     async function getDocuments(): Promise<void> {
         try {
@@ -50,30 +55,30 @@ export function WeatherProvider({ children }: { children: React.ReactNode }): JS
     }
 
     async function addNewTracking(location: Location): Promise<void> {
-        const currentLocationWeather = await fetchCurrent(location);
-        if (currentLocationWeather) setWeatherTrackings([currentLocationWeather]);
+        const currentLocationWeather = await fetchCurrentWeather(location);
+        if (currentLocationWeather) {
+            weatherTrackings.length ?
+                setWeatherTrackings((prev) => [...prev, currentLocationWeather])
+                : setWeatherTrackings([currentLocationWeather]);
+        } 
     }
-    /*
-    async function updateWeatherTrackings(): Promise<void> {
-        const updatePromises = weatherTrackings.map(async (tracking) => {
-            try {
-                const weatherDoc = doc(db, WeatherRef.WEATHER, tracking.id);
-                const newWeather = await fetchWeather(tracking.coords, WeatherType.WEATHER);
-                await updateDoc(weatherDoc, { ...newWeather });
-            } catch (err) {
-                console.error(err);
+
+    useEffect(() => {
+        async function getCurrentLocationWeather(): Promise<void> {
+            const location = await getLocation();
+            if (location) {
+                const currentWeather = await fetchCurrentWeather(location);
+                if (currentWeather) setCurrentLocationWeather(currentWeather);
             }
-        });
-
-        await Promise.all(updatePromises);
-
-        getDocuments();
-    }*/
+        }
+        getCurrentLocationWeather();
+    }, [idToken]);
 
     async function removeFromTracking(idToRemove: string): Promise<void> {
-        const weatherDoc = doc(db, WeatherRef.WEATHER, idToRemove);
-        await deleteDoc(weatherDoc);
-        getDocuments();
+        const deletedFromDB = await fetchRemoveWeather(idToRemove);
+        if (!deletedFromDB) return;
+        const filteredWeatherTrackings = weatherTrackings.filter((tracking) => tracking.id !== idToRemove);
+        setWeatherTrackings(filteredWeatherTrackings);
     }
     
 
@@ -82,7 +87,7 @@ export function WeatherProvider({ children }: { children: React.ReactNode }): JS
             currentLocationWeather,
             weatherTrackings,
             addNewTracking,
-            removeFromTracking
+            removeFromTracking,
         }}>
             {children}
         </WeatherContext.Provider>

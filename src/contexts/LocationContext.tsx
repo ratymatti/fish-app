@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Position } from "../types/location";
-import { Location } from "../types/location";
+import { Position, Location  } from "../types/location";
 
 export interface LocationContextType {
     userLocation: Location | null | undefined;

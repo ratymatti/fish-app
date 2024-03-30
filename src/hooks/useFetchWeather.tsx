@@ -7,7 +7,7 @@ import { WeatherInfo, WeatherObject } from '../types/weather';
 import { useIdToken } from './useIdToken';
 
 interface FetchWeather {
-    fetchCurrent: (location: Location) => Promise<WeatherObject | null>;
+    fetchCurrentWeather: (location: Location) => Promise<WeatherObject | null>;
 }
 
 export function useFetchWeather(): FetchWeather {
@@ -33,7 +33,6 @@ export function useFetchWeather(): FetchWeather {
             const response = await fetch(urlToFetch, config);
             if (response.ok) {
                 const data = await response.json();
-                console.log(data);
                 return data;
             }
         } catch (err) {
@@ -46,13 +45,12 @@ export function useFetchWeather(): FetchWeather {
         return null;
     }
 
-    function fetchCurrent(location: Location) {
+    function fetchCurrentWeather(location: Location): Promise<WeatherObject | null> {
         const endpoint = '/fetch/current';
         const method = 'POST';
         const body = location;
         return fetchWeatherFromBackend({ endpoint, method, body });
     }
-
 
     function createWeatherObject(data: any, location: Location, type: WeatherType) {
         const source = type === WeatherType.WEATHER ? data : data.city;
@@ -100,5 +98,5 @@ export function useFetchWeather(): FetchWeather {
         return forecastArray;
     }
 
-    return { fetchCurrent };
+    return { fetchCurrentWeather };
 }
