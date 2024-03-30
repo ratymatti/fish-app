@@ -4,11 +4,11 @@ import RemoveButton from '../RemoveButton/RemoveButton';
 import { WeatherObject } from '../../types/weather';
 import CardHeader from '../CardHeader/CardHeader';
 import CardInfoRow from '../CardInfoRow/CardInfoRow';
+import { WeatherContext, WeatherContextType } from '../../contexts/WeatherContext';
 
 interface WeatherCardProps {
     data: WeatherObject;
     isRemovable: boolean;
-    removeTracking?: (id: string) => void | undefined;
 }
 
 interface CardInfo {
@@ -41,7 +41,9 @@ function createCardData(data: WeatherObject): CardInfo | null {
 }
 
 export default function WeatherCard(props: WeatherCardProps): JSX.Element {
-    const { data, isRemovable, removeTracking } = props;
+    const { data, isRemovable } = props;
+
+    const { removeFromTracking } = React.useContext(WeatherContext) as WeatherContextType;
 
     const [cardInfo, setCardInfo] = useState<CardInfo>();
 
@@ -70,7 +72,7 @@ export default function WeatherCard(props: WeatherCardProps): JSX.Element {
                     value={value} />
             ))}
             {isRemovable && <RemoveButton
-                removeTracking={removeTracking!}
+                removeFromTracking={removeFromTracking}
                 content={cardInfo} />}
         </div>
     )
