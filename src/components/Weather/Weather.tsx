@@ -17,8 +17,7 @@ export default function Weather(): JSX.Element | null {
     const {
         currentLocationWeather,
         weatherTrackings,
-        addNewTracking,
-        removeFromTracking } = React.useContext(WeatherContext) as WeatherContextType;
+        addNewTracking } = React.useContext(WeatherContext) as WeatherContextType;
 
     const { userLocation } = React.useContext(LocationContext) as LocationContextType;
 
@@ -35,10 +34,6 @@ export default function Weather(): JSX.Element | null {
             addNewTracking(coords);
             setNewWeatherLocation([]);
         }
-    }
-
-    function removeTracking(idToRemove: string) {
-        removeFromTracking(idToRemove);
     }
 
     function handleSelection() {
@@ -58,8 +53,7 @@ export default function Weather(): JSX.Element | null {
                     <WeatherCard
                         key={weatherObj.id}
                         data={weatherObj}
-                        isRemovable={true}
-                        removeTracking={removeTracking} />
+                        isRemovable={true} />
                 ))}
                 <button onClick={() => setCurrent(Current.MAP)}>Add new tracking</button>
             </div>
