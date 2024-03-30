@@ -1,13 +1,11 @@
-import getCurrentTime from '../modules/getCurrentTime/getCurrentTime';
-import getCurrentDateString from '../modules/getCurrentDateString/getCurrentDateString';
-import { v4 as uuidv4 } from 'uuid';
+
 import { Location } from '../types/location';
-import { Time, WeatherType } from '../types/weather';
-import { WeatherInfo, WeatherObject } from '../types/weather';
+import { WeatherObject } from '../types/weather';
 import { useIdToken } from './useIdToken';
+import { WeatherEndpoint } from '../contexts/WeatherContext';
 
 interface FetchWeather {
-    fetchCurrentWeather: (location: Location) => Promise<WeatherObject | null>;
+    fetchCurrentWeather: (location: Location, endpoint: WeatherEndpoint) => Promise<WeatherObject | null>;
 }
 
 export function useFetchWeather(): FetchWeather {
@@ -45,58 +43,12 @@ export function useFetchWeather(): FetchWeather {
         return null;
     }
 
-    function fetchCurrentWeather(location: Location): Promise<WeatherObject | null> {
-        const endpoint = '/fetch/current';
+    function fetchCurrentWeather(location: Location, endpoint: WeatherEndpoint): Promise<WeatherObject | null> {
         const method = 'POST';
         const body = location;
         return fetchWeatherFromBackend({ endpoint, method, body });
     }
 
-    function createWeatherObject(data: any, location: Location, type: WeatherType) {
-        const source = type === WeatherType.WEATHER ? data : data.city;
-
-        const newWeatherObj = {
-            type: type,
-            name: source.name,
-            id: uuidv4(),
-            info: 'all good!',
-            coords: {
-                lat: location.lat,
-                lng: location.lng
-            },
-            forecastArray: type === WeatherType.FORECAST ? createForecastArray(data) : [],
-            currentWeather: type === WeatherType.WEATHER ? getWeatherInfo(data, WeatherType.WEATHER) : {}
-        }
-        return newWeatherObj;
-    }
-
-    function getWeatherInfo(data: any, type: WeatherType): WeatherInfo {
-        const currentTimeDate = `${getCurrentDateString()} ${getCurrentTime()}`
-        return {
-            icon: data.weather[0].icon,
-            time: type === WeatherType.WEATHER ? currentTimeDate : data.dt_txt,
-            weather: {
-                temp: data.main.temp,
-                feels_like: data.main.feels_like,
-                humidity: data.main.humidity,
-                pressure: data.main.pressure,
-                wind_speed: data.wind.speed,
-                wind_direction: data.wind.deg,
-            }
-        }
-    }
-
-    function createForecastArray(data: any): WeatherInfo[] {
-        const forecastArray: WeatherInfo[] = [];
-        for (const index in data.list) {
-            const time = data.list[index].dt_txt.split(' ')[1]
-            if (time === Time.TIME) {
-                const weatherObj = getWeatherInfo(data.list[index], WeatherType.FORECAST);
-                forecastArray.push(weatherObj);
-            }
-        }
-        return forecastArray;
-    }
 
     return { fetchCurrentWeather };
 }

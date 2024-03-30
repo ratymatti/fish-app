@@ -15,6 +15,11 @@ export interface WeatherContextType {
     removeFromTracking: (idToRemove: string) => void;
 }
 
+export enum WeatherEndpoint {
+    CURRENT = '/fetch/current',
+    TRACKING = '/fetch/tracking',
+}
+
 
 export function WeatherProvider({ children }: { children: React.ReactNode }): JSX.Element {
     const [currentLocationWeather, setCurrentLocationWeather] = useState<WeatherObject | null>(null);
@@ -29,7 +34,7 @@ export function WeatherProvider({ children }: { children: React.ReactNode }): JS
 
 
     async function addNewTracking(location: Location): Promise<void> {
-        const currentLocationWeather = await fetchCurrentWeather(location);
+        const currentLocationWeather = await fetchCurrentWeather(location, WeatherEndpoint.TRACKING);
         if (currentLocationWeather) {
             weatherTrackings.length ?
                 setWeatherTrackings((prev) => [...prev, currentLocationWeather])
@@ -48,7 +53,7 @@ export function WeatherProvider({ children }: { children: React.ReactNode }): JS
         async function getCurrentLocationWeather(): Promise<void> {
             const location = await getLocation();
             if (location) {
-                const currentWeather = await fetchCurrentWeather(location);
+                const currentWeather = await fetchCurrentWeather(location, WeatherEndpoint.CURRENT);
                 if (currentWeather) setCurrentLocationWeather(currentWeather);
             }
         }
