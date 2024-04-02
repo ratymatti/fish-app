@@ -59,6 +59,21 @@ export function WeatherProvider({ children }: { children: React.ReactNode }): JS
         }
         getCurrentLocationWeather();
     }, [idToken]);
+
+    useEffect(() => {
+        const delay = Math.random() * 5 * 60 * 1000; // random delay between 0 and 5 minutes
+        const updateInterval = setTimeout(() => {
+            setInterval(async () => {
+                const updatedTrackings = await Promise.all(weatherTrackings.map(async (tracking) => {
+                    const updatedWeather = await fetchCurrentWeather(tracking.coords, WeatherEndpoint.TRACKING);
+                    return updatedWeather || tracking; // if fetch fails, keep the old data
+                }));
+                setWeatherTrackings(updatedTrackings);
+            }, 15 * 60 * 1000); // update every 15 minutes
+        }, delay);
+    
+        return () => clearTimeout(updateInterval); // cleanup on unmount
+    }, [weatherTrackings, fetchCurrentWeather]);
     
 
     return (
