@@ -3,7 +3,7 @@ import { useIdToken } from './useIdToken';
 export function useFetchDelete() {
     const rootUrl = 'http://localhost:8080/weather';
 
-    const { idToken } = useIdToken();
+    const { refreshedIdToken } = useIdToken();
 
     async function fetchDeleteFromBackend({ endpoint }): Promise<boolean> {
         const urlToFetch = `${rootUrl}${endpoint}`;
@@ -12,7 +12,7 @@ export function useFetchDelete() {
             method: 'Delete',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${idToken}`
+                'Authorization': `Bearer ${refreshedIdToken}`
             }
         }
         

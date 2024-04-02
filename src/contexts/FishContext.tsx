@@ -14,7 +14,6 @@ export interface FishContextType {
     updateUserFishArr: (newFish: FishObject) => void;
 }
 
-
 const convertISOStringToDate = (fish: FishObject): FishObject => {
     return {
         ...fish,
@@ -31,11 +30,12 @@ const createDateString = (date: Date): string => {
 
 export const FishContext = React.createContext<FishContextType | undefined>(undefined);
 
+
 export function FishProvider({ children }: { children: React.ReactNode }): JSX.Element {
     const [userFishArr, setUserFishArr] = useState<FishObject[]>([]);
     const [cardFish, setCardFish] = useState<CardFish | null>(null);
 
-    const { idToken } = useIdToken();
+    const { initialIdToken } = useIdToken();
     const { fetchFishData } = useFetchFish();
 
     function updateUserFishArr(newFish: FishObject): void {
@@ -46,9 +46,9 @@ export function FishProvider({ children }: { children: React.ReactNode }): JSX.E
 
     useEffect(() => {
         async function setFishData(): Promise<void> {
-            if (idToken) {
+            if (initialIdToken) {
                 try {
-                    const fishes = await fetchFishData({ idToken });
+                    const fishes = await fetchFishData();
                     if (fishes.length) {
                         const updatedFishes = fishes
                             .map((fish: FishObject) => convertISOStringToDate(fish))
@@ -61,7 +61,7 @@ export function FishProvider({ children }: { children: React.ReactNode }): JSX.E
             }
         }
         setFishData();
-    }, [idToken]);
+    }, [initialIdToken]);
 
     return (
         <FishContext.Provider value={{

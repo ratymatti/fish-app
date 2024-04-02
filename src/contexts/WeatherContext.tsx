@@ -30,7 +30,7 @@ export function WeatherProvider({ children }: { children: React.ReactNode }): JS
     const { fetchCurrentWeather } = useFetchWeather();
     const { fetchRemoveWeather } = useFetchDelete();
 
-    const { idToken } = useIdToken();
+    const { initialIdToken } = useIdToken();
 
 
     async function addNewTracking(location: Location): Promise<void> {
@@ -57,14 +57,14 @@ export function WeatherProvider({ children }: { children: React.ReactNode }): JS
                 if (currentWeather) setCurrentLocationWeather(currentWeather);
             }
         }
-        if (idToken) {
+        if (initialIdToken) {
             const updateInterval = setInterval(() => {
                 updateCurrentLocationWeather();
             }, 15 * 60 * 1000); // update every 15 minutes
     
             return () => clearInterval(updateInterval); // cleanup on unmount
         }
-    }, [idToken]); // REFACTOR THIS hook after refactored to refresh idTokens
+    }, [initialIdToken]); // REFACTOR THIS hook after refactored to refresh idTokens
 
     useEffect(() => {
         async function updateWeatherTrackings(): Promise<void> {
@@ -74,14 +74,14 @@ export function WeatherProvider({ children }: { children: React.ReactNode }): JS
             }));
             setWeatherTrackings(updatedTrackings);
         }
-        if (idToken) {
+        if (initialIdToken) {
             const updateInterval = setInterval(() => {
                 updateWeatherTrackings();
             }, 15 * 60 * 1000); // update every 15 minutes
 
             return () => clearInterval(updateInterval); // cleanup on unmount
         }
-    }, [idToken]); // REFACTOR THIS hook after refactored to refresh idTokens
+    }, [initialIdToken]); // REFACTOR THIS hook after refactored to refresh idTokens
     
 
     return (

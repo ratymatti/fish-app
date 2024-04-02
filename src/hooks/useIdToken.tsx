@@ -4,17 +4,20 @@ import { auth } from "../config/firebase";
 import { useState, useEffect } from "react";
 
 interface IdToken {
-    idToken: string | null;
+    initialIdToken: string | null;
+    refreshedIdToken: string | null;
 }
 
 export function useIdToken(): IdToken {
-    const [idToken, setIdToken] = useState<string | null>(null);
+    const [initialIdToken, setInitialIdToken] = useState<string | null>(null);
+    const [refreshedIdToken, setRefreshedIdToken] = useState<string | null>(null);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             if (user) {
                 const token = await user.getIdToken();
-                setIdToken(token);
+                setInitialIdToken(token);
+                setRefreshedIdToken(token);
             }
         });
 
@@ -22,5 +25,18 @@ export function useIdToken(): IdToken {
         return () => unsubscribe();
     }, []);
 
-    return { idToken }
+    useEffect(() => {
+        const interval = setInterval(async () => {
+            const user = auth.currentUser;
+            if (user) {
+                const token = await user.getIdToken(true);
+                setRefreshedIdToken(token);
+            }
+        }, 3600 * 1000); // Refresh every hour
+
+        // Clean up interval on unmount
+        return () => clearInterval(interval);
+    }, []);
+
+    return { initialIdToken, refreshedIdToken }
 }

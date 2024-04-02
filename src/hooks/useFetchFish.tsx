@@ -3,23 +3,24 @@
  * @returns {FetchFish} - object with function for fetching fish data
  */
 
+import { useIdToken } from "./useIdToken";
+
 interface FetchFish {
-    fetchFishData: (data: IdToken) => Promise<any>
+    fetchFishData: () => Promise<any>
 }
 
-interface IdToken {
-    idToken: string;
-}
 
 export function useFetchFish(): FetchFish {
     const urlToFetch = 'http://localhost:8080/user/fishes';
 
-    async function fetchFishData({ idToken }: IdToken): Promise<any> {
+    const { refreshedIdToken } = useIdToken();
+
+    async function fetchFishData(): Promise<any> {
         const config: RequestInit = {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${idToken}`
+                'Authorization': `Bearer ${refreshedIdToken}`
             }
         }
 

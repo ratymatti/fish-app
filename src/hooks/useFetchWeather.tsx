@@ -10,7 +10,7 @@ interface FetchWeather {
 
 export function useFetchWeather(): FetchWeather {
 
-    const { idToken } = useIdToken();
+    const { refreshedIdToken } = useIdToken();
 
     const rootUrl = 'http://localhost:8080/weather';
 
@@ -22,7 +22,7 @@ export function useFetchWeather(): FetchWeather {
             method,
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${idToken}`
+                'Authorization': `Bearer ${refreshedIdToken}`
             },
             body: JSON.stringify(body)
         }

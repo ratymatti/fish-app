@@ -11,13 +11,13 @@ export const UserContext = React.createContext<UserContextType | undefined>(unde
 export function UserProvider({ children }: { children: React.ReactNode }): JSX.Element {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
-    const { idToken } = useIdToken();
+    const { initialIdToken } = useIdToken();
 
     useEffect(() => {
-        if (idToken) {
+        if (initialIdToken) {
             setIsLoggedIn(true);
         }
-    }, [idToken]);
+    }, [initialIdToken]);
 
     return (
         <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
