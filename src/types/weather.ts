@@ -40,8 +40,8 @@ export interface WeatherInfo {
         feelsLike: number;
         humidity: number;
         pressure: number;
-        wind_speed: number;
-        wind_direction: number;
+        windSpeed: number;
+        windDirection: number;
     };
 }
 
