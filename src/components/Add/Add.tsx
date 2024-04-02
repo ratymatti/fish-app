@@ -69,7 +69,7 @@ export default function Add(props : AddProps): JSX.Element {
     
     const { saveFishData } = useSaveFish();
 
-    const { idToken } = useIdToken();
+    const { refreshedIdToken } = useIdToken();
 
     
 
@@ -87,8 +87,8 @@ export default function Add(props : AddProps): JSX.Element {
 
         try {
             const newFish = createNewFish();
-            if (idToken) {
-               const savedFish = await saveFishData({ idToken, newFish });
+            if (refreshedIdToken) {
+               const savedFish = await saveFishData({ refreshedIdToken, newFish });
                updateUserFishArr(savedFish);
             }
         } catch (err) {
