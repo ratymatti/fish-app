@@ -50,30 +50,38 @@ export function WeatherProvider({ children }: { children: React.ReactNode }): JS
     }
 
     useEffect(() => {
-        async function getCurrentLocationWeather(): Promise<void> {
+        async function updateCurrentLocationWeather(): Promise<void> {
             const location = await getLocation();
             if (location) {
                 const currentWeather = await fetchCurrentWeather(location, WeatherEndpoint.CURRENT);
                 if (currentWeather) setCurrentLocationWeather(currentWeather);
             }
         }
-        getCurrentLocationWeather();
-    }, [idToken]);
+        if (idToken) {
+            const updateInterval = setInterval(() => {
+                updateCurrentLocationWeather();
+            }, 15 * 60 * 1000); // update every 15 minutes
+    
+            return () => clearInterval(updateInterval); // cleanup on unmount
+        }
+    }, [idToken]); // REFACTOR THIS hook after refactored to refresh idTokens
 
     useEffect(() => {
-        const delay = Math.random() * 5 * 60 * 1000; // random delay between 0 and 5 minutes
-        const updateInterval = setTimeout(() => {
-            setInterval(async () => {
-                const updatedTrackings = await Promise.all(weatherTrackings.map(async (tracking) => {
-                    const updatedWeather = await fetchCurrentWeather(tracking.coords, WeatherEndpoint.TRACKING);
-                    return updatedWeather || tracking; // if fetch fails, keep the old data
-                }));
-                setWeatherTrackings(updatedTrackings);
+        async function updateWeatherTrackings(): Promise<void> {
+            const updatedTrackings = await Promise.all(weatherTrackings.map(async (tracking) => {
+                const updatedWeather = await fetchCurrentWeather(tracking.coords, WeatherEndpoint.TRACKING);
+                return updatedWeather || tracking; // if fetch fails, keep the old data
+            }));
+            setWeatherTrackings(updatedTrackings);
+        }
+        if (idToken) {
+            const updateInterval = setInterval(() => {
+                updateWeatherTrackings();
             }, 15 * 60 * 1000); // update every 15 minutes
-        }, delay);
-    
-        return () => clearTimeout(updateInterval); // cleanup on unmount
-    }, [weatherTrackings, fetchCurrentWeather]);
+
+            return () => clearInterval(updateInterval); // cleanup on unmount
+        }
+    }, [idToken]); // REFACTOR THIS hook after refactored to refresh idTokens
     
 
     return (
