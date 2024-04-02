@@ -6,7 +6,7 @@ import { NewFishObject } from "../types/fish";
  */
 
 interface SaveFishDataArgs {
-    idToken: string;
+    refreshedIdToken: string;
     newFish: NewFishObject;
   }
   
@@ -17,12 +17,12 @@ interface SaveFishDataArgs {
 export function useSaveFish(): SaveFish {
     const urlToFetch = 'http://localhost:8080/fish/save';
 
-    async function saveFishData({ idToken, newFish }: SaveFishDataArgs): Promise<any> {
+    async function saveFishData({ refreshedIdToken, newFish }: SaveFishDataArgs): Promise<any> {
         const config: RequestInit = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${idToken}`
+                'Authorization': `Bearer ${refreshedIdToken}`
             },
             body: JSON.stringify(newFish)
         }
