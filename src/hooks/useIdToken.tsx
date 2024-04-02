@@ -32,7 +32,7 @@ export function useIdToken(): IdToken {
                 const token = await user.getIdToken(true);
                 setRefreshedIdToken(token);
             }
-        }, 3600 * 1000); // Refresh every hour
+        }, 60 * 60 * 1000); // Refresh every hour
 
         // Clean up interval on unmount
         return () => clearInterval(interval);
