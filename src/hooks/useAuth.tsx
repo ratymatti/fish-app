@@ -3,7 +3,7 @@ import { useState } from "react";
 interface FetchUserData {
     endpoint: string;
     method: string;
-    body: IdToken;
+    idToken: string;
 }
 
 interface IdToken {
@@ -15,13 +15,13 @@ export function useAuth() {
 
     const rootUrl = 'http://localhost:8080/user';
 
-    async function fetchUserAuth({ endpoint, method, body }: FetchUserData) {
+    async function fetchUserAuth({ endpoint, method, idToken }: FetchUserData) {
         const config: RequestInit = {
             method,
             headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body)
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${idToken}`
+            }
         }
 
         const urlToFetch = `${rootUrl}/${endpoint}`;
@@ -37,10 +37,8 @@ export function useAuth() {
     function authenticateUser({ idToken }: IdToken ) {
         const endpoint = 'authenticate';
         const method = 'POST';
-        const body = {
-            idToken: idToken
-        }
-        fetchUserAuth({ endpoint, method, body });
+        
+        fetchUserAuth({ endpoint, method, idToken });
     }
 
 
