@@ -58,6 +58,8 @@ export function WeatherProvider({ children }: { children: React.ReactNode }): JS
             }
         }
         if (initialIdToken) {
+            updateCurrentLocationWeather();
+
             const updateInterval = setInterval(() => {
                 updateCurrentLocationWeather();
             }, 15 * 60 * 1000); // update every 15 minutes
@@ -68,6 +70,7 @@ export function WeatherProvider({ children }: { children: React.ReactNode }): JS
 
     useEffect(() => {
         async function updateWeatherTrackings(): Promise<void> {
+            if (!weatherTrackings.length) return;
             const updatedTrackings = await Promise.all(weatherTrackings.map(async (tracking) => {
                 const updatedWeather = await fetchCurrentWeather(tracking.coords, WeatherEndpoint.TRACKING);
                 return updatedWeather || tracking; // if fetch fails, keep the old data
@@ -75,6 +78,8 @@ export function WeatherProvider({ children }: { children: React.ReactNode }): JS
             setWeatherTrackings(updatedTrackings);
         }
         if (initialIdToken) {
+            updateWeatherTrackings();
+
             const updateInterval = setInterval(() => {
                 updateWeatherTrackings();
             }, 15 * 60 * 1000); // update every 15 minutes
