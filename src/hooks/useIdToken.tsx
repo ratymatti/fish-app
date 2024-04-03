@@ -6,11 +6,17 @@ import { useState, useEffect } from "react";
 interface IdToken {
     initialIdToken: string | null;
     refreshedIdToken: string | null;
+    resetIdTokens: () => void;
 }
 
 export function useIdToken(): IdToken {
     const [initialIdToken, setInitialIdToken] = useState<string | null>(null);
     const [refreshedIdToken, setRefreshedIdToken] = useState<string | null>(null);
+
+    function resetIdTokens(): void {
+        setInitialIdToken(null);
+        setRefreshedIdToken(null);
+    }
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -38,5 +44,5 @@ export function useIdToken(): IdToken {
         return () => clearInterval(interval);
     }, []);
 
-    return { initialIdToken, refreshedIdToken }
+    return { initialIdToken, refreshedIdToken, resetIdTokens }
 }

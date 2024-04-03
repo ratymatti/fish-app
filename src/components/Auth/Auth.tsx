@@ -7,12 +7,15 @@ import "./Auth.css";
 import { UserContext, UserContextType } from '../../contexts/UserContext';
 import { ActiveContext, ActiveContextType, ActiveState } from '../../contexts/ActiveContext';
 import { useAuth } from '../../hooks/useAuth';
+import { useIdToken } from '../../hooks/useIdToken';
 
 export default function Auth() {
     const { setActive } = React.useContext(ActiveContext) as ActiveContextType;
     const { isLoggedIn, setIsLoggedIn } = React.useContext(UserContext) as UserContextType;
 
     const { authenticateUser, response } = useAuth();
+
+    const { resetIdTokens } = useIdToken();
 
     async function signInWithGoogle() {
         try {
@@ -34,6 +37,7 @@ export default function Auth() {
 
     async function logOut() {
         try {
+            resetIdTokens();
             await signOut(auth);
             setIsLoggedIn(false);
             setActive(ActiveState.Empty);
