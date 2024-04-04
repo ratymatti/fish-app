@@ -66,7 +66,7 @@ export function WeatherProvider({ children }: { children: React.ReactNode }): JS
     
             return () => clearInterval(updateInterval); // cleanup on unmount
         }
-    }, [initialIdToken]); // REFACTOR THIS hook after refactored to refresh idTokens
+    }, [initialIdToken]);
 
     useEffect(() => {
         async function updateWeatherTrackings(): Promise<void> {
@@ -86,7 +86,7 @@ export function WeatherProvider({ children }: { children: React.ReactNode }): JS
 
             return () => clearInterval(updateInterval); // cleanup on unmount
         }
-    }, [initialIdToken]); // REFACTOR THIS hook after refactored to refresh idTokens
+    }, [initialIdToken]); 
     
 
     return (
