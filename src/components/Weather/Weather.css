@@ -5,3 +5,18 @@
 .weather button:hover {
     border: 2px solid orange;
 }
+
+.weather p {
+    font-size: 10px;
+}
+
+.weather {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.weather-info {
+    flex-grow: 1;
+}

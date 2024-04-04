@@ -55,7 +55,13 @@ export default function Weather(): JSX.Element | null {
                         data={weatherObj}
                         isRemovable={true} />
                 ))}
-                <button onClick={() => setCurrent(Current.MAP)}>Add new tracking</button>
+                <div className="weather-info">
+                    {weatherTrackings.length < 5 ?
+                        <button onClick={() => setCurrent(Current.MAP)}>Add new tracking</button>
+                        : <p>You have reached the maximum limit of 5 weather trackings. Please remove an existing tracking to add a new one.</p>
+                    }
+                </div>
+
             </div>
         )
     }

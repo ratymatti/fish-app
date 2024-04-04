@@ -23,13 +23,13 @@ function createCardData(data: WeatherObject): CardInfo | null {
 
         const source = data.currentWeather.weather;
 
-        function getWindDirectionInCardinal(windDirection): string {
+        function getWindDirectionInCardinal(windDirection: number): string {
             const directions = ["North", "North-East", "East", "South-East", "South", "South-West", "West", "North-West", "North"];
             return directions[Math.round(((windDirection % 360) / 45))];
         }
 
         return {
-            header: `Current Weather in ${data.name}`,
+            header: `${data.name}`,
             info: [
                 { text: 'Temperature: ', value: `${source.temp >= 0 ? '+' : ''}${source.temp}` },
                 { text: 'Feels Like: ', value: `${source.feelsLike >= 0 ? '+' : ''}${source.feelsLike}` },
