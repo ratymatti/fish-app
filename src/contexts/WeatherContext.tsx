@@ -5,6 +5,8 @@ import { LocationContext, LocationContextType } from './LocationContext';
 import { Location } from '../types/location';
 import { useIdToken } from '../hooks/useIdToken';
 import { useFetchDelete } from '../hooks/useFetchDelete';
+import { useFetchTrackings } from '../hooks/useFetchTrackings';
+import { useUpdateTracking } from '../hooks/useUpdateTracking';
 
 export const WeatherContext = React.createContext<WeatherContextType | undefined>(undefined);
 
@@ -28,7 +30,9 @@ export function WeatherProvider({ children }: { children: React.ReactNode }): JS
     const { getLocation } = React.useContext(LocationContext) as LocationContextType;
 
     const { fetchCurrentWeather } = useFetchWeather();
+    const { fetchUserTrackings } = useFetchTrackings();
     const { fetchRemoveWeather } = useFetchDelete();
+    const { fetchUpdateTrackingWeather } = useUpdateTracking();
 
     const { initialIdToken } = useIdToken();
 
@@ -39,7 +43,7 @@ export function WeatherProvider({ children }: { children: React.ReactNode }): JS
             weatherTrackings.length ?
                 setWeatherTrackings((prev) => [...prev, currentLocationWeather])
                 : setWeatherTrackings([currentLocationWeather]);
-        } 
+        }
     }
 
     async function removeFromTracking(idToRemove: string): Promise<void> {
@@ -47,6 +51,14 @@ export function WeatherProvider({ children }: { children: React.ReactNode }): JS
         if (!deletedFromDB) return;
         const filteredWeatherTrackings = weatherTrackings.filter((tracking) => tracking.id !== idToRemove);
         setWeatherTrackings(filteredWeatherTrackings);
+    }
+
+    async function getUserTrackings(): Promise<WeatherObject[]> {
+        if (weatherTrackings.length) {
+            return weatherTrackings;
+        } else {
+            return await fetchUserTrackings();
+        }
     }
 
     useEffect(() => {
@@ -63,18 +75,20 @@ export function WeatherProvider({ children }: { children: React.ReactNode }): JS
             const updateInterval = setInterval(() => {
                 updateCurrentLocationWeather();
             }, 15 * 60 * 1000); // update every 15 minutes
-    
+
             return () => clearInterval(updateInterval); // cleanup on unmount
         }
     }, [initialIdToken]);
 
     useEffect(() => {
         async function updateWeatherTrackings(): Promise<void> {
-            if (!weatherTrackings.length) return;
-            const updatedTrackings = await Promise.all(weatherTrackings.map(async (tracking) => {
-                const updatedWeather = await fetchCurrentWeather(tracking.coords, WeatherEndpoint.TRACKING);
-                return updatedWeather || tracking; // if fetch fails, keep the old data
-            }));
+            const userTrackings = await getUserTrackings();
+            if (!userTrackings.length) return;
+            const updatedTrackings: WeatherObject[] = [];
+            for (const tracking of userTrackings) {
+                const updatedWeather = await fetchUpdateTrackingWeather(tracking.id);
+                updatedTrackings.push(updatedWeather || tracking); // if fetch fails, keep the old data
+            }
             setWeatherTrackings(updatedTrackings);
         }
         if (initialIdToken) {
@@ -86,8 +100,8 @@ export function WeatherProvider({ children }: { children: React.ReactNode }): JS
 
             return () => clearInterval(updateInterval); // cleanup on unmount
         }
-    }, [initialIdToken]); 
-    
+    }, [initialIdToken]);
+
 
     return (
         <WeatherContext.Provider value={{
