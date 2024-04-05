@@ -14,7 +14,6 @@ export function useFetchWeather(): FetchWeather {
 
     const rootUrl = 'http://localhost:8080/weather';
 
-
     async function fetchWeatherFromBackend({ endpoint, method, body }): Promise<WeatherObject | null> {
         const urlToFetch = `${rootUrl}${endpoint}`;
 
@@ -48,7 +47,6 @@ export function useFetchWeather(): FetchWeather {
         const body = location;
         return fetchWeatherFromBackend({ endpoint, method, body });
     }
-
 
     return { fetchCurrentWeather };
 }
