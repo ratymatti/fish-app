@@ -1,6 +1,10 @@
 import { useIdToken } from './useIdToken';
 
-export function useFetchDelete() {
+interface DeleteTracking {
+    fetchRemoveWeather: (idToRemove: string) => Promise<boolean>;
+}
+
+export function useFetchDelete(): DeleteTracking {
     const rootUrl = 'http://localhost:8080/weather';
 
     const { refreshedIdToken } = useIdToken();
@@ -31,7 +35,7 @@ export function useFetchDelete() {
         return false;
     }
 
-    function fetchRemoveWeather(idToRemove: string) {
+    function fetchRemoveWeather(idToRemove: string): Promise<boolean> {
         const endpoint = `/delete/${idToRemove}`;
     
         return fetchDeleteFromBackend({ endpoint });
