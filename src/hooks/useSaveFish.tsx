@@ -1,30 +1,28 @@
 import { NewFishObject } from "../types/fish";
+import { useIdToken } from "./useIdToken";
 
 /**
  * Custom hook for saving fish data
  * @returns {SaveFish} - object with function for saving fish data
  */
-
-interface SaveFishDataArgs {
-    refreshedIdToken: string;
-    newFish: NewFishObject;
-  }
   
   interface SaveFish {
-    saveFishData: (args: SaveFishDataArgs) => Promise<any>
+    saveFishData: (args: NewFishObject) => Promise<any>
   }
 
 export function useSaveFish(): SaveFish {
     const urlToFetch = 'http://localhost:8080/fish/save';
 
-    async function saveFishData({ refreshedIdToken, newFish }: SaveFishDataArgs): Promise<any> {
+    const { refreshedIdToken } = useIdToken();
+
+    async function saveFishData(newFishData: NewFishObject): Promise<any> {
         const config: RequestInit = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${refreshedIdToken}`
             },
-            body: JSON.stringify(newFish)
+            body: JSON.stringify(newFishData)
         }
 
         try {

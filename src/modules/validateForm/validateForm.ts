@@ -1,36 +1,25 @@
 /**
  * Function validateForm
  * used in Add.js
- * @description Validates the form by checking if the species, cm, water and location
+ * @description Validates the form by checking if the species, cm, water, date and location
  *  are provided correctly
- * @param {*} species 
- * @param {*} length 
- * @param {*} locationName 
- * @param {*} fishGeolocation 
+ * @param {*} newFishData as NewFishObject
  * @returns string or null
  */
 
-interface ValidateFormParams {
-    species: string | null;
-    length: number | null;
-    locationName: string | null;
-    geolocation: {
-        lat: number;
-        lng: number;
-    } | null;
-    catchDate: Date | null;
-}
+import { NewFishObject } from "../../types/fish";
 
-function validateForm({species, length, locationName, geolocation, catchDate}: ValidateFormParams): string | null {
-    if (!species) return 'Species is required';
+
+function validateForm(newFishData : NewFishObject): string | null {
+    if (!newFishData.species) return 'Species is required';
         
-    if (!length || isNaN(length) || length <= 0) return 'Length must be greater than 0';
+    if (!newFishData.length || isNaN(newFishData.length) || newFishData.length <= 0) return 'Length must be greater than 0';
     
-    if (!locationName) return 'Location is required.';
+    if (!newFishData.locationName) return 'Location is required.';
     
-    if (!geolocation) return 'Geolocation is required.';
+    if (!newFishData.geolocation) return 'Geolocation is required.';
 
-    if (!catchDate) return 'Date is required.';
+    if (!newFishData.date) return 'Date is required.';
     
     return null;       
 }
