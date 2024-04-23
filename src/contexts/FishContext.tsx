@@ -48,7 +48,7 @@ export function FishProvider({ children }: { children: React.ReactNode }): JSX.E
         async function setFishData(): Promise<void> {
             if (initialIdToken) {
                 try {
-                    const fishes = await fetchFishData();
+                    const fishes: FishObject[] = await fetchFishData();
                     if (fishes.length) {
                         const updatedFishes = fishes
                             .map((fish: FishObject) => convertISOStringToDate(fish))
