@@ -5,12 +5,12 @@
 
 import { useIdToken } from "./useIdToken";
 
-interface FetchFish {
+interface FetchFishHook {
     fetchFishData: () => Promise<any>
 }
 
 
-export function useFetchFish(): FetchFish {
+export function useFetchFish(): FetchFishHook {
     const urlToFetch = 'http://localhost:8080/user/fishes';
 
     const { refreshedIdToken } = useIdToken();

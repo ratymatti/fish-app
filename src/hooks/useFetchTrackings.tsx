@@ -3,11 +3,11 @@ import { WeatherObject } from '../types/weather';
 import { useIdToken } from './useIdToken';
 
 
-interface FetchWeather {
+interface FetchWeatherTrackingHook {
     fetchUserTrackings: () => Promise<WeatherObject[]>;
 }
 
-export function useFetchTrackings(): FetchWeather {
+export function useFetchTrackings(): FetchWeatherTrackingHook {
 
     const { refreshedIdToken } = useIdToken();
 

@@ -10,7 +10,12 @@ interface IdToken {
     idToken: string;
 }
 
-export function useAuth() {
+interface AuthHook {
+    authenticateUser: ({ idToken }: IdToken) => void;
+    response: boolean | null;
+}
+
+export function useAuth(): AuthHook {
     const [response, setResponse] = useState<boolean | null>(null);
 
     const rootUrl = 'http://localhost:8080/user';

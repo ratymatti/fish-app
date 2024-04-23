@@ -1,10 +1,10 @@
 import { useIdToken } from './useIdToken';
 
-interface DeleteTracking {
+interface DeleteWeatherHook {
     fetchRemoveWeather: (idToRemove: string) => Promise<boolean>;
-}
+} 
 
-export function useFetchDelete(): DeleteTracking {
+export function useFetchDelete(): DeleteWeatherHook {
     const rootUrl = 'http://localhost:8080/weather';
 
     const { refreshedIdToken } = useIdToken();

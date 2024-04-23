@@ -3,13 +3,13 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../config/firebase";
 import { useState, useEffect } from "react";
 
-interface IdToken {
+interface IdTokenHook {
     initialIdToken: string | null;
     refreshedIdToken: string | null;
     resetIdTokens: () => void;
 }
 
-export function useIdToken(): IdToken {
+export function useIdToken(): IdTokenHook {
     const [initialIdToken, setInitialIdToken] = useState<string | null>(null);
     const [refreshedIdToken, setRefreshedIdToken] = useState<string | null>(null);
 

@@ -4,11 +4,11 @@ import { WeatherObject } from '../types/weather';
 import { useIdToken } from './useIdToken';
 import { WeatherEndpoint } from '../contexts/WeatherContext';
 
-interface FetchWeather {
+interface FetchCurrentWeatherHook {
     fetchCurrentWeather: (location: Location, endpoint: WeatherEndpoint) => Promise<WeatherObject | null>;
 }
 
-export function useFetchWeather(): FetchWeather {
+export function useFetchWeather(): FetchCurrentWeatherHook {
 
     const { refreshedIdToken } = useIdToken();
 

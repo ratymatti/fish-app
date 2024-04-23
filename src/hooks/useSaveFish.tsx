@@ -6,11 +6,11 @@ import { useIdToken } from "./useIdToken";
  * @returns {SaveFish} - object with function for saving fish data
  */
   
-  interface SaveFish {
+  interface SaveFishHook {
     saveFishData: (args: NewFishObject) => Promise<any>
   }
 
-export function useSaveFish(): SaveFish {
+export function useSaveFish(): SaveFishHook {
     const urlToFetch = 'http://localhost:8080/fish/save';
 
     const { refreshedIdToken } = useIdToken();
