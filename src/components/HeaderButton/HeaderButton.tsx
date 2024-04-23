@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './HeaderButton.css';
 
-import { ActiveContext, ActiveContextType, ActiveState } from '../../contexts/ActiveContext';
+import { AppStateContext, AppStateContextType, ActiveState } from '../../contexts/AppStateContext';
 
 interface HeaderButtonProps {
     buttonValue: ActiveState;
 }
 
 export default function HeaderButton({ buttonValue }: HeaderButtonProps) {
-    const { active, setActive } = React.useContext(ActiveContext) as ActiveContextType;
+    const { active, setActive } = useContext(AppStateContext) as AppStateContextType;
 
     return (
         <li>

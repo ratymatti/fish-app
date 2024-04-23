@@ -1,17 +1,15 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { signInWithPopup, signOut } from "firebase/auth";
 import { googleProvider } from '../../config/firebase';
 import { auth } from '../../config/firebase';
 import "./Auth.css";
 
-import { UserContext, UserContextType } from '../../contexts/UserContext';
-import { ActiveContext, ActiveContextType, ActiveState } from '../../contexts/ActiveContext';
 import { useAuth } from '../../hooks/useAuth';
 import { useIdToken } from '../../hooks/useIdToken';
+import { AppStateContext, AppStateContextType, ActiveState } from '../../contexts/AppStateContext';
 
 export default function Auth() {
-    const { setActive } = React.useContext(ActiveContext) as ActiveContextType;
-    const { isLoggedIn, setIsLoggedIn } = React.useContext(UserContext) as UserContextType;
+    const { setActive, isLoggedIn, setIsLoggedIn } = useContext(AppStateContext) as AppStateContextType;
 
     const { authenticateUser, response } = useAuth();
 

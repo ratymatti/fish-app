@@ -8,16 +8,15 @@ import Freeze from './components/Freeze/Freeze';
 import { FishProvider } from './contexts/FishContext';
 import { WeatherProvider } from './contexts/WeatherContext';
 import { LocationProvider } from './contexts/LocationContext';
-import { UserProvider } from './contexts/UserContext';
-import { ActiveProvider } from './contexts/ActiveContext';
+
+import { AppStateProvider } from './contexts/AppStateContext';
 
 function App() {
     const [freeze, setFreeze] = useState<boolean>(false);
 
     return (
-        <ActiveProvider>
-            <UserProvider>
-                <LocationProvider>
+        <AppStateProvider>
+            <LocationProvider>
                     <FishProvider>
                         <WeatherProvider>
                             <div className='App'>
@@ -30,8 +29,9 @@ function App() {
                         </WeatherProvider>
                     </FishProvider>
                 </LocationProvider>
-            </UserProvider>
-        </ActiveProvider>
+        </AppStateProvider>
+                
+
     )
 }
 

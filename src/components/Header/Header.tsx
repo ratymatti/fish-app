@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './Header.css';
 import Auth from '../Auth/Auth';
 import HeaderButton from '../HeaderButton/HeaderButton';
 
-import { UserContext, UserContextType } from '../../contexts/UserContext';
-import { ActiveState } from '../../contexts/ActiveContext';
+import { ActiveState, AppStateContext, AppStateContextType } from '../../contexts/AppStateContext';
 
 export default function Header() {
-    const { isLoggedIn }: {isLoggedIn : boolean } = React.useContext(UserContext) as UserContextType;
+    
+    const { isLoggedIn } = useContext(AppStateContext) as AppStateContextType;
 
     return (
         <div className='header'>
