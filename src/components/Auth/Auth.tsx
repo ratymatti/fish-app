@@ -2,11 +2,12 @@ import React, { useContext, useEffect } from 'react'
 import { signInWithPopup, signOut } from "firebase/auth";
 import { googleProvider } from '../../config/firebase';
 import { auth } from '../../config/firebase';
-import "./Auth.css";
 
 import { useAuth } from '../../hooks/useAuth';
 import { useIdToken } from '../../hooks/useIdToken';
 import { AppStateContext, AppStateContextType, ActiveState } from '../../contexts/AppStateContext';
+
+import googleLogo from '../../assets/web_light_rd_SI.svg';
 
 export default function Auth() {
     const { setActive, isLoggedIn, setIsLoggedIn } = useContext(AppStateContext) as AppStateContextType;
@@ -51,17 +52,19 @@ export default function Auth() {
         }
     }, [response]);
 
+    const authStyles = "text-s border-2 uppercase rounded-md py-1 px-4 hover:border-orange-400 hover:text-orange-400 transition-colors duration-800 ease-in-out";
 
     return (
-        <div className='auth'>
+        <div>
             {isLoggedIn ?
-                <button onClick={logOut}>
+                <button className={authStyles} onClick={logOut}>
                     Sign Out
                 </button>
-            :
-                <button onClick={signInWithGoogle}>
-                    Sign In With Google
-                </button>}
+                :
+                <button className='my-16' onClick={signInWithGoogle}>
+                    <img src={googleLogo} alt="Google logo" className="inline-block mr-2" />
+                </button>
+            }
         </div>
     )
 }
