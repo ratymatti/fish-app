@@ -1,20 +1,19 @@
 import React, { useContext } from 'react';
-import './Header.css';
 import Auth from '../Auth/Auth';
 import HeaderButton from '../HeaderButton/HeaderButton';
 
 import { ActiveState, AppStateContext, AppStateContextType } from '../../contexts/AppStateContext';
+import HeaderLogo from '../HeaderLogo/HeaderLogo';
+import HeaderButtonsContainer from '../HeaderButtonsContainer/HeaderButtonsContainer';
 
 export default function Header() {
-    
     const { isLoggedIn } = useContext(AppStateContext) as AppStateContextType;
 
     return (
-        <div className='header'>
-            <h1>Only <span className='fish-logo'>Fishes</span></h1>
+        <div className='sticky top-0 z-[10] m-0 bg-neutral-800 flex justify-between w-full h-28 border-b'>
+            <HeaderLogo />
             {isLoggedIn &&
-                <div className='header-buttons'>
-                    <ul>
+                    <HeaderButtonsContainer>
                         <HeaderButton
                             buttonValue={ActiveState.AddFish} />
                         <HeaderButton
@@ -26,9 +25,7 @@ export default function Header() {
                         <li>
                             {isLoggedIn && <Auth />}
                         </li>
-                    </ul>
-                </div>
-            }
+                    </HeaderButtonsContainer>}
         </div>
     )
 }

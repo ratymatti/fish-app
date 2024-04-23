@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import Map from '../Map/Map';
 import Add from '../Add/Add';
-import './AddContainer.css';
 import SpinningIcon from '../SpinningIcon/SpinningIcon';
 import { LocationContext, LocationContextType } from '../../contexts/LocationContext';
 import { LocationObject } from '../../types/location';
+import Button from '../Button/Button';
 
 export enum CurrentState {
     Map = 'map',
@@ -15,7 +15,6 @@ export enum CurrentState {
 export default function AddContainer(): JSX.Element | null {
     const [current, setCurrent] = useState<CurrentState>(CurrentState.Map);
     const [fishGeolocation, setFishGeolocation] = useState<LocationObject[]>([]);
-    const [disabled, setDisabled] = useState<boolean>(true);
 
     const { userLocation, setUserLocation } = React.useContext(LocationContext) as LocationContextType;
 
@@ -27,34 +26,44 @@ export default function AddContainer(): JSX.Element | null {
                     lng: fishGeolocation[0].geolocation.lng
                 }
             );
-        }    
+        }
         setCurrent(CurrentState.Map);
     }
 
 
     if (current === CurrentState.Map && userLocation) {
         return (
-            <div className='map'>
+            <div className='h-1/2 w-full mx-8 flex flex-col'>
                 <Map
                     zoom={12}
                     center={userLocation}
                     setFishGeolocation={setFishGeolocation}
-                    markerLocations={fishGeolocation}
-                    setDisabled={setDisabled} />
-                <button className='button' disabled={disabled} onClick={() => setCurrent(CurrentState.Add)}>Select location</button>
+                    markerLocations={fishGeolocation} />
+                <div className='flex justify-center py-8'>
+                    <Button
+                        onClick={() => setCurrent(CurrentState.Add)}
+                        disabled={!fishGeolocation.length}>
+                        {'Select location'}
+                    </Button>
+                </div>
             </div>
         )
     }
 
     if (current === CurrentState.Add) {
         return (
-            <div className='add'>
-                <button className='button' onClick={handleClick}>Edit location</button>
+            <div>
+                <div className='flex justify-center mb-2'>
+                    <Button onClick={handleClick}>
+                        {'Edit location'}
+                    </Button>
+                </div>
                 <Add
                     fishGeolocation={fishGeolocation}
                     setCurrent={setCurrent}
                     setFishGeolocation={setFishGeolocation} />
             </div>
+
         )
     }
 

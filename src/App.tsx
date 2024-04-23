@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './App.css';
 import MainContainer from './components/MainContainer/MainContainer';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
@@ -19,7 +18,7 @@ function App() {
             <LocationProvider>
                     <FishProvider>
                         <WeatherProvider>
-                            <div className='App'>
+                            <div className='h-screen overflow-auto'>
                                 {freeze && <Freeze />}
                                 <Header />
                                 <MainContainer

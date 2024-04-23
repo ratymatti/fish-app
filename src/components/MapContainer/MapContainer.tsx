@@ -29,7 +29,7 @@ export default function MapContainer(): JSX.Element {
     }, [userFishArr]);
 
     return (
-        <div className='map-container'>
+        <div className='h-1/2 w-full mx-8'>
             <Map
                 center={userLocation}
                 zoom={10}

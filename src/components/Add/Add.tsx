@@ -13,6 +13,7 @@ import { useSaveFish } from '../../hooks/useSaveFish';
 import { FishContext, FishContextType } from '../../contexts/FishContext';
 import { optionsCm } from '../../modules/options/optionsCm';
 import { AppStateContext, AppStateContextType } from '../../contexts/AppStateContext';
+import Button from '../Button/Button';
 
 interface AddProps {
     fishGeolocation: LocationObject[];
@@ -38,14 +39,14 @@ export default function Add({ fishGeolocation, setFishGeolocation, setCurrent }:
     const { newFishData, setNewFishData } = useContext(CreateFishContext) as CreateFishContextType;
     const { updateUserFishArr } = useContext(FishContext) as FishContextType;
     const { setError } = useContext(AppStateContext) as AppStateContextType
-    
+
     const { saveFishData } = useSaveFish();
 
-    async function handleSubmit(event: React.FormEvent<HTMLButtonElement>): Promise<void>{
+    async function handleSubmit(event: React.FormEvent<HTMLButtonElement>): Promise<void> {
         event.preventDefault();
 
         const errorMessage = validateForm(newFishData);
-        
+
         if (errorMessage) {
             setError(errorMessage);
             return;
@@ -53,26 +54,28 @@ export default function Add({ fishGeolocation, setFishGeolocation, setCurrent }:
 
         setCurrent(CurrentState.Loading);
 
-        if (newFishData.date instanceof Date) setNewFishData({...newFishData, date: newFishData.date.toISOString()});
+        if (newFishData.date instanceof Date) setNewFishData({ ...newFishData, date: newFishData.date.toISOString() });
 
         try {
-               const savedFish = await saveFishData(newFishData);
-               updateUserFishArr(savedFish);
-               setNewFishData(JSON.parse(JSON.stringify(initialFishData)));
+            const savedFish = await saveFishData(newFishData);
+            updateUserFishArr(savedFish);
+            setNewFishData(JSON.parse(JSON.stringify(initialFishData)));
         } catch (err) {
             console.error(err);
         }
-        
+
         setCurrent(CurrentState.Map);
         setFishGeolocation([]);
     }
 
     useEffect(() => {
         if (fishGeolocation.length) {
-            setNewFishData({...newFishData, geolocation: {
-                lat: fishGeolocation[0].geolocation.lat,
-                lng: fishGeolocation[0].geolocation.lng
-            }});
+            setNewFishData({
+                ...newFishData, geolocation: {
+                    lat: fishGeolocation[0].geolocation.lat,
+                    lng: fishGeolocation[0].geolocation.lng
+                }
+            });
         }
     }, [fishGeolocation]);
 
@@ -85,7 +88,7 @@ export default function Add({ fishGeolocation, setFishGeolocation, setCurrent }:
                         selected={newFishData.date}
                         placeholderText='Select date'
                         dateFormat="dd/MM/yyyy"
-                        onChange={(date: Date) => setNewFishData({...newFishData, date})} />
+                        onChange={(date: Date) => setNewFishData({ ...newFishData, date })} />
                 </div>
                 <div className='select'>
                     <Select
@@ -94,7 +97,7 @@ export default function Add({ fishGeolocation, setFishGeolocation, setCurrent }:
                         placeholder='Select species'
                         styles={styleOptions}
                         onChange={(selectedSpecies: SingleValue<OptionTypeString>) => {
-                            if (selectedSpecies && selectedSpecies.value) setNewFishData({...newFishData, species: selectedSpecies.value});
+                            if (selectedSpecies && selectedSpecies.value) setNewFishData({ ...newFishData, species: selectedSpecies.value });
                         }} />
                 </div>
                 <div className='select'>
@@ -104,7 +107,7 @@ export default function Add({ fishGeolocation, setFishGeolocation, setCurrent }:
                         placeholder='Select lenght'
                         styles={styleOptions}
                         onChange={(length: SingleValue<OptionTypeNumber>) => {
-                            if (length && length.value) setNewFishData({...newFishData, length: length.value});
+                            if (length && length.value) setNewFishData({ ...newFishData, length: length.value });
                         }} />
                 </div>
                 <div className='select'>
@@ -114,23 +117,20 @@ export default function Add({ fishGeolocation, setFishGeolocation, setCurrent }:
                         placeholder='Select location name'
                         styles={styleOptions}
                         onChange={(selectedLocationName: SingleValue<OptionTypeString>) => {
-                            if (selectedLocationName && selectedLocationName.value) setNewFishData({...newFishData, locationName: selectedLocationName.value});
+                            if (selectedLocationName && selectedLocationName.value) setNewFishData({ ...newFishData, locationName: selectedLocationName.value });
                         }} />
                 </div>
                 <div className='select'>
                     <Textarea
                         className='comment-option'
-                        onChange={(e) => setNewFishData({...newFishData, comment: e.target.value})}
+                        onChange={(e) => setNewFishData({ ...newFishData, comment: e.target.value })}
                         placeholder={"Add a comment..."}
                         autoSize={{ minRows: 5 }} />
                 </div>
-                <div className='select'>
-                    <div className='submit'>
-                        <button
-                            className='submit-button'
-                            type='submit'
-                            onClick={handleSubmit}>Submit</button>
-                    </div>
+                <div className='mt-2 flex justify-center'>
+                    <Button onClick={handleSubmit}>
+                        {'Submit'}
+                    </Button>
                 </div>
             </form>
         </div>

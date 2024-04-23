@@ -10,12 +10,14 @@ interface FishRowProps {
 export default function FishRow(props: FishRowProps): JSX.Element {
     const { fish, handleFishRowClick } = props;
 
+    const style = 'border border-neutral-700 pl-2';
+
     return (
-        <tr onClick={() => handleFishRowClick(fish.id)} className='row' key={fish.id}>
-            <td>{fish.species}</td>
-            <td>{fish.length}cm</td>
-            <td>{fish.locationName}</td>
-            <td>{fish.dateString}</td>
+        <tr className='hover:cursor-pointer hover:bg-neutral-500 transition-colors duration-800 ease-in-out' onClick={() => handleFishRowClick(fish.id)} key={fish.id}>
+            <td className={style}>{fish.species}</td>
+            <td className={style}>{fish.length} cm</td>
+            <td className={style}>{fish.locationName}</td>
+            <td className={style}>{fish.dateString}</td>
         </tr>
     )
 }

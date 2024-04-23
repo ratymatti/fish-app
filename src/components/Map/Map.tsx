@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api';
-import './Map.css';
 import { mapStyles } from '../../modules/mapStyles/mapStyles';
 import SpinningIcon from '../SpinningIcon/SpinningIcon';
 import createCoords from '../../modules/createCoords/createCoords';
@@ -21,7 +20,6 @@ interface MapProps {
     markerLocations: LocationObject[];
     zoom: number;
     setFishGeolocation?: (value: LocationObject[]) => void;
-    setDisabled?: (value: boolean) => void;
     setNewWeatherLocation?: (value: any) => void;
     center?: Location | null;
 }
@@ -35,7 +33,7 @@ export default function Map(props: MapProps): JSX.Element {
     const {
         markerLocations,
         zoom, setFishGeolocation,
-        setDisabled, setNewWeatherLocation
+        setNewWeatherLocation
     } = props;
 
     const { isLoaded } = useLoadScript({
@@ -56,7 +54,6 @@ export default function Map(props: MapProps): JSX.Element {
 
         if (active === ActiveState.AddFish) {
             if (setFishGeolocation) setFishGeolocation([selectedLocation]);
-            if (setDisabled) setDisabled(false);
         } else if (active === ActiveState.Weather) {
             if (setNewWeatherLocation) setNewWeatherLocation([selectedLocation]);
         }
@@ -78,7 +75,7 @@ export default function Map(props: MapProps): JSX.Element {
         <GoogleMap
             zoom={zoom}
             center={center}
-            mapContainerClassName='map-container'
+            mapContainerClassName='w-full h-full'
             onClick={(event) => {
                 handleClick(event);
             }}

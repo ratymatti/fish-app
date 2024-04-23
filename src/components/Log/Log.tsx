@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import './Log.css';
+
 import FishCard from '../FishCard/FishCard';
 import { FishContext } from '../../contexts/FishContext';
 import FishRow from '../FishRow/FishRow';
@@ -34,13 +34,12 @@ export default function Log(props: LogProps): JSX.Element {
     }, [cardFish]);
 
     return (
-        <div className='log'>
+        <div className='bg-neutral-800 border border-neutral-700 w-5/6 h-1/2 flex items-start justify-center'>
             {cardFish && <FishCard
                 cardFish={cardFish}
                 closeCard={closeCard}
-                handleRemove={handleRemove} />}
-            <div className='table'>
-                <table>
+                handleRemove={handleRemove} />}       
+                <table className='bg-neutral-800 text-neutral-200 text-s w-screen overflow-scroll border-separate border-spacing-2 border border-neutral-700'>
                     <thead>
                         <TheadRows />
                     </thead>
@@ -53,7 +52,6 @@ export default function Log(props: LogProps): JSX.Element {
                         ))}
                     </tbody>
                 </table>
-            </div>
         </div>
     )
 }

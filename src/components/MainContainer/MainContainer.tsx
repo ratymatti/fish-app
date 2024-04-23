@@ -3,13 +3,13 @@ import AddContainer from '../AddContainer/AddContainer';
 import Log from '../Log/Log';
 import MapContainer from '../MapContainer/MapContainer';
 import Weather from '../Weather/Weather';
-import './MainContainer.css';
 import Auth from '../Auth/Auth';
 import { CreateFishProvider } from '../../contexts/CreateFishContext';
 import Modal from '../Modal/Modal';
 import { useModal } from '../../hooks/useModal';
 import { AppStateContext, AppStateContextType, ActiveState } from '../../contexts/AppStateContext';
 import InvalidInputModal from '../InvalidInputModal/InvalidInputModal';
+//import './MainContainer.css';
 
 interface MainContainerProps {
     setFreeze: (freeze: boolean) => void;
@@ -38,7 +38,7 @@ export default function MainContainer({ setFreeze }: MainContainerProps) {
             <Modal ref={modalRef}>
                 <InvalidInputModal errorMessage={error} onClose={handleCloseModal} />
             </Modal>
-            <div className='main-container'>
+            <div className='h-screen px-8 mt-8 flex justify-center'>
                 {active === ActiveState.AddFish &&
                     <CreateFishProvider>
                         <AddContainer />
