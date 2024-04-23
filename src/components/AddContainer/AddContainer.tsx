@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 import Map from '../Map/Map';
 import Add from '../Add/Add';
 import './AddContainer.css';
@@ -6,20 +6,13 @@ import SpinningIcon from '../SpinningIcon/SpinningIcon';
 import { LocationContext, LocationContextType } from '../../contexts/LocationContext';
 import { LocationObject } from '../../types/location';
 
-
-interface AddContainerProps {
-    setError: Dispatch<SetStateAction<string>>;
-}
-
 export enum CurrentState {
     Map = 'map',
     Add = 'add',
     Loading = 'loading'
 }
 
-export default function AddContainer(props: AddContainerProps): JSX.Element | null {
-    const { setError } = props;
-
+export default function AddContainer(): JSX.Element | null {
     const [current, setCurrent] = useState<CurrentState>(CurrentState.Map);
     const [fishGeolocation, setFishGeolocation] = useState<LocationObject[]>([]);
     const [disabled, setDisabled] = useState<boolean>(true);
@@ -58,7 +51,6 @@ export default function AddContainer(props: AddContainerProps): JSX.Element | nu
             <div className='add'>
                 <button className='button' onClick={handleClick}>Edit location</button>
                 <Add
-                    setError={setError}
                     fishGeolocation={fishGeolocation}
                     setCurrent={setCurrent}
                     setFishGeolocation={setFishGeolocation} />

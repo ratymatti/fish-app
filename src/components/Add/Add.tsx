@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Select, { SingleValue } from 'react-select';
 import DatePicker from "react-datepicker";
 import Textarea from 'rc-textarea';
@@ -12,12 +12,12 @@ import { LocationObject } from '../../types/location';
 import { useSaveFish } from '../../hooks/useSaveFish';
 import { FishContext, FishContextType } from '../../contexts/FishContext';
 import { optionsCm } from '../../modules/options/optionsCm';
+import { AppStateContext, AppStateContextType } from '../../contexts/AppStateContext';
 
 interface AddProps {
     fishGeolocation: LocationObject[];
     setCurrent: (current: CurrentState) => void;
     setFishGeolocation: (fishGeolocation: LocationObject[]) => void;
-    setError: (error: string) => void;
 }
 
 type OptionTypeString = {
@@ -34,12 +34,12 @@ const styleOptions = {
     option: (styles) => ({ ...styles, color: 'black' })
 };
 
-export default function Add({ fishGeolocation, setFishGeolocation, setCurrent, setError } : AddProps): JSX.Element {
-    const { newFishData, setNewFishData } = React.useContext(CreateFishContext) as CreateFishContextType;
-    const { updateUserFishArr } = React.useContext(FishContext) as FishContextType;
+export default function Add({ fishGeolocation, setFishGeolocation, setCurrent }: AddProps): JSX.Element {
+    const { newFishData, setNewFishData } = useContext(CreateFishContext) as CreateFishContextType;
+    const { updateUserFishArr } = useContext(FishContext) as FishContextType;
+    const { setError } = useContext(AppStateContext) as AppStateContextType
     
     const { saveFishData } = useSaveFish();
-
 
     async function handleSubmit(event: React.FormEvent<HTMLButtonElement>): Promise<void>{
         event.preventDefault();

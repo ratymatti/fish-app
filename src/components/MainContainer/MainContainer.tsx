@@ -1,50 +1,60 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import AddContainer from '../AddContainer/AddContainer';
 import Log from '../Log/Log';
 import MapContainer from '../MapContainer/MapContainer';
 import Weather from '../Weather/Weather';
 import './MainContainer.css';
 import Auth from '../Auth/Auth';
-import Error from '../Error/Error';
-
 import { CreateFishProvider } from '../../contexts/CreateFishContext';
-import { UserContext } from '../../contexts/UserContext';
-import { ActiveContext, ActiveContextType, ActiveState } from '../../contexts/ActiveContext';
+import Modal from '../Modal/Modal';
+import { useModal } from '../../hooks/useModal';
+import { AppStateContext, AppStateContextType, ActiveState } from '../../contexts/AppStateContext';
+import InvalidInputModal from '../InvalidInputModal/InvalidInputModal';
 
 interface MainContainerProps {
     setFreeze: (freeze: boolean) => void;
 }
 
 export default function MainContainer({ setFreeze }: MainContainerProps) {
-    const [error, setError] = useState<string>('');
+    const { error, setError } = useContext(AppStateContext) as AppStateContextType;
 
-    const { isLoggedIn } = React.useContext(UserContext) as { isLoggedIn: boolean };
-    const { active } = React.useContext(ActiveContext) as ActiveContextType;
+    const { modalRef, openModal, closeModal } = useModal();  
+
+    const { isLoggedIn, active } = useContext(AppStateContext) as AppStateContextType;
+
+    function handleCloseModal(): void {
+        closeModal();
+        setError('');
+    }
 
     useEffect(() => {
-        error ? setFreeze(true) : setFreeze(false);
+        if (error.trim() !== '') {
+            openModal();
+        }
     }, [error]);
 
     return (
-        <div className='main-container'>
-            {error && <Error
-                error={error}
-                setError={setError} />}
-            {active === ActiveState.AddFish &&
-                <CreateFishProvider>
-                    <AddContainer
-                        setError={setError} />
-                </CreateFishProvider>}
-            {active === ActiveState.Fishes &&
-                <Log
-                    setFreeze={setFreeze} />}
-            {active === ActiveState.Weather &&
-                <Weather />}
-            {active === ActiveState.Map &&
-                <MapContainer />}
-            {!isLoggedIn &&
-                <Auth />}
-        </div>
+        <>
+            <Modal ref={modalRef}>
+                <InvalidInputModal errorMessage={error} onClose={handleCloseModal} />
+            </Modal>
+            <div className='main-container'>
+                {active === ActiveState.AddFish &&
+                    <CreateFishProvider>
+                        <AddContainer />
+                    </CreateFishProvider>}
+                {active === ActiveState.Fishes &&
+                    <Log
+                        setFreeze={setFreeze} />}
+                {active === ActiveState.Weather &&
+                    <Weather />}
+                {active === ActiveState.Map &&
+                    <MapContainer />}
+                {!isLoggedIn &&
+                    <Auth />}
+            </div>
+        </>
+
     )
 }
 
