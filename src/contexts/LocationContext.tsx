@@ -43,7 +43,6 @@ export function LocationProvider({ children }: { children: React.ReactNode }): J
             const coords = await getLocation();
             setUserLocation(coords);
         }
-
         getCoords();
     }, []);
 
