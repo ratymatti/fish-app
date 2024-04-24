@@ -6,8 +6,6 @@ import Freeze from './components/Freeze/Freeze';
 
 import { FishProvider } from './contexts/FishContext';
 import { WeatherProvider } from './contexts/WeatherContext';
-import { LocationProvider } from './contexts/LocationContext';
-
 import { AppStateProvider } from './contexts/AppStateContext';
 
 function App() {
@@ -15,7 +13,6 @@ function App() {
 
     return (
         <AppStateProvider>
-            <LocationProvider>
                     <FishProvider>
                         <WeatherProvider>
                             <div className='h-screen overflow-auto'>
@@ -27,7 +24,6 @@ function App() {
                             </div>
                         </WeatherProvider>
                     </FishProvider>
-                </LocationProvider>
         </AppStateProvider>
                 
 

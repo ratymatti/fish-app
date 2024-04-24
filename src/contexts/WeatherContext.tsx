@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext, ReactNode } from 'react';
 import { useFetchWeather } from '../hooks/useFetchWeather';
 import { WeatherObject } from '../types/weather';
-import { LocationContext, LocationContextType } from './LocationContext';
 import { Location } from '../types/location';
 import { useIdToken } from '../hooks/useIdToken';
 import { useFetchDelete } from '../hooks/useFetchDelete';
 import { useFetchTrackings } from '../hooks/useFetchTrackings';
 import { useUpdateTracking } from '../hooks/useUpdateTracking';
+import { AppStateContext, AppStateContextType } from './AppStateContext';
 
 export const WeatherContext = React.createContext<WeatherContextType | undefined>(undefined);
 
@@ -31,14 +31,14 @@ export function WeatherProvider({ children }: WeatherProviderProps): JSX.Element
     const [currentLocationWeather, setCurrentLocationWeather] = useState<WeatherObject | null>(null);
     const [weatherTrackings, setWeatherTrackings] = useState<WeatherObject[]>([]);
 
-    const { getLocation } = useContext(LocationContext) as LocationContextType;
-
     const { fetchCurrentWeather } = useFetchWeather();
     const { fetchUserTrackings } = useFetchTrackings();
     const { fetchRemoveWeather } = useFetchDelete();
     const { fetchUpdateTrackingWeather } = useUpdateTracking();
 
     const { initialIdToken } = useIdToken();
+
+    const { userLocation } = useContext(AppStateContext) as AppStateContextType;
 
 
     async function addNewTracking(location: Location): Promise<void> {
@@ -67,11 +67,8 @@ export function WeatherProvider({ children }: WeatherProviderProps): JSX.Element
 
     useEffect(() => {
         async function updateCurrentLocationWeather(): Promise<void> {
-            const location = await getLocation();
-            console.log(location)
-            if (location) {
-                const currentWeather = await fetchCurrentWeather(location, WeatherEndpoint.CURRENT);
-                console.log(currentWeather)
+            if (userLocation) {
+                const currentWeather = await fetchCurrentWeather(userLocation, WeatherEndpoint.CURRENT);
                 if (currentWeather) setCurrentLocationWeather(currentWeather);
             }
         }
@@ -84,7 +81,7 @@ export function WeatherProvider({ children }: WeatherProviderProps): JSX.Element
 
             return () => clearInterval(updateInterval); // cleanup on unmount
         }
-    }, [initialIdToken]);
+    }, [initialIdToken, userLocation]);
 
     useEffect(() => {
         async function updateWeatherTrackings(): Promise<void> {

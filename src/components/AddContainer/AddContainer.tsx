@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import Map from '../Map/Map';
 import Add from '../Add/Add';
 import SpinningIcon from '../SpinningIcon/SpinningIcon';
-import { LocationContext, LocationContextType } from '../../contexts/LocationContext';
 import { LocationObject } from '../../types/location';
 import Button from '../Button/Button';
 import Modal from '../Modal/Modal';
@@ -20,8 +19,7 @@ export default function AddContainer(): JSX.Element | null {
     const [current, setCurrent] = useState<CurrentState>(CurrentState.Map);
     const [fishGeolocation, setFishGeolocation] = useState<LocationObject[]>([]);
 
-    const { userLocation, setUserLocation } = useContext(LocationContext) as LocationContextType;
-    const { error, setError } = useContext(AppStateContext) as AppStateContextType;
+    const { error, setError, userLocation, setUserLocation } = useContext(AppStateContext) as AppStateContextType;
 
     const { modalRef, openModal, closeModal } = useModal();
 

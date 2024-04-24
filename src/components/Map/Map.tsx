@@ -3,8 +3,6 @@ import { GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api';
 import { mapStyles } from '../../modules/mapStyles/mapStyles';
 import SpinningIcon from '../SpinningIcon/SpinningIcon';
 import createCoords from '../../modules/createCoords/createCoords';
-
-import { LocationContext, LocationContextType } from '../../contexts/LocationContext';
 import { Location, LocationObject } from '../../types/location';
 import { AppStateContext, AppStateContextType, ActiveState } from '../../contexts/AppStateContext';
 
@@ -42,8 +40,7 @@ export default function Map(props: MapProps): JSX.Element {
 
     const [markers, setMarkers] = useState<Marker[]>([]);
 
-    const { userLocation } = useContext(LocationContext) as LocationContextType;
-    const { active } = useContext(AppStateContext) as AppStateContextType;
+    const { active, userLocation } = useContext(AppStateContext) as AppStateContextType;
 
     let center: Location = { lat: 67.92, lng: 26.5 };
 

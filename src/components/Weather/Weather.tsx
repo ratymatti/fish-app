@@ -2,11 +2,11 @@ import React, { useContext, useState } from 'react';
 import WeatherCard from '../WeatherCard/WeatherCard';
 import Map from '../Map/Map';
 import { WeatherContext, WeatherContextType } from '../../contexts/WeatherContext';
-import { LocationContext, LocationContextType } from '../../contexts/LocationContext';
 import { LocationObject } from '../../types/location';
 import ContainerHeader from '../ContainerHeader/ContainerHeader';
 import SectionContainer from '../SectionContainer/SectionContainer';
 import SectionButton from '../SectionButton/SectionButton';
+import { AppStateContext, AppStateContextType } from '../../contexts/AppStateContext';
 
 enum Current {
     WEATHER = 'weather',
@@ -19,7 +19,7 @@ export default function Weather(): JSX.Element | null {
         weatherTrackings,
         addNewTracking } = useContext(WeatherContext) as WeatherContextType;
 
-    const { userLocation } = useContext(LocationContext) as LocationContextType;
+    const { userLocation } = useContext(AppStateContext) as AppStateContextType;
 
     const [current, setCurrent] = useState<Current>(Current.WEATHER);
     const [newWeatherLocation, setNewWeatherLocation] = useState<LocationObject[]>([]);
