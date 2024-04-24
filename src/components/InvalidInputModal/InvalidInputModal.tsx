@@ -1,5 +1,5 @@
 import React from 'react'
-import './InvalidInputModal.css';
+import SectionButton from '../SectionButton/SectionButton';
 
 interface InvalidInputProps {
     errorMessage: string;
@@ -8,10 +8,10 @@ interface InvalidInputProps {
 
 export default function InvalidInputModal({ errorMessage, onClose }: InvalidInputProps): JSX.Element {
     return (
-        <div className='input-modal'>
-            <h3>Invalid input</h3>
-            <p>{errorMessage}</p>
-            <button onClick={onClose}>Close</button>
+        <div className='flex flex-col justify-between p-6 items-center w-80 h-48 border border-neutral-800'>
+            <h3 className='text-neutral-300 text-lg uppercase'>Invalid input</h3>
+            <p className='text-neutral-300 text-sm'>{errorMessage}</p>
+            <SectionButton onClick={onClose}>Close</SectionButton>
         </div>
     )
 }
