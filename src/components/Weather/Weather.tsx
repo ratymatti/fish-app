@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import './Weather.css';
+import React, { useContext, useState } from 'react';
 import WeatherCard from '../WeatherCard/WeatherCard';
 import Map from '../Map/Map';
-
 import { WeatherContext, WeatherContextType } from '../../contexts/WeatherContext';
 import { LocationContext, LocationContextType } from '../../contexts/LocationContext';
 import { LocationObject } from '../../types/location';
-
+import ContainerHeader from '../ContainerHeader/ContainerHeader';
+import SectionContainer from '../SectionContainer/SectionContainer';
+import SectionButton from '../SectionButton/SectionButton';
 
 enum Current {
     WEATHER = 'weather',
@@ -17,9 +17,9 @@ export default function Weather(): JSX.Element | null {
     const {
         currentLocationWeather,
         weatherTrackings,
-        addNewTracking } = React.useContext(WeatherContext) as WeatherContextType;
+        addNewTracking } = useContext(WeatherContext) as WeatherContextType;
 
-    const { userLocation } = React.useContext(LocationContext) as LocationContextType;
+    const { userLocation } = useContext(LocationContext) as LocationContextType;
 
     const [current, setCurrent] = useState<Current>(Current.WEATHER);
     const [newWeatherLocation, setNewWeatherLocation] = useState<LocationObject[]>([]);
@@ -44,37 +44,64 @@ export default function Weather(): JSX.Element | null {
 
     if (current === Current.WEATHER) {
         return (
-            <div className='weather'>
-                {currentLocationWeather &&
-                    <WeatherCard
-                        data={currentLocationWeather}
-                        isRemovable={false} />}
-                {weatherTrackings && weatherTrackings.map((weatherObj) => (
-                    <WeatherCard
-                        key={weatherObj.id}
-                        data={weatherObj}
-                        isRemovable={true} />
-                ))}
-                <div className="weather-info">
+            <div className='w-full h-full flex flex-col'>
+                <div className='flex flex-row mx-4 border-b border-neutral-800'>
                     {weatherTrackings.length < 5 ?
-                        <button onClick={() => setCurrent(Current.MAP)}>Add new tracking</button>
-                        : <p>You have reached the maximum limit of 5 weather trackings. Please remove an existing tracking to add a new one.</p>
+                        (
+                            <div className='flex justify-end items-center w-full pb-4'>
+                                <SectionButton onClick={() => setCurrent(Current.MAP)}>
+                                    Add new tracking
+                                </SectionButton>
+                            </div>
+                        ) : (
+                            <div className='flex justify-center w-full uppercase'>
+                                <p className='text-xs text-orange-400 mb-2'>You have reached the maximum limit of 5 weather trackings. Please remove existing tracking to add a new one.</p>
+                            </div>
+                        )
                     }
                 </div>
-
+                <div className='flex flex-row w-full'>
+                    {currentLocationWeather &&
+                        <SectionContainer>
+                            <ContainerHeader>
+                                Current weather
+                            </ContainerHeader>
+                            <WeatherCard
+                                data={currentLocationWeather}
+                                isRemovable={false} />
+                        </SectionContainer>}
+                    <SectionContainer>
+                        <ContainerHeader>
+                            Your weather trackings
+                        </ContainerHeader>
+                        {weatherTrackings && weatherTrackings.map((weatherObj) => (
+                            <WeatherCard
+                                key={weatherObj.id}
+                                data={weatherObj}
+                                isRemovable={true} />
+                        ))}
+                    </SectionContainer>
+                </div>
             </div>
         )
     }
 
     if (current === Current.MAP) {
         return (
-            <div className='map'>
+            <div className='h-1/2 w-full mx-4'>
+                <div className='mb-2 text-center uppercase'>
+                    <p className='text-md text-orange-400'>Select location from the map to continue</p>
+                </div>
                 <Map
                     center={userLocation}
                     zoom={5}
                     markerLocations={newWeatherLocation}
                     setNewWeatherLocation={setNewWeatherLocation} />
-                <button onClick={() => { handleSelection() }}>Set Weather Tracking</button>
+                <div className='border-b border-neutral-800 h-16 flex justify-center items-center'>
+                    <SectionButton onClick={() => handleSelection()}  disabled={!newWeatherLocation.length}>
+                        Set Weather Tracking
+                    </SectionButton>
+                </div>
             </div>
         )
     }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import MainContainer from './components/MainContainer/MainContainer';
 import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
+// import Footer from './components/Footer/Footer';
 import Freeze from './components/Freeze/Freeze';
 
 import { FishProvider } from './contexts/FishContext';
@@ -23,7 +23,7 @@ function App() {
                                 <Header />
                                 <MainContainer
                                     setFreeze={setFreeze} />
-                                <Footer />
+                                {/* <Footer /> */}
                             </div>
                         </WeatherProvider>
                     </FishProvider>

@@ -5,8 +5,8 @@ import './SpinningIcon.css';
 export default function SpinningIcon() {
   
   return (
-    <div className='spinning-icon'>
-        <FaSpinner size='3rem' />                                        
+    <div className='h-full w-full border flex justify-center items-center'>
+        <FaSpinner size='4rem' />                                        
       </div>  
   )
 };
