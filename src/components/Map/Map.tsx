@@ -18,7 +18,7 @@ interface MapProps {
     markerLocations: LocationObject[];
     zoom: number;
     setFishGeolocation?: (value: LocationObject[]) => void;
-    setNewWeatherLocation?: (value: any) => void;
+    setNewWeatherLocation?: (value: LocationObject[]) => void;
     center?: Location | null;
 }
 
@@ -46,7 +46,7 @@ export default function Map(props: MapProps): JSX.Element {
 
     if (userLocation) center = userLocation;
 
-    function handleClick(event: any): void{
+    function handleClick(event: google.maps.MapMouseEvent): void {
         const selectedLocation = createCoords(event);
 
         if (active === ActiveState.AddFish) {
@@ -73,11 +73,8 @@ export default function Map(props: MapProps): JSX.Element {
             zoom={zoom}
             center={center}
             mapContainerClassName='w-full h-full'
-            onClick={(event) => {
-                handleClick(event);
-            }}
-            options={options}
-        >
+            onClick={(event) => handleClick(event)}
+            options={options}>
             {markers.map(marker => <MarkerF
                 key={marker.id.valueOf()}
                 position={
