@@ -70,17 +70,17 @@ export default function Weather(): JSX.Element | null {
                                 data={currentLocationWeather}
                                 isRemovable={false} />
                         </SectionContainer>}
-                    <SectionContainer>
+                    {weatherTrackings.length > 0 && <SectionContainer>
                         <ContainerHeader>
                             Your weather trackings
                         </ContainerHeader>
-                        {weatherTrackings && weatherTrackings.map((weatherObj) => (
+                        {weatherTrackings.map((weatherObj) => (
                             <WeatherCard
                                 key={weatherObj.id}
                                 data={weatherObj}
                                 isRemovable={true} />
                         ))}
-                    </SectionContainer>
+                    </SectionContainer>}
                 </div>
             </div>
         )
