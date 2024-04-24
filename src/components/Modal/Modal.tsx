@@ -1,6 +1,7 @@
 import React, { ReactNode, forwardRef, useImperativeHandle, useRef } from 'react'
 import { createPortal } from 'react-dom';
 import './Modal.css';
+import '../../input.css';
 
 type ModalRef = { open: () => void; close: () => void; } | null;
 
