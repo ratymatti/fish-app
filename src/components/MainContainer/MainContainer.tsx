@@ -9,7 +9,6 @@ import Modal from '../Modal/Modal';
 import { useModal } from '../../hooks/useModal';
 import { AppStateContext, AppStateContextType, ActiveState } from '../../contexts/AppStateContext';
 import InvalidInputModal from '../InvalidInputModal/InvalidInputModal';
-//import './MainContainer.css';
 
 interface MainContainerProps {
     setFreeze: (freeze: boolean) => void;
