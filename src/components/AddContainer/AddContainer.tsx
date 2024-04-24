@@ -49,7 +49,7 @@ export default function AddContainer(): JSX.Element | null {
 
     if (current === CurrentState.Map && userLocation) {
         return (
-            <div className='h-1/2 w-full mx-8 flex flex-col'>
+            <div className='h-4/6 w-full flex flex-col mx-8 pb-8'>
                 <Map
                     zoom={12}
                     center={userLocation}
