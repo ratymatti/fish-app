@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './RemoveButton.css';
 import { BsTrash } from 'react-icons/bs';
 
 interface RemoveButtonProps {
@@ -14,7 +13,7 @@ interface RemoveButtonProps {
 
 export default function RemoveButton(props: RemoveButtonProps): JSX.Element {
     const { content, removeFromTracking } = props;
-    
+
     const [clicked, setClicked] = useState<boolean>(false);
 
     function handleClick(currentID: string) {
@@ -23,21 +22,22 @@ export default function RemoveButton(props: RemoveButtonProps): JSX.Element {
     }
 
     return (
-        <div className='remove-button'>
-            <div className='trash-button'>
+        <div className='flex items-center p-2 uppercase text-xs'>
+            <div className='hover:cursor-pointer'>
                 {clicked === false && <BsTrash
                     onClick={() => setClicked(true)} />}
             </div>
             {clicked && (
-                <div className='remove-buttons'>
-                    <p>Are you sure?</p>
-                    <button onClick={() => handleClick(content.id)}>
+                <>
+                    <p className='mr-2 text-orange-400'>Are you sure?</p>
+                    <button className='mx-1 uppercase transition ease-in-out delay-100 hover:-translate-y-1 hover:text-orange-400 hover:scale-110 duration-100' onClick={() => handleClick(content.id)}>
                         Yes
                     </button>
-                    <button onClick={() => setClicked(false)}>
+                    <button className='mx-1 uppercase transition ease-in-out delay-100 hover:-translate-y-1 hover:text-orange-400 hover:scale-110 duration-100' onClick={() => setClicked(false)}>
                         No
                     </button>
-                </div>
+                </>
+
             )}
         </div>
     )

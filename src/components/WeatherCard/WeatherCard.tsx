@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import './WeatherCard.css';
 import RemoveButton from '../RemoveButton/RemoveButton';
 import { WeatherObject } from '../../types/weather';
-import CardHeader from '../CardHeader/CardHeader';
-import CardInfoRow from '../CardInfoRow/CardInfoRow';
+//import CardHeader from '../CardHeader/CardHeader';
+//import CardInfoRow from '../CardInfoRow/CardInfoRow';
 import { WeatherContext, WeatherContextType } from '../../contexts/WeatherContext';
 
 interface WeatherCardProps {
@@ -35,7 +34,7 @@ function createCardData(data: WeatherObject): CardInfo | null {
                 { text: 'Feels Like: ', value: `${source.feelsLike >= 0 ? '+' : ''}${source.feelsLike}` },
                 { text: 'Humidity: ', value: `${source.humidity}%` },
                 { text: 'Pressure: ', value: `${source.pressure} hPa` },
-                { text: 'Wind Direction: ', value: getWindDirectionInCardinal(source.windDirection)},
+                { text: 'Wind Direction: ', value: getWindDirectionInCardinal(source.windDirection) },
                 { text: 'Wind Speed: ', value: `${source.windSpeed} m/s` },
                 { text: 'updated at ', value: data.currentWeather.time }
             ],
@@ -53,7 +52,7 @@ export default function WeatherCard(props: WeatherCardProps): JSX.Element {
 
     const [cardInfo, setCardInfo] = useState<CardInfo>();
 
-    
+
     useEffect(() => {
         const newCardInfo = createCardData(data);
         if (newCardInfo) setCardInfo(newCardInfo);
@@ -61,25 +60,32 @@ export default function WeatherCard(props: WeatherCardProps): JSX.Element {
 
 
     if (!cardInfo) return <div>loading...</div>
-    
+
     return (
-        <div className='weather-card'>
-            <CardHeader text={cardInfo.header} />
-            <div id="icon">
+        <div className='border border-neutral-900 text-neutral-400 bg-neutral-800 mb-4'>
+            <div className='flex flex-col justify-between border-b border-neutral-900'>
+                <h3 className='text-center mt-2 uppercase text-xs'>{cardInfo.header}</h3>
                 <img
+                    className="mx-auto h-12"
                     id="wicon"
                     src={cardInfo.icon}
                     alt="Weather icon" />
             </div>
-            {cardInfo.info.map(({ text, value }, index) => (
-                <CardInfoRow
-                    key={index}
-                    text={text}
-                    value={value} />
-            ))}
-            {isRemovable && <RemoveButton
-                removeFromTracking={removeFromTracking}
-                content={cardInfo} />}
+            <div className='my-2 mx-4'>
+                {cardInfo.info.map(({ text, value }, index) => (
+                    <div key={index} className='uppercase text-xs flex flex-row justify-between'>
+                        <p>{text}</p>
+                        <p>{value}</p>
+                    </div>
+
+
+                ))}
+            </div>
+            <div className='h-6 flex justify-end'>
+                {isRemovable && <RemoveButton
+                    removeFromTracking={removeFromTracking}
+                    content={cardInfo} />}
+            </div>
         </div>
     )
 }
