@@ -1,5 +1,4 @@
 import React from 'react'
-import './CardInfoRow.css';
 
 interface CardInfoRowProps {
     text: string;

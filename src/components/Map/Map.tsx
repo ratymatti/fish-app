@@ -65,7 +65,7 @@ export default function Map(props: MapProps): JSX.Element {
 
     if (!isLoaded) {
         return (
-            <div className='loading-map'>
+            <div className='h-full w-full'>
                 <SpinningIcon />
             </div>
         )
