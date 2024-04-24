@@ -8,7 +8,7 @@ interface LocationModalProps {
 
 export default function LocationModal({ onAllow, onDeny }: LocationModalProps) {
     return (
-        <div className='h-full w-full p-4 bg-neutral-700'>
+        
             <div className='border border-neutral-800 h-full w-full flex flex-col justify-between items-center py-8 bg-neutral-700'>
                 <h3 className='uppercase text-sm mt-2 text-neutral-300'>App want's to use your location</h3>
                 <p className='mx-4 my-6 text-center text-xs text-neutral-400'>Location information is used only for providing weather data.</p>
@@ -17,6 +17,6 @@ export default function LocationModal({ onAllow, onDeny }: LocationModalProps) {
                     <SectionButton modal onClick={onDeny}>Deny</SectionButton>
                 </div>
             </div>
-        </div>
+        
     )
 }

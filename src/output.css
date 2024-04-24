@@ -828,6 +828,10 @@ video {
   padding: 1rem;
 }
 
+.p-6{
+  padding: 1.5rem;
+}
+
 .px-2{
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -967,6 +971,11 @@ body {
 .sticky {
   position: -webkit-sticky !important;
   position: sticky !important;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+  /* Semi-transparent black */
 }
 
 .hover\:-translate-y-1:hover{

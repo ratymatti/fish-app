@@ -1,6 +1,5 @@
 import React, { ReactNode, forwardRef, useImperativeHandle, useRef } from 'react'
 import { createPortal } from 'react-dom';
-import './Modal.css';
 import '../../input.css';
 
 type ModalRef = { open: () => void; close: () => void; } | null;
@@ -30,7 +29,7 @@ const Modal = forwardRef<ModalRef, ModalProps>(function Modal({ children }, ref)
     });
 
     return createPortal(
-        <dialog ref={dialog}>
+        <dialog ref={dialog} className='bg-neutral-700 p-4'>
             {children}
         </dialog>,
         modalRoot
