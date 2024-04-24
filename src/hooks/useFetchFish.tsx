@@ -9,7 +9,6 @@ interface FetchFishHook {
     fetchFishData: () => Promise<any>
 }
 
-
 export function useFetchFish(): FetchFishHook {
     const urlToFetch = 'http://localhost:8080/user/fishes';
 
@@ -26,8 +25,10 @@ export function useFetchFish(): FetchFishHook {
 
         try {
             const response = await fetch(urlToFetch, config);
-            const data = await response.json();
-            return data;
+            if (response.ok) {
+                const data = await response.json();
+                return data;
+            }
         } catch (err) {
             console.error(err);
             return null;
