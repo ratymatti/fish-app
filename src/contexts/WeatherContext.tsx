@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, ReactNode } from 'react';
 import { useFetchWeather } from '../hooks/useFetchWeather';
 import { WeatherObject } from '../types/weather';
 import { LocationContext, LocationContextType } from './LocationContext';
@@ -22,12 +22,16 @@ export enum WeatherEndpoint {
     TRACKING = '/fetch/tracking',
 }
 
+interface WeatherProviderProps {
+    children: ReactNode;
+}
 
-export function WeatherProvider({ children }: { children: React.ReactNode }): JSX.Element {
+
+export function WeatherProvider({ children }: WeatherProviderProps): JSX.Element {
     const [currentLocationWeather, setCurrentLocationWeather] = useState<WeatherObject | null>(null);
     const [weatherTrackings, setWeatherTrackings] = useState<WeatherObject[]>([]);
 
-    const { getLocation } = React.useContext(LocationContext) as LocationContextType;
+    const { getLocation } = useContext(LocationContext) as LocationContextType;
 
     const { fetchCurrentWeather } = useFetchWeather();
     const { fetchUserTrackings } = useFetchTrackings();
@@ -64,8 +68,10 @@ export function WeatherProvider({ children }: { children: React.ReactNode }): JS
     useEffect(() => {
         async function updateCurrentLocationWeather(): Promise<void> {
             const location = await getLocation();
+            console.log(location)
             if (location) {
                 const currentWeather = await fetchCurrentWeather(location, WeatherEndpoint.CURRENT);
+                console.log(currentWeather)
                 if (currentWeather) setCurrentLocationWeather(currentWeather);
             }
         }
