@@ -14,13 +14,15 @@ interface AppStateProps {
     children: ReactNode;
 }
 
+export type Error = string | null;
+
 export interface AppStateContextType {
     isLoggedIn: boolean;
     setIsLoggedIn: (isLoggedIn: boolean) => void;
     active: ActiveState;
     setActive: (active: ActiveState) => void;
-    error: string;
-    setError: (error: string) => void;
+    error: Error;
+    setError: (error: Error) => void;
     userLocation: Location | undefined;
     setUserLocation: (userLocation: Location | undefined) => void;
     getAndSetLocation: () => Promise<void>;
@@ -31,7 +33,7 @@ export const AppStateContext = createContext<AppStateContextType | undefined>(un
 export function AppStateProvider({ children }: AppStateProps) {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const [active, setActive] = useState<ActiveState>(ActiveState.Empty);
-    const [error, setError] = useState<string>('');
+    const [error, setError] = useState<Error>(null);
     const [userLocation, setUserLocation] = useState<Location | undefined>(undefined);
 
     const { initialIdToken } = useIdToken();

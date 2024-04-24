@@ -37,11 +37,11 @@ export default function AddContainer(): JSX.Element | null {
 
     function handleCloseModal(): void {
         closeModal();
-        setError('');
+        setError(null);
     }
 
     useEffect(() => {
-        if (error.trim() !== '') {
+        if (error !== null) {
             openModal();
         }
     }, [error]);

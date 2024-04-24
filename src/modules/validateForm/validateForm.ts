@@ -9,17 +9,16 @@
 
 import { NewFishObject } from "../../types/fish";
 
-
 function validateForm(newFishData : NewFishObject): string | null {
+    if (!newFishData.date) return 'Date is required';
+
     if (!newFishData.species) return 'Species is required';
         
-    if (!newFishData.length || isNaN(newFishData.length) || newFishData.length <= 0) return 'Length must be greater than 0';
+    if (!newFishData.length || isNaN(newFishData.length) || newFishData.length <= 0) return 'Length is required';
     
-    if (!newFishData.locationName) return 'Location is required.';
+    if (!newFishData.locationName) return 'Location is required';
     
-    if (!newFishData.geolocation) return 'Geolocation is required.';
-
-    if (!newFishData.date) return 'Date is required.';
+    if (!newFishData.geolocation) return 'Geolocation is required';
     
     return null;       
 }

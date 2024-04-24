@@ -1,8 +1,9 @@
 import React from 'react'
 import SectionButton from '../SectionButton/SectionButton';
+import { Error } from '../../contexts/AppStateContext';
 
 interface InvalidInputProps {
-    errorMessage: string;
+    errorMessage: Error;
     onClose: () => void;
 }
 
