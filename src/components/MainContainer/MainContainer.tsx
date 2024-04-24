@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import AddContainer from '../AddContainer/AddContainer';
 import Log from '../Log/Log';
-import MapContainer from '../MapContainer/MapContainer';
+import MapSection from '../MapSection/MapSection';
 import Weather from '../Weather/Weather';
 import Auth from '../Auth/Auth';
 import { CreateFishProvider } from '../../contexts/CreateFishContext';
@@ -50,7 +50,7 @@ export default function MainContainer({ setFreeze }: MainContainerProps) {
                 {active === ActiveState.Weather &&
                     <Weather />}
                 {active === ActiveState.Map &&
-                    <MapContainer />}
+                    <MapSection />}
                 {!isLoggedIn &&
                     <Auth />}
             </div>

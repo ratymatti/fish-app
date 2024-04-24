@@ -7,6 +7,7 @@ import ContainerHeader from '../ContainerHeader/ContainerHeader';
 import SectionContainer from '../SectionContainer/SectionContainer';
 import SectionButton from '../SectionButton/SectionButton';
 import { AppStateContext, AppStateContextType } from '../../contexts/AppStateContext';
+import MapContainer from '../MapContainer/MapContainer';
 
 enum Current {
     WEATHER = 'weather',
@@ -88,21 +89,21 @@ export default function Weather(): JSX.Element | null {
 
     if (current === Current.MAP) {
         return (
-            <div className='h-1/2 w-full mx-4'>
-                <div className='mb-2 text-center uppercase'>
-                    <p className='text-md text-orange-400'>Select location from the map to continue</p>
-                </div>
+            <MapContainer>
                 <Map
                     center={userLocation}
                     zoom={5}
                     markerLocations={newWeatherLocation}
                     setNewWeatherLocation={setNewWeatherLocation} />
-                <div className='border-b border-neutral-800 h-16 flex justify-center items-center'>
-                    <SectionButton onClick={() => handleSelection()}  disabled={!newWeatherLocation.length}>
+                <div className='mt-2 h-6 text-center uppercase'>
+                    {!newWeatherLocation.length && <p className='text-md text-orange-400'>Select location from the map to continue</p>}
+                </div>
+                <div className='border-b border-neutral-800 pb-2 h-10 flex justify-center items-center'>
+                    <SectionButton onClick={() => handleSelection()} disabled={!newWeatherLocation.length}>
                         Set Weather Tracking
                     </SectionButton>
                 </div>
-            </div>
+            </MapContainer>
         )
     }
 

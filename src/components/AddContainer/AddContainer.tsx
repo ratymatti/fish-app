@@ -8,6 +8,7 @@ import Modal from '../Modal/Modal';
 import InvalidInputModal from '../InvalidInputModal/InvalidInputModal';
 import { AppStateContext, AppStateContextType } from '../../contexts/AppStateContext';
 import { useModal } from '../../hooks/useModal';
+import MapContainer from '../MapContainer/MapContainer';
 
 export enum CurrentState {
     Map = 'map',
@@ -49,7 +50,7 @@ export default function AddContainer(): JSX.Element | null {
 
     if (current === CurrentState.Map && userLocation) {
         return (
-            <div className='h-4/6 w-full flex flex-col mx-8 pb-8'>
+            <MapContainer>
                 <Map
                     zoom={12}
                     center={userLocation}
@@ -62,7 +63,7 @@ export default function AddContainer(): JSX.Element | null {
                         {'Select location'}
                     </Button>
                 </div>
-            </div>
+            </MapContainer>
         )
     }
 
