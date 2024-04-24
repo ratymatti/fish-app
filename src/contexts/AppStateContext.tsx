@@ -23,7 +23,7 @@ export interface AppStateContextType {
     setError: (error: string) => void;
     userLocation: Location | undefined;
     setUserLocation: (userLocation: Location | undefined) => void;
-    getLocation: () => Promise<{ lat: number; lng: number } | undefined>;
+    getAndSetLocation: () => Promise<void>;
 }
 
 export const AppStateContext = createContext<AppStateContextType | undefined>(undefined);
@@ -36,7 +36,7 @@ export function AppStateProvider({ children }: AppStateProps) {
 
     const { initialIdToken } = useIdToken();
 
-    async function getLocation(): Promise<Location | undefined>{
+    async function getAndSetLocation(): Promise<void> {
         if (navigator.geolocation) {
             try {
                 const position: Position = await new Promise((resolve, reject) => {
@@ -45,8 +45,7 @@ export function AppStateProvider({ children }: AppStateProps) {
 
                 const { latitude: lat, longitude: lng } = position.coords;
 
-                return { lat, lng };
-
+                setUserLocation({ lat, lng });
             } catch (error) {
                 console.error(error);
             }
@@ -71,7 +70,7 @@ export function AppStateProvider({ children }: AppStateProps) {
             setError,
             userLocation,
             setUserLocation,
-            getLocation
+            getAndSetLocation
         }}>
             {children}
         </AppStateContext.Provider>
