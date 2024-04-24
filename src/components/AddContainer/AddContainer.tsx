@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Map from '../Map/Map';
 import Add from '../Add/Add';
 import SpinningIcon from '../SpinningIcon/SpinningIcon';
 import { LocationContext, LocationContextType } from '../../contexts/LocationContext';
 import { LocationObject } from '../../types/location';
 import Button from '../Button/Button';
+import Modal from '../Modal/Modal';
+import InvalidInputModal from '../InvalidInputModal/InvalidInputModal';
+import { AppStateContext, AppStateContextType } from '../../contexts/AppStateContext';
+import { useModal } from '../../hooks/useModal';
 
 export enum CurrentState {
     Map = 'map',
@@ -16,7 +20,10 @@ export default function AddContainer(): JSX.Element | null {
     const [current, setCurrent] = useState<CurrentState>(CurrentState.Map);
     const [fishGeolocation, setFishGeolocation] = useState<LocationObject[]>([]);
 
-    const { userLocation, setUserLocation } = React.useContext(LocationContext) as LocationContextType;
+    const { userLocation, setUserLocation } = useContext(LocationContext) as LocationContextType;
+    const { error, setError } = useContext(AppStateContext) as AppStateContextType;
+
+    const { modalRef, openModal, closeModal } = useModal();
 
     function handleClick(): void {
         if (fishGeolocation.length) {
@@ -29,6 +36,17 @@ export default function AddContainer(): JSX.Element | null {
         }
         setCurrent(CurrentState.Map);
     }
+
+    function handleCloseModal(): void {
+        closeModal();
+        setError('');
+    }
+
+    useEffect(() => {
+        if (error.trim() !== '') {
+            openModal();
+        }
+    }, [error]);
 
 
     if (current === CurrentState.Map && userLocation) {
@@ -52,18 +70,22 @@ export default function AddContainer(): JSX.Element | null {
 
     if (current === CurrentState.Add) {
         return (
-            <div>
-                <div className='flex justify-center mb-2'>
-                    <Button onClick={handleClick}>
-                        {'Edit location'}
-                    </Button>
+            <>
+                <Modal ref={modalRef}>
+                    <InvalidInputModal errorMessage={error} onClose={handleCloseModal} />
+                </Modal>
+                <div>
+                    <div className='flex justify-center mb-2'>
+                        <Button onClick={handleClick}>
+                            {'Edit location'}
+                        </Button>
+                    </div>
+                    <Add
+                        fishGeolocation={fishGeolocation}
+                        setCurrent={setCurrent}
+                        setFishGeolocation={setFishGeolocation} />
                 </div>
-                <Add
-                    fishGeolocation={fishGeolocation}
-                    setCurrent={setCurrent}
-                    setFishGeolocation={setFishGeolocation} />
-            </div>
-
+            </>
         )
     }
 
