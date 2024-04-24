@@ -567,10 +567,6 @@ video {
   margin: 1rem;
 }
 
-.m-8{
-  margin: 2rem;
-}
-
 .mx-1{
   margin-left: 0.25rem;
   margin-right: 0.25rem;
@@ -599,16 +595,6 @@ video {
 .my-2{
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
-}
-
-.my-8{
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
-
-.my-4{
-  margin-top: 1rem;
-  margin-bottom: 1rem;
 }
 
 .my-6{
@@ -642,34 +628,6 @@ video {
 
 .mt-8{
   margin-top: 2rem;
-}
-
-.mb-6{
-  margin-bottom: 1.5rem;
-}
-
-.mb-16{
-  margin-bottom: 4rem;
-}
-
-.mb-12{
-  margin-bottom: 3rem;
-}
-
-.mb-10{
-  margin-bottom: 2.5rem;
-}
-
-.mb-8{
-  margin-bottom: 2rem;
-}
-
-.mt-4{
-  margin-top: 1rem;
-}
-
-.mt-6{
-  margin-top: 1.5rem;
 }
 
 .inline-block{
@@ -712,6 +670,10 @@ video {
   height: 100vh;
 }
 
+.w-1\/2{
+  width: 50%;
+}
+
 .w-2\/3{
   width: 66.666667%;
 }
@@ -726,22 +688,6 @@ video {
 
 .w-screen{
   width: 100vw;
-}
-
-.w-1\/2{
-  width: 50%;
-}
-
-.w-3\/4{
-  width: 75%;
-}
-
-.w-2\/4{
-  width: 50%;
-}
-
-.w-2\/6{
-  width: 33.333333%;
 }
 
 .border-separate{
@@ -882,10 +828,6 @@ video {
   padding: 1rem;
 }
 
-.p-8{
-  padding: 2rem;
-}
-
 .px-2{
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -911,26 +853,12 @@ video {
   padding-bottom: 2rem;
 }
 
-.px-10{
-  padding-left: 2.5rem;
-  padding-right: 2.5rem;
-}
-
-.px-6{
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-}
-
 .pb-4{
   padding-bottom: 1rem;
 }
 
 .pl-2{
   padding-left: 0.5rem;
-}
-
-.pb-6{
-  padding-bottom: 1.5rem;
 }
 
 .text-center{
@@ -942,14 +870,14 @@ video {
   line-height: 2.25rem;
 }
 
-.text-xs{
-  font-size: 0.75rem;
-  line-height: 1rem;
-}
-
 .text-sm{
   font-size: 0.875rem;
   line-height: 1.25rem;
+}
+
+.text-xs{
+  font-size: 0.75rem;
+  line-height: 1rem;
 }
 
 .uppercase{
@@ -966,6 +894,11 @@ video {
   color: rgb(229 229 229 / var(--tw-text-opacity));
 }
 
+.text-neutral-300{
+  --tw-text-opacity: 1;
+  color: rgb(212 212 212 / var(--tw-text-opacity));
+}
+
 .text-neutral-400{
   --tw-text-opacity: 1;
   color: rgb(163 163 163 / var(--tw-text-opacity));
@@ -979,11 +912,6 @@ video {
 .text-white{
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-.text-neutral-300{
-  --tw-text-opacity: 1;
-  color: rgb(212 212 212 / var(--tw-text-opacity));
 }
 
 .opacity-30{
@@ -1078,4 +1006,9 @@ body {
 .hover\:text-orange-400:hover{
   --tw-text-opacity: 1;
   color: rgb(251 146 60 / var(--tw-text-opacity));
+}
+
+.focus\:outline-none:focus{
+  outline: 2px solid transparent;
+  outline-offset: 2px;
 }

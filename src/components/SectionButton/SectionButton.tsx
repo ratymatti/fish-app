@@ -8,7 +8,7 @@ interface SectionButtonProps {
 }
 
 export default function SectionButton({ children, onClick, disabled, modal, ...props }: SectionButtonProps) {
-    let style = 'border uppercase rounded-md px-2';
+    let style = 'border uppercase rounded-md px-2 focus:outline-none';
     
     if (modal) {
         style += ' border-orange-400 text-orange-400 hover:text-orange-300 text-sm';
