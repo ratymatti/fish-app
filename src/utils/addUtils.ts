@@ -1,3 +1,5 @@
+import { SingleValue } from "react-select";
+
 export type OptionTypeString = {
     label: string;
     value: string;
@@ -7,6 +9,10 @@ export type OptionTypeNumber = {
     label: string;
     value: number;
 }
+
+type OptionType = OptionTypeString | OptionTypeNumber | { value: string | number | null; label: string | null; };
+
+export type SingleValueOptionType = SingleValue<OptionType>;
 
 export const styleOptions = {
     control: (styles, { isFocused }) => {
