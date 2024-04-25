@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext, ReactNode } from 'react';
 import { FishObject, CardFish } from '../types/fish';
 import { useFetchFish } from '../hooks/useFetchFish';
 import { useIdToken } from '../hooks/useIdToken';
@@ -9,6 +9,10 @@ export interface FishContextType {
     cardFish: CardFish | null;
     setCardFish: (fish: CardFish | null) => void;
     updateUserFishArr: (newFish: FishObject) => void;
+}
+
+interface FishProviderProps {
+    children: ReactNode;
 }
 
 const convertISOStringToDate = (fish: FishObject): FishObject => {
@@ -25,9 +29,9 @@ const createDateString = (date: Date): string => {
     return `${day}/${month}/${year}`;
 }
 
-export const FishContext = React.createContext<FishContextType | undefined>(undefined);
+export const FishContext = createContext<FishContextType | undefined>(undefined);
 
-export function FishProvider({ children }: { children: React.ReactNode }): JSX.Element {
+export function FishProvider({ children }: FishProviderProps): JSX.Element {
     const [userFishArr, setUserFishArr] = useState<FishObject[]>([]);
     const [cardFish, setCardFish] = useState<CardFish | null>(null);
 
@@ -44,8 +48,8 @@ export function FishProvider({ children }: { children: React.ReactNode }): JSX.E
         async function setFishData(): Promise<void> {
             if (initialIdToken) {
                 try {
-                    const fishes: FishObject[] = await fetchFishData();
-                    if (fishes && fishes.length) {
+                    const fishes = await fetchFishData();
+                    if (Array.isArray(fishes) && fishes.length) {
                         const updatedFishes = fishes
                             .map((fish: FishObject) => convertISOStringToDate(fish))
                             .map((fish: FishObject) => ({ ...fish, dateString: createDateString(fish.date as Date) }));
