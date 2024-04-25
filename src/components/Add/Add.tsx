@@ -12,8 +12,10 @@ import { LocationObject } from '../../types/location';
 import { useSaveFish } from '../../hooks/useSaveFish';
 import { FishContext, FishContextType } from '../../contexts/FishContext';
 import { optionsCm } from '../../modules/options/optionsCm';
-import { AppStateContext, AppStateContextType } from '../../contexts/AppStateContext';
+import { AppStateContext, AppStateContextType, AppError } from '../../contexts/AppStateContext';
 import Button from '../Button/Button';
+import { FishObject, NewFishObject, RequestFishObject } from '../../types/fish';
+import copyFishObject from '../../modules/copyFishObject/copyFishObject';
 
 interface AddProps {
     fishGeolocation: LocationObject[];
@@ -48,24 +50,28 @@ export default function Add({ fishGeolocation, setFishGeolocation, setCurrent }:
         const errorMessage = validateForm(newFishData);
 
         if (errorMessage) {
-            setError(errorMessage);
+            setError(errorMessage as AppError);
             return;
         }
 
         setCurrent(CurrentState.Loading);
 
-        if (newFishData.date instanceof Date) setNewFishData({ ...newFishData, date: newFishData.date.toISOString() });
+        const requestFishData: RequestFishObject = copyFishObject(newFishData as NewFishObject);
 
         try {
-            const savedFish = await saveFishData(newFishData);
-            updateUserFishArr(savedFish);
-            setNewFishData(JSON.parse(JSON.stringify(initialFishData)));
+            const savedFish = await saveFishData(requestFishData as RequestFishObject);
+            if (savedFish !== null) {
+                updateUserFishArr(savedFish as FishObject);
+                setNewFishData(JSON.parse(JSON.stringify(initialFishData)));
+                setCurrent(CurrentState.Map);
+                setFishGeolocation([]);
+            } else {
+                setCurrent(CurrentState.Add);
+                setError(AppError.Network);
+            }
         } catch (err) {
             console.error(err);
         }
-
-        setCurrent(CurrentState.Map);
-        setFishGeolocation([]);
     }
 
     useEffect(() => {
