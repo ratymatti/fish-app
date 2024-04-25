@@ -8,13 +8,17 @@ import { LocationObject } from '../../types/location';
  * @returns object with key location containing lat and lng properties and a unique id
  */
 
-export default function createCoords(event: any): LocationObject {
-    const newLocationObject = {
-        geolocation: {
-            lat: event.latLng.lat(),
-            lng: event.latLng.lng(),
-        },
-        id: uuidv4()
+export default function createCoords(event: google.maps.MapMouseEvent): LocationObject {
+    if (event.latLng) {
+        const newLocationObject = {
+            geolocation: {
+                lat: event.latLng.lat(),
+                lng: event.latLng.lng(),
+            },
+            id: uuidv4()
+        }
+        return newLocationObject;
+    } else {
+        throw new Error('No event.latLng property found');
     }
-    return newLocationObject;
 }

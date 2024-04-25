@@ -42,17 +42,22 @@ export default function Map(props: MapProps): JSX.Element {
 
     const { active, userLocation } = useContext(AppStateContext) as AppStateContextType;
 
-    let center: Location = { lat: 67.92, lng: 26.5 };
-
-    if (userLocation) center = userLocation;
+    let center: Location = { lat: 66.215381, lng: 29.635635 }; // If user location is not available, center the map to
+                                                               // 'Hevonperse' ('Horses ass' in English) in Kuusamo, Finland 
+    if (userLocation) center = userLocation;                   
 
     function handleClick(event: google.maps.MapMouseEvent): void {
-        const selectedLocation = createCoords(event);
+        try {
+            const selectedLocation = createCoords(event);
 
-        if (active === ActiveState.AddFish) {
-            if (setFishGeolocation) setFishGeolocation([selectedLocation]);
-        } else if (active === ActiveState.Weather) {
-            if (setNewWeatherLocation) setNewWeatherLocation([selectedLocation]);
+            if (active === ActiveState.AddFish) {
+                if (setFishGeolocation) setFishGeolocation([selectedLocation]);
+            } else if (active === ActiveState.Weather) {
+                if (setNewWeatherLocation) setNewWeatherLocation([selectedLocation]);
+            }
+        } catch (error) {
+            console.error(error);
+            // Handle this error in a more user-friendly way later
         }
     }
 
