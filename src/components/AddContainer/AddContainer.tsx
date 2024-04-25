@@ -5,9 +5,11 @@ import { LocationObject } from '../../types/location';
 import Button from '../Button/Button';
 import Modal from '../Modal/Modal';
 import InvalidInputModal from '../InvalidInputModal/InvalidInputModal';
-import { AppStateContext, AppStateContextType } from '../../contexts/AppStateContext';
+import { AppError, AppStateContext, AppStateContextType } from '../../contexts/AppStateContext';
 import { useModal } from '../../hooks/useModal';
 import MapContainer from '../MapContainer/MapContainer';
+import { CreateFishContext, CreateFishContextType } from '../../contexts/CreateFishContext';
+import validateForm from '../../modules/validateForm/validateForm';
 
 export enum CurrentState {
     Map = 'map',
@@ -20,6 +22,7 @@ export default function AddContainer(): JSX.Element | null {
     const [fishGeolocation, setFishGeolocation] = useState<LocationObject[]>([]);
 
     const { error, setError, userLocation, setUserLocation } = useContext(AppStateContext) as AppStateContextType;
+    const { newFishData, saveNewFish } = useContext(CreateFishContext) as CreateFishContextType;
 
     const { modalRef, openModal, closeModal } = useModal();
 
@@ -38,6 +41,25 @@ export default function AddContainer(): JSX.Element | null {
     function handleCloseModal(): void {
         closeModal();
         setError(null);
+    }
+
+    async function handleSubmit(): Promise<void> {
+        const errorMessage = validateForm(newFishData);
+        if (errorMessage) {
+            setCurrent(CurrentState.Add);
+            setError(errorMessage as AppError);
+            return;
+        } else {
+            setCurrent(CurrentState.Loading);
+        }    
+            const response = await saveNewFish();
+            if (response) {
+                setCurrent(CurrentState.Map);
+                setFishGeolocation([]);
+            } else {
+                setCurrent(CurrentState.Add);
+                setError(AppError.Network);
+            }
     }
 
     useEffect(() => {
@@ -72,16 +94,22 @@ export default function AddContainer(): JSX.Element | null {
                 <Modal ref={modalRef}>
                     {error && <InvalidInputModal errorMessage={error} onClose={handleCloseModal} />}
                 </Modal>
-                <div>
-                    <div className='flex justify-center mb-2'>
+                <div className='w-5/6'>
+                    <div className='w-full h-1/2'>
+                        <Add
+                            fishGeolocation={fishGeolocation}
+                            setCurrent={setCurrent}
+                            setFishGeolocation={setFishGeolocation} />
+
+                    </div>
+                    <div className='flex justify-center my-6'>
                         <Button onClick={handleClick}>
                             {'Edit location'}
                         </Button>
+                        <Button onClick={handleSubmit}>
+                            {'Submit'}
+                        </Button>
                     </div>
-                    <Add
-                        fishGeolocation={fishGeolocation}
-                        setCurrent={setCurrent}
-                        setFishGeolocation={setFishGeolocation} />
                 </div>
             </>
         )

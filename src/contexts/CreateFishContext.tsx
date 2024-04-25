@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React, { ReactNode, createContext, useContext, useState } from 'react';
 
-import { NewFishObject } from '../types/fish';
-
-export interface CreateFishContextType {
-    newFishData: NewFishObject;
-    setNewFishData: (newFishData: NewFishObject) => void;
-}
+import { FishObject, NewFishObject, RequestFishObject } from '../types/fish';
+import copyFishObject from '../modules/copyFishObject/copyFishObject';
+import { useSaveFish } from '../hooks/useSaveFish';
+import { FishContext, FishContextType } from './FishContext';
 
 export const initialFishData: NewFishObject = {
     species: null,
@@ -19,15 +17,45 @@ export const initialFishData: NewFishObject = {
     }
 }
 
+export interface CreateFishContextType {
+    newFishData: NewFishObject;
+    setNewFishData: (newFishData: NewFishObject) => void;
+    saveNewFish: () => Promise<boolean>;
+}
 
-export const CreateFishContext = React.createContext<CreateFishContextType | undefined>(undefined);
+interface CreateFishProviderProps {
+    children: ReactNode;
+}
 
-export function CreateFishProvider({ children }: { children: React.ReactNode }): JSX.Element {
+export const CreateFishContext = createContext<CreateFishContextType | undefined>(undefined);
+
+export function CreateFishProvider({ children }: CreateFishProviderProps) {
     const [newFishData, setNewFishData] = useState<NewFishObject>(JSON.parse(JSON.stringify(initialFishData)));
+
+    const { updateUserFishArr } = useContext(FishContext) as FishContextType;
+
+    const { saveFishData } = useSaveFish();
+
+    async function saveNewFish(): Promise<boolean> {
+        try {
+            const requestFishData: RequestFishObject = copyFishObject(newFishData as NewFishObject);
+            const savedFish = await saveFishData(requestFishData as RequestFishObject);
+            if (savedFish !== null) {
+                updateUserFishArr(savedFish as FishObject);
+                setNewFishData(JSON.parse(JSON.stringify(initialFishData)));
+                return true;
+            }
+        } catch (err) {
+            console.error(err);
+        }
+        return false;
+    }
 
     return (
         <CreateFishContext.Provider value={{
-            newFishData, setNewFishData
+            newFishData,
+            setNewFishData,
+            saveNewFish
         }}>
             {children}
         </CreateFishContext.Provider>
