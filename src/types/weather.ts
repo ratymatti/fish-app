@@ -62,5 +62,5 @@ export interface WeatherObject {
     info: string;
     coords: Location;
     forecastArray: WeatherInfo[] | [];
-    currentWeather: WeatherInfo | {};
+    currentWeather: WeatherInfo | null;
 }
