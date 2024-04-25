@@ -71,7 +71,7 @@ export default function AddContainer(): JSX.Element | null {
         return (
             <>
                 <Modal ref={modalRef}>
-                    <InvalidInputModal errorMessage={error} onClose={handleCloseModal} />
+                    {error && <InvalidInputModal errorMessage={error} onClose={handleCloseModal} />}
                 </Modal>
                 <div>
                     <div className='flex justify-center mb-2'>
