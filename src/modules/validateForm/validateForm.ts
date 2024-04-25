@@ -1,3 +1,4 @@
+import { AppError } from "../../contexts/AppStateContext";
 /**
  * Function validateForm
  * used in Add.js
@@ -9,18 +10,20 @@
 
 import { NewFishObject } from "../../types/fish";
 
-function validateForm(newFishData : NewFishObject): string | null {
-    if (!newFishData.date) return 'Date is required';
-
-    if (!newFishData.species) return 'Species is required';
-        
-    if (!newFishData.length || isNaN(newFishData.length) || newFishData.length <= 0) return 'Length is required';
-    
-    if (!newFishData.locationName) return 'Location is required';
-    
-    if (!newFishData.geolocation) return 'Geolocation is required';
-    
-    return null;       
+function validateForm(newFishData : NewFishObject): AppError | null {
+    if (!newFishData.date) {
+        return AppError.Date;
+    } else if (!newFishData.species) {
+        return AppError.Species;
+    } else if (!newFishData.length || isNaN(newFishData.length) || newFishData.length < 10) {
+        return AppError.Length;
+    } else if (!newFishData.locationName) {
+        return AppError.Location;
+    } else if (!newFishData.geolocation) {
+        return AppError.Geolocation;
+    } else {
+        return null;       
+    }
 }
 
 export default validateForm;

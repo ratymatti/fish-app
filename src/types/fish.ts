@@ -32,8 +32,17 @@ export interface CardFish {
 export interface NewFishObject {
     species: string | null;
     length: number | null;
-    date: Date | string | null;
+    date: Date | null;
     locationName: string | null;
+    comment: string | null;
+    geolocation: Location;
+}
+
+export interface RequestFishObject {
+    species: string;
+    length: number;
+    date: string;
+    locationName: string;
     comment: string | null;
     geolocation: Location;
 }
