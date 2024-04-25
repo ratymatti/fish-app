@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api';
 import { mapStyles } from '../../modules/mapStyles/mapStyles';
-import SpinningIcon from '../SpinningIcon/SpinningIcon';
 import createCoords from '../../modules/createCoords/createCoords';
 import { Location, LocationObject } from '../../types/location';
 import { AppStateContext, AppStateContextType, ActiveState } from '../../contexts/AppStateContext';
@@ -67,9 +66,7 @@ export default function Map(props: MapProps): JSX.Element {
 
     if (!isLoaded) {
         return (
-            <div className='h-full w-full'>
-                <SpinningIcon />
-            </div>
+            <div>Loading..</div>
         )
     }
 

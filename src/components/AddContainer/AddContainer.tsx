@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Map from '../Map/Map';
 import Add from '../Add/Add';
-import SpinningIcon from '../SpinningIcon/SpinningIcon';
 import { LocationObject } from '../../types/location';
 import Button from '../Button/Button';
 import Modal from '../Modal/Modal';
@@ -90,9 +89,7 @@ export default function AddContainer(): JSX.Element | null {
 
     if (current === CurrentState.Loading) {
         return (
-            <div id='loading'>
-                <SpinningIcon />
-            </div>
+            <div>Loading..</div>
         )
     }
 
