@@ -1,3 +1,57 @@
+export type OptionTypeString = {
+    label: string;
+    value: string;
+}
+
+export type OptionTypeNumber = {
+    label: string;
+    value: number;
+}
+
+export const styleOptions = {
+    control: (styles, { isFocused }) => {
+        return {
+            ...styles,
+            backgroundColor: 'rgb(115, 115, 115)',
+            borderColor: 'rgb(17, 24, 39)',
+            boxShadow: isFocused ? 'none' : styles.boxShadow,
+        };
+    },
+    singleValue: (styles) => ({ ...styles, paddingRight: 10, color: 'rgb(17, 24, 39)', backgroundColor: 'rgb(115, 115, 115)' }),
+    placeholder: (styles) => ({ ...styles, paddingRight: 10, color: 'rgb(17, 24, 39)', backgroundColor: 'rgb(115, 115, 115)' }),
+    option: (styles) => ({ ...styles, color: 'rgb(17, 24, 39)', backgroundColor: 'rgb(115, 115, 115)' }),
+    dropdownIndicator: (base) => ({
+        ...base,
+        color: 'rgb(17, 24, 39)', // this will change the color of the arrow
+    }),
+    menu: (styles) => ({ ...styles, padding: 0, backgroundColor: 'rgb(115, 115, 115)' }),
+    menuList: (styles) => ({ ...styles, padding: 0, borderRadius: '10px' }),
+};
+
+export const optionsSpecies = [
+    { value: 'trout', label: 'Trout' },
+    { value: 'salmon', label: 'Salmon' },
+    { value: 'grayling', label: 'Grayling' },
+    { value: 'rainbowtrout', label: 'Rainbowtrout' },
+    { value: 'pike', label: 'Pike' },
+    { value: 'perch', label: 'Perch' },
+    { value: 'zander', label: 'Zander' },
+    { value: 'other', label: 'Other' },
+    { value: 'whitefish', label: 'Whitefish' },
+];
+
+export const optionsLocation = [
+    { value: 'Kitkajoki', label: 'Kitkajoki' },
+    { value: 'Kuusinkijoki', label: 'Kuusinkijoki' },
+    { value: 'Byske', label: 'Byske' },
+    { value: 'Kemijoki', label: 'Kemijoki' },
+    { value: 'Ounasjoki', label: 'Ounasjoki' },
+    { value: 'Vikajoki', label: 'Vikajoki' },
+    { value: 'Tornionjoki', label: 'Tornionjoki' },
+    { value: 'Raudanjoki', label: 'Raudanjoki' },
+    { value: 'Other', label: 'Other' },
+];
+
 interface ValueLabelPair {
     value: number;
     label: string;
