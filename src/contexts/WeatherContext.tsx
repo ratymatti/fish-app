@@ -11,7 +11,7 @@ import { AppStateContext, AppStateContextType } from './AppStateContext';
 export const WeatherContext = React.createContext<WeatherContextType | undefined>(undefined);
 
 export interface WeatherContextType {
-    currentLocationWeather: any;
+    currentLocationWeather: WeatherObject | null;
     weatherTrackings: WeatherObject[];
     addNewTracking: (coords: Location) => void;
     removeFromTracking: (idToRemove: string) => void;
@@ -39,7 +39,6 @@ export function WeatherProvider({ children }: WeatherProviderProps): JSX.Element
     const { initialIdToken } = useIdToken();
 
     const { userLocation } = useContext(AppStateContext) as AppStateContextType;
-
 
     async function addNewTracking(location: Location): Promise<void> {
         const currentLocationWeather = await fetchCurrentWeather(location, WeatherEndpoint.TRACKING);

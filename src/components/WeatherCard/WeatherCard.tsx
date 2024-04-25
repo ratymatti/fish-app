@@ -22,11 +22,6 @@ function createCardData(data: WeatherObject): CardInfo | null {
 
         const source = data.currentWeather.weather;
 
-        function getWindDirectionInCardinal(windDirection: number): string {
-            const directions = ["North", "North-East", "East", "South-East", "South", "South-West", "West", "North-West", "North"];
-            return directions[Math.round(((windDirection % 360) / 45))];
-        }
-
         return {
             header: `${data.name}`,
             info: [
@@ -43,6 +38,11 @@ function createCardData(data: WeatherObject): CardInfo | null {
         }
     }
     return null;
+}
+
+function getWindDirectionInCardinal(windDirection: number): string {
+    const directions = ["North", "North-East", "East", "South-East", "South", "South-West", "West", "North-West", "North"];
+    return directions[Math.round(((windDirection % 360) / 45))];
 }
 
 export default function WeatherCard(props: WeatherCardProps): JSX.Element {
