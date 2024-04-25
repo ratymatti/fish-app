@@ -21,6 +21,7 @@ export interface CreateFishContextType {
     newFishData: NewFishObject;
     setNewFishData: (newFishData: NewFishObject) => void;
     saveNewFish: () => Promise<boolean>;
+    resetNewFishData: () => void;
 }
 
 interface CreateFishProviderProps {
@@ -42,7 +43,7 @@ export function CreateFishProvider({ children }: CreateFishProviderProps) {
             const savedFish = await saveFishData(requestFishData as RequestFishObject);
             if (savedFish !== null) {
                 updateUserFishArr(savedFish as FishObject);
-                setNewFishData(JSON.parse(JSON.stringify(initialFishData)));
+                resetNewFishData();
                 return true;
             }
         } catch (err) {
@@ -51,11 +52,16 @@ export function CreateFishProvider({ children }: CreateFishProviderProps) {
         return false;
     }
 
+    function resetNewFishData(): void {
+        setNewFishData(JSON.parse(JSON.stringify(initialFishData)));
+    }
+
     return (
         <CreateFishContext.Provider value={{
             newFishData,
             setNewFishData,
-            saveNewFish
+            saveNewFish,
+            resetNewFishData
         }}>
             {children}
         </CreateFishContext.Provider>

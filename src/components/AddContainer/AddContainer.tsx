@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import Map from '../Map/Map';
 import Add from '../Add/Add';
 import { LocationObject } from '../../types/location';
 import Button from '../Button/Button';
 import Modal from '../Modal/Modal';
 import InvalidInputModal from '../InvalidInputModal/InvalidInputModal';
-import { AppError, AppStateContext, AppStateContextType } from '../../contexts/AppStateContext';
+import { AppError, AppStateContext, AppStateContextType, ActiveState } from '../../contexts/AppStateContext';
 import { useModal } from '../../hooks/useModal';
 import MapContainer from '../MapContainer/MapContainer';
 import { CreateFishContext, CreateFishContextType } from '../../contexts/CreateFishContext';
@@ -21,10 +21,12 @@ export default function AddContainer(): JSX.Element | null {
     const [current, setCurrent] = useState<CurrentState>(CurrentState.Map);
     const [fishGeolocation, setFishGeolocation] = useState<LocationObject[]>([]);
 
-    const { error, setError, userLocation, setUserLocation } = useContext(AppStateContext) as AppStateContextType;
-    const { newFishData, saveNewFish } = useContext(CreateFishContext) as CreateFishContextType;
+    const { error, setError, userLocation, setUserLocation, setActive } = useContext(AppStateContext) as AppStateContextType;
+    const { newFishData, saveNewFish, resetNewFishData } = useContext(CreateFishContext) as CreateFishContextType;
 
     const { modalRef, openModal, closeModal } = useModal();
+
+    const submitCountRef = useRef(0);
 
     function handleClick(): void {
         if (fishGeolocation.length) {
@@ -39,6 +41,12 @@ export default function AddContainer(): JSX.Element | null {
     }
 
     function handleCloseModal(): void {
+        if (submitCountRef.current >= 3) {
+            resetNewFishData();
+            setTimeout(() => {
+                setActive(ActiveState.Empty);
+            }, 500);
+        }
         closeModal();
         setError(null);
     }
@@ -50,10 +58,11 @@ export default function AddContainer(): JSX.Element | null {
             setError(errorMessage as AppError);
             return;
         } else {
-            setCurrent(CurrentState.Loading);
+            submitCountRef.current += 1;
         }    
             const response = await saveNewFish();
             if (response) {
+                submitCountRef.current = 0;
                 setCurrent(CurrentState.Map);
                 setFishGeolocation([]);
             } else {
@@ -92,7 +101,7 @@ export default function AddContainer(): JSX.Element | null {
         return (
             <>
                 <Modal ref={modalRef}>
-                    {error && <InvalidInputModal errorMessage={error} onClose={handleCloseModal} />}
+                    {error && <InvalidInputModal submitCount={submitCountRef} errorMessage={error} onClose={handleCloseModal} />}
                 </Modal>
                 <div className='w-5/6'>
                     <div className='w-full h-1/2'>
