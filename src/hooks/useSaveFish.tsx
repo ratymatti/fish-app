@@ -1,4 +1,4 @@
-import { NewFishObject } from "../types/fish";
+import { FishObject, NewFishObject } from "../types/fish";
 import { useIdToken } from "./useIdToken";
 
 /**
@@ -7,7 +7,7 @@ import { useIdToken } from "./useIdToken";
  */
   
   interface SaveFishHook {
-    saveFishData: (args: NewFishObject) => Promise<any>
+    saveFishData: (args: NewFishObject) => Promise<FishObject | null>
   }
 
 export function useSaveFish(): SaveFishHook {
@@ -15,7 +15,7 @@ export function useSaveFish(): SaveFishHook {
 
     const { refreshedIdToken } = useIdToken();
 
-    async function saveFishData(newFishData: NewFishObject): Promise<any> {
+    async function saveFishData(newFishData: NewFishObject): Promise<FishObject | null> {
         const config: RequestInit = {
             method: 'POST',
             headers: {
@@ -27,7 +27,6 @@ export function useSaveFish(): SaveFishHook {
 
         try {
             const response = await fetch(urlToFetch, config);
-            
             if (response.ok) {
                 const data = await response.json();
                 return data;
@@ -35,6 +34,8 @@ export function useSaveFish(): SaveFishHook {
         } catch (err) {
             console.error(err);
         }
+        return null;
     }
+    
    return { saveFishData }
 }
