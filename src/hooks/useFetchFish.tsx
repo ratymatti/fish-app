@@ -3,10 +3,11 @@
  * @returns {FetchFish} - object with function for fetching fish data
  */
 
+import { FishObject } from "../types/fish";
 import { useIdToken } from "./useIdToken";
 
 interface FetchFishHook {
-    fetchFishData: () => Promise<any>
+    fetchFishData: () => Promise<FishObject[] | null>
 }
 
 export function useFetchFish(): FetchFishHook {
@@ -14,7 +15,7 @@ export function useFetchFish(): FetchFishHook {
 
     const { refreshedIdToken } = useIdToken();
 
-    async function fetchFishData(): Promise<any> {
+    async function fetchFishData(): Promise<FishObject[] | null> {
         const config: RequestInit = {
             method: 'GET',
             headers: {
@@ -26,13 +27,13 @@ export function useFetchFish(): FetchFishHook {
         try {
             const response = await fetch(urlToFetch, config);
             if (response.ok) {
-                const data = await response.json();
+                const data: FishObject[] = await response.json();
                 return data;
-            }
+            } 
         } catch (err) {
             console.error(err);
-            return null;
         }
+        return null;
     }
 
     return { fetchFishData }
