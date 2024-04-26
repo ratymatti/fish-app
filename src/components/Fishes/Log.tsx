@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-
+import React, { useContext, useEffect } from 'react'
 import FishCard from './FishCard';
 import { FishContext } from '../../contexts/FishContext';
 import FishRow from './FishRow';
@@ -7,14 +6,8 @@ import TheadRows from './TheadRows';
 import useSorting, { Field, SortDirection } from '../../hooks/useSorting';
 import useFishCard from '../../hooks/useFishCard';
 
-interface LogProps {
-    setFreeze: (freeze: boolean) => void;
-}
-
-export default function Log(props: LogProps): JSX.Element {
-    const { setFreeze } = props;
-
-    const fishContext = React.useContext(FishContext);
+export default function Log(): JSX.Element {
+    const fishContext = useContext(FishContext);
 
     if (!fishContext) {
         throw new Error("FishContext is undefined");
@@ -28,10 +21,6 @@ export default function Log(props: LogProps): JSX.Element {
     useEffect(() => {
         sortByField(Field.DATE, SortDirection.DESC);
     }, [])
-
-    useEffect(() => {
-        cardFish ? setFreeze(true) : setFreeze(false);
-    }, [cardFish]);
 
     return (
         <div className='bg-neutral-800 border border-neutral-700 w-5/6 h-1/2 flex items-start justify-center'>

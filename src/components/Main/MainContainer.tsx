@@ -10,11 +10,7 @@ import Modal from '../Modal/Modal';
 import { useModal } from '../../hooks/useModal';
 import LocationModal from '../Modal/LocationModal';
 
-interface MainContainerProps {
-    setFreeze: (freeze: boolean) => void;
-}
-
-export default function MainContainer({ setFreeze }: MainContainerProps) {
+export default function MainContainer() {
     const { isLoggedIn, active, userLocation, getAndSetLocation } = useContext(AppStateContext) as AppStateContextType;
 
     const { modalRef, openModal, closeModal } = useModal();
@@ -45,8 +41,7 @@ export default function MainContainer({ setFreeze }: MainContainerProps) {
                         <AddContainer />
                     </CreateFishProvider>}
                 {active === ActiveState.Fishes &&
-                    <Log
-                        setFreeze={setFreeze} />}
+                    <Log />}
                 {active === ActiveState.Weather &&
                     <Weather />}
                 {active === ActiveState.Map &&
