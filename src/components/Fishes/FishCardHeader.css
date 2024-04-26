@@ -1,8 +1,0 @@
-.fish-card-header {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.close-card:hover {
-    cursor: pointer;
-}

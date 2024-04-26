@@ -1,33 +1,39 @@
 import React, { useContext, useEffect } from 'react'
-import FishCard from './FishCard';
-import { FishContext } from '../../contexts/FishContext';
+import { FishContext, FishContextType } from '../../contexts/FishContext';
 import FishRow from './FishRow';
 import TheadRows from './TheadRows';
 import useSorting, { Field, SortDirection } from '../../hooks/useSorting';
-import useFishCard from '../../hooks/useFishCard';
+import FishCardModal from '../Modal/FishCardModal';
+import Modal from '../Modal/Modal';
+import { useModal } from '../../hooks/useModal';
 
 export default function Log(): JSX.Element {
-    const fishContext = useContext(FishContext);
-
-    if (!fishContext) {
-        throw new Error("FishContext is undefined");
-    }
-    const { userFishArr, cardFish } = fishContext;
+    const { userFishArr, selectedFish, setSelectedFish, selectFishById } = useContext(FishContext) as FishContextType;
 
     const { sortByField } = useSorting();
 
-    const { handleFishRowClick, closeCard, handleRemove } = useFishCard();
+    const { modalRef, openModal, closeModal } = useModal();
+
+    function handleOpenCard(fishID: string) {
+        selectFishById(fishID);
+        openModal();
+    }
+
+    function handleCloseCard() {
+        setSelectedFish(null);
+        closeModal();
+    }
 
     useEffect(() => {
         sortByField(Field.DATE, SortDirection.DESC);
-    }, [])
+    }, []);
 
     return (
-        <div className='bg-neutral-800 border border-neutral-700 w-5/6 h-1/2 flex items-start justify-center'>
-            {cardFish && <FishCard
-                cardFish={cardFish}
-                closeCard={closeCard}
-                handleRemove={handleRemove} />}       
+        <>
+            <Modal ref={modalRef}>
+                {selectedFish && <FishCardModal onClose={handleCloseCard} cardFish={selectedFish} />}
+            </Modal>
+            <div className='bg-neutral-800 border border-neutral-700 w-5/6 h-1/2 flex items-start justify-center'>
                 <table className='bg-neutral-800 text-neutral-200 text-s w-screen overflow-scroll border-separate border-spacing-2 border border-neutral-700'>
                     <thead>
                         <TheadRows />
@@ -37,11 +43,12 @@ export default function Log(): JSX.Element {
                             <FishRow
                                 key={fish.id}
                                 fish={fish}
-                                handleFishRowClick={handleFishRowClick} />
+                                handleFishRowClick={() => handleOpenCard(fish.id)} />
                         ))}
                     </tbody>
                 </table>
-        </div>
+            </div>
+        </>
     )
 }
 

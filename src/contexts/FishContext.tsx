@@ -1,14 +1,15 @@
 import React, { useState, useEffect, createContext, ReactNode } from 'react';
-import { FishObject, CardFish } from '../types/fish';
+import { FishObject } from '../types/fish';
 import { useFetchFish } from '../hooks/useFetchFish';
 import { useIdToken } from '../hooks/useIdToken';
 
 export interface FishContextType {
     userFishArr: FishObject[];
     setUserFishArr: (fishes: FishObject[]) => void;
-    cardFish: CardFish | null;
-    setCardFish: (fish: CardFish | null) => void;
+    selectedFish: FishObject | null;
+    setSelectedFish: (fish: FishObject | null) => void;
     updateUserFishArr: (newFish: FishObject) => void;
+    selectFishById: (fishID: string) => void;
 }
 
 interface FishProviderProps {
@@ -33,7 +34,7 @@ export const FishContext = createContext<FishContextType | undefined>(undefined)
 
 export function FishProvider({ children }: FishProviderProps): JSX.Element {
     const [userFishArr, setUserFishArr] = useState<FishObject[]>([]);
-    const [cardFish, setCardFish] = useState<CardFish | null>(null);
+    const [selectedFish, setSelectedFish] = useState<FishObject | null>(null);
 
     const { initialIdToken } = useIdToken();
     const { fetchFishData } = useFetchFish();
@@ -42,6 +43,11 @@ export function FishProvider({ children }: FishProviderProps): JSX.Element {
         newFish.date = new Date(newFish.date);
         newFish.dateString = createDateString(newFish.date);
         setUserFishArr((prev) => prev ? [...prev, newFish] : [newFish]);
+    }
+
+    function selectFishById(fishID: string): void {
+        const selectedFish: FishObject = userFishArr.find(fish => fish.id === fishID)!;
+        setSelectedFish(selectedFish);
     }
 
     useEffect(() => {
@@ -67,10 +73,10 @@ export function FishProvider({ children }: FishProviderProps): JSX.Element {
         <FishContext.Provider value={{
             userFishArr,
             setUserFishArr,
-            cardFish,
-            setCardFish,
-            updateUserFishArr
-        }}>
+            selectedFish,
+            setSelectedFish,
+            updateUserFishArr,
+            selectFishById }}>
             {children}
         </FishContext.Provider>
     )

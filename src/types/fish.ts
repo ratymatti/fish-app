@@ -1,5 +1,6 @@
 
 import { Location } from "./location";
+import { WeatherObject } from "./weather";
 
 /**
  * Interface FishObject
@@ -20,6 +21,7 @@ export interface FishObject {
     comment: string | null;
     geolocation: Location;
     dateString: string | null;
+    weather: WeatherObject | null;
 }
 
 export interface CardFish {

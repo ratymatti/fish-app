@@ -1,5 +1,4 @@
 import React from 'react'
-import './FishCardHeader.css';
 
 interface FishCardHeaderProps {
     closeCard: () => void;
