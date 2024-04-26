@@ -77,8 +77,6 @@ export default function WeatherCard(props: WeatherCardProps): JSX.Element {
                         <p>{text}</p>
                         <p>{value}</p>
                     </div>
-
-
                 ))}
             </div>
             <div className='h-6 flex justify-end'>

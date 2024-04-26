@@ -1,8 +1,21 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
-export default function SectionContainer({children, ...props}) {
+interface SectionContainerProps {
+    children: ReactNode;
+    weather?: boolean;
+}
+
+export default function SectionContainer({children, weather, ...props}: SectionContainerProps) {
+    let styles: string = "p-4";
+
+    if (weather) {
+        styles += " h-full w-1/2"
+    } else {
+        styles += " h-full w-full"
+    }
+
     return (
-        <section className='p-4 h-full w-full' {...props}>
+        <section className={styles} {...props}>
             {children}
         </section>
     )
