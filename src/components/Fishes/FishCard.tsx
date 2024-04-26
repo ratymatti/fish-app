@@ -1,5 +1,4 @@
 import React from 'react'
-import './FishCard.css';
 import { CardFish } from '../../types/fish';
 import FishCardHeader from './FishCardHeader';
 import CardHeader from './CardHeader';
