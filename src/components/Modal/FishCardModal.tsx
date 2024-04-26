@@ -34,11 +34,11 @@ export default function FishCardModal({ onClose, cardFish }: FishCardModalProps)
                         const label = keyToLabelMap[key] || key;
                         return <p key={key} className='uppercase text-xs'>{`${label}: ${value}`}</p>
                     })}
-                    {cardFish.weather && cardFish.weather.currentWeather && Object.entries(cardFish.weather.currentWeather.weather).map(([key, value]) => {
+                    {cardFish.weather && cardFish.weather.currentWeather ? Object.entries(cardFish.weather.currentWeather.weather).map(([key, value]) => {
                         if (key === 'icon' || key === 'id' || key === 'windDirection' || key === 'windSpeed' || key === 'feelsLike') return null;
                         const label = keyToLabelMap[key] || key;
                         return <p key={key} className='uppercase text-xs'>{`${label}: ${value}`}</p>
-                    })}
+                    }) : <p className='text-xs uppercase text-center'>weather information not available</p>}
                 </SectionContainer>
             </div>
             {cardFish.comment &&
