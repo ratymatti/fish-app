@@ -1,5 +1,5 @@
-import { Field, SortDirection } from '../../hooks/useSorting';
-import { FishObject } from '../../types/fish';
+import { Field, SortDirection } from '../hooks/useSorting';
+import { FishObject } from '../types/fish';
 
 /**
  * Sorts an array of fish objects based on the selected field and direction.

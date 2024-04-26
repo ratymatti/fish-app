@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import Map from '../Map/Map';
-import Add from '../Add/Add';
+import Add from './Add';
 import { LocationObject } from '../../types/location';
-import Button from '../Button/Button';
+import Button from '../Main/Button';
 import Modal from '../Modal/Modal';
-import InvalidInputModal from '../InvalidInputModal/InvalidInputModal';
+import InvalidInputModal from '../Modal/InvalidInputModal';
 import { AppError, AppStateContext, AppStateContextType, ActiveState } from '../../contexts/AppStateContext';
 import { useModal } from '../../hooks/useModal';
-import MapContainer from '../MapContainer/MapContainer';
+import MapContainer from '../Map/MapContainer';
 import { CreateFishContext, CreateFishContextType } from '../../contexts/CreateFishContext';
-import validateForm from '../../modules/validateForm/validateForm';
+import validateForm from '../../utils/validateForm';
 
 export enum CurrentState {
     Map = 'map',

@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 
-import FishCard from '../FishCard/FishCard';
+import FishCard from './FishCard';
 import { FishContext } from '../../contexts/FishContext';
-import FishRow from '../FishRow/FishRow';
-import TheadRows from '../TheadRows/TheadRows';
+import FishRow from './FishRow';
+import TheadRows from './TheadRows';
 import useSorting, { Field, SortDirection } from '../../hooks/useSorting';
 import useFishCard from '../../hooks/useFishCard';
 

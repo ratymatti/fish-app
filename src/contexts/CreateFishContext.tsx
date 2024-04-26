@@ -1,7 +1,7 @@
 import React, { ReactNode, createContext, useContext, useState } from 'react';
 
 import { FishObject, NewFishObject, RequestFishObject } from '../types/fish';
-import copyFishObject from '../modules/copyFishObject/copyFishObject';
+import copyFishObject from '../utils/copyFishObject';
 import { useSaveFish } from '../hooks/useSaveFish';
 import { FishContext, FishContextType } from './FishContext';
 

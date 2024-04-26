@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api';
-import { mapStyles } from '../../modules/mapStyles/mapStyles';
-import createCoords from '../../modules/createCoords/createCoords';
+import { mapStyles } from '../../utils/mapStyles';
+import createCoords from '../../utils/createCoords';
 import { Location, LocationObject } from '../../types/location';
 import { AppStateContext, AppStateContextType, ActiveState } from '../../contexts/AppStateContext';
 

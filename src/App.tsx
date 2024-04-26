@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import MainContainer from './components/MainContainer/MainContainer';
+import MainContainer from './components/Main/MainContainer';
 import Header from './components/Header/Header';
 // import Footer from './components/Footer/Footer';
-import Freeze from './components/Freeze/Freeze';
+import Freeze from './components/Main/Freeze';
 
 import { FishProvider } from './contexts/FishContext';
 import { WeatherProvider } from './contexts/WeatherContext';

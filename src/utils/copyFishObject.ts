@@ -1,4 +1,4 @@
-import { NewFishObject, RequestFishObject } from "../../types/fish";
+import { NewFishObject, RequestFishObject } from "../types/fish";
 
 /**
  * Values can be type asserted to be non-null here because

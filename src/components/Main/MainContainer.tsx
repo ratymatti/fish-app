@@ -1,14 +1,14 @@
 import React, { useContext, useEffect } from 'react';
-import AddContainer from '../AddContainer/AddContainer';
-import Log from '../Log/Log';
-import MapSection from '../MapSection/MapSection';
+import AddContainer from '../Fishes/AddContainer';
+import Log from '../Fishes/Log';
+import MapSection from '../Map/MapSection';
 import Weather from '../Weather/Weather';
 import Auth from '../Auth/Auth';
 import { CreateFishProvider } from '../../contexts/CreateFishContext';
 import { AppStateContext, AppStateContextType, ActiveState } from '../../contexts/AppStateContext';
 import Modal from '../Modal/Modal';
 import { useModal } from '../../hooks/useModal';
-import LocationModal from '../LocationModal/LocationModal';
+import LocationModal from '../Modal/LocationModal';
 
 interface MainContainerProps {
     setFreeze: (freeze: boolean) => void;

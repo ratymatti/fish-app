@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react';
-import WeatherCard from '../WeatherCard/WeatherCard';
+import WeatherCard from './WeatherCard';
 import Map from '../Map/Map';
 import { WeatherContext, WeatherContextType } from '../../contexts/WeatherContext';
 import { LocationObject } from '../../types/location';
-import ContainerHeader from '../ContainerHeader/ContainerHeader';
-import SectionContainer from '../SectionContainer/SectionContainer';
-import SectionButton from '../SectionButton/SectionButton';
+import ContainerHeader from '../Main/ContainerHeader';
+import SectionContainer from '../Main/SectionContainer';
+import SectionButton from '../Main/SectionButton';
 import { AppStateContext, AppStateContextType } from '../../contexts/AppStateContext';
-import MapContainer from '../MapContainer/MapContainer';
+import MapContainer from '../Map/MapContainer';
 
 enum Current {
     WEATHER = 'weather',

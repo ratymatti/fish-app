@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { sortFishes } from '../modules/sortFishes/sortFishes';
+import { sortFishes } from '../utils/sortFishes';
 import { FishContext } from '../contexts/FishContext';
 
 export enum SortDirection {

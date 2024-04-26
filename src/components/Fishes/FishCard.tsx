@@ -1,9 +1,9 @@
 import React from 'react'
 import './FishCard.css';
 import { CardFish } from '../../types/fish';
-import FishCardHeader from '../FishCardHeader/FishCardHeader';
-import CardHeader from '../CardHeader/CardHeader';
-import CardInfoRow from '../CardInfoRow/CardInfoRow';
+import FishCardHeader from './FishCardHeader';
+import CardHeader from './CardHeader';
+import CardInfoRow from './CardInfoRow';
 
 interface FishCardProps {
     cardFish: CardFish | null;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import RemoveButton from '../RemoveButton/RemoveButton';
+import RemoveButton from '../Main/RemoveButton';
 import { WeatherObject } from '../../types/weather';
 //import CardHeader from '../CardHeader/CardHeader';
 //import CardInfoRow from '../CardInfoRow/CardInfoRow';

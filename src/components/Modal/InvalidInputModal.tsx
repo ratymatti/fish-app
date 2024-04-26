@@ -1,5 +1,5 @@
 import React, { MutableRefObject } from 'react'
-import SectionButton from '../SectionButton/SectionButton';
+import SectionButton from '../Main/SectionButton';
 import { AppError } from '../../contexts/AppStateContext';
 
 interface InvalidInputProps {

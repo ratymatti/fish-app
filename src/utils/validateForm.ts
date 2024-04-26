@@ -1,4 +1,4 @@
-import { AppError } from "../../contexts/AppStateContext";
+import { AppError } from "../contexts/AppStateContext";
 /**
  * Function validateForm
  * used in Add.js
@@ -8,7 +8,7 @@ import { AppError } from "../../contexts/AppStateContext";
  * @returns string or null
  */
 
-import { NewFishObject } from "../../types/fish";
+import { NewFishObject } from "../types/fish";
 
 function validateForm(newFishData : NewFishObject): AppError | null {
     if (!newFishData.date) {

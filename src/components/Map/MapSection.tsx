@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Map from '../Map/Map';
+import Map from './Map';
 import { FishContext, FishContextType } from '../../contexts/FishContext';
 import { Location, LocationObject } from '../../types/location';
 import { FishObject } from '../../types/fish';
 import { AppStateContext, AppStateContextType } from '../../contexts/AppStateContext';
-import MapContainer from '../MapContainer/MapContainer';
+import MapContainer from './MapContainer';
 
 const filterAndTransformFishes = (userFishArr: FishObject[]): LocationObject[] => {
     return userFishArr

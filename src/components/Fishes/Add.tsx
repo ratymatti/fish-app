@@ -1,16 +1,16 @@
 import React, { useContext, useEffect } from 'react';
 import Textarea from 'rc-textarea';
 import { CreateFishContext, CreateFishContextType } from '../../contexts/CreateFishContext';
-import { CurrentState } from '../AddContainer/AddContainer';
+import { CurrentState } from './AddContainer';
 import { LocationObject } from '../../types/location';
-import BasicDateCalendar from '../BasicDateCalendar/BasicDateCalendar';
+import BasicDateCalendar from '../Main/BasicDateCalendar';
 import {
     optionsCm,
     optionsSpecies,
     optionsLocation,
     SingleValueOptionType
 } from '../../utils/addUtils';
-import { CustomSelect } from '../CustomSelect/CustomSelect';
+import { CustomSelect } from '../Main/CustomSelect';
 
 interface AddProps {
     fishGeolocation: LocationObject[];

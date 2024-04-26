@@ -1,5 +1,5 @@
 import React from 'react'
-import SectionButton from '../SectionButton/SectionButton'
+import SectionButton from '../Main/SectionButton'
 
 interface LocationModalProps {
     onAllow: () => void;
