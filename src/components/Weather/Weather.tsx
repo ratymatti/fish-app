@@ -63,7 +63,7 @@ export default function Weather(): JSX.Element | null {
                 </div>
                 <div className='flex flex-row w-full'>
                     {currentLocationWeather &&
-                        <SectionContainer weather>
+                        <SectionContainer half>
                             <ContainerHeader>
                                 Current weather
                             </ContainerHeader>
@@ -72,7 +72,7 @@ export default function Weather(): JSX.Element | null {
                                 isRemovable={false} />
                         </SectionContainer>}
                     {weatherTrackings.length > 0 &&
-                    <SectionContainer weather>
+                    <SectionContainer half>
                         <ContainerHeader>
                             Your weather trackings
                         </ContainerHeader>
@@ -107,7 +107,6 @@ export default function Weather(): JSX.Element | null {
             </MapContainer>
         )
     }
-
     else return null;
 }
 

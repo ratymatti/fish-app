@@ -6,9 +6,10 @@ type ModalRef = { open: () => void; close: () => void; } | null;
 
 interface ModalProps {
     children: ReactNode;
+    fishCard?: boolean;
 }
 
-const Modal = forwardRef<ModalRef, ModalProps>(function Modal({ children }, ref) {
+const Modal = forwardRef<ModalRef, ModalProps>(function Modal({ children, fishCard }, ref) {
     const modalRoot = document.getElementById('modal-root');
     if (!modalRoot) throw new Error('Modal root not found');
 
@@ -28,8 +29,14 @@ const Modal = forwardRef<ModalRef, ModalProps>(function Modal({ children }, ref)
         throw new Error('Dialog ref is null');
     });
 
+    let styles: string = 'bg-neutral-700 p-4';
+    
+    if (fishCard) {
+        styles += " w-1/2"
+    }
+
     return createPortal(
-        <dialog ref={dialog} className='bg-neutral-700 p-4'>
+        <dialog ref={dialog} className={styles}>
             {children}
         </dialog>,
         modalRoot

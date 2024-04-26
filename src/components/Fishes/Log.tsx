@@ -30,7 +30,7 @@ export default function Log(): JSX.Element {
 
     return (
         <>
-            <Modal ref={modalRef}>
+            <Modal ref={modalRef} fishCard>
                 {selectedFish && <FishCardModal onClose={handleCloseCard} cardFish={selectedFish} />}
             </Modal>
             <div className='bg-neutral-800 border border-neutral-700 w-5/6 h-1/2 flex items-start justify-center'>
