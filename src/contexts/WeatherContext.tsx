@@ -76,7 +76,7 @@ export function WeatherProvider({ children }: WeatherProviderProps): JSX.Element
 
             const updateInterval = setInterval(() => {
                 updateCurrentLocationWeather();
-            }, 15 * 60 * 1000); // update every 15 minutes
+            }, 60 * 60 * 1000); // update every 60 minutes
 
             return () => clearInterval(updateInterval);
         }
@@ -104,7 +104,7 @@ export function WeatherProvider({ children }: WeatherProviderProps): JSX.Element
 
             const updateInterval = setInterval(() => {
                 updateWeatherTrackings();
-            }, 15 * 60 * 1000); // update every 15 minutes
+            }, 60 * 60 * 1000); // update every 60 minutes
 
             return () => clearInterval(updateInterval);
         }
