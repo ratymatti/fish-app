@@ -20,7 +20,8 @@ export enum AppError {
     Species = 'Please select a species',
     Length = 'Please select a length',
     Location = 'Please select a location',
-    Geolocation = 'Please select a geolocation'
+    Geolocation = 'Please select a geolocation',
+    GeolocationNotAvailable = 'Location information not available. Check your browser settings.'
 }
 
 
@@ -57,10 +58,9 @@ export function AppStateProvider({ children }: AppStateProps) {
 
                 setUserLocation({ lat, lng });
             } catch (error) {
+                setError(AppError.GeolocationNotAvailable);
                 console.error(error);
             }
-        } else {
-            alert('Geolocation not available'); // CHANGE THIS
         }
     }
 

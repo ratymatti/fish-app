@@ -9,9 +9,10 @@ import { AppStateContext, AppStateContextType, ActiveState } from '../../context
 import Modal from '../Modal/Modal';
 import { useModal } from '../../hooks/useModal';
 import LocationModal from '../Modal/LocationModal';
+import LocationNotAvailableModal from '../Modal/LocationNotAvailableModal';
 
 export default function MainContainer() {
-    const { isLoggedIn, active, userLocation, getAndSetLocation } = useContext(AppStateContext) as AppStateContextType;
+    const { error, isLoggedIn, active, userLocation, getAndSetLocation } = useContext(AppStateContext) as AppStateContextType;
 
     const { modalRef, openModal, closeModal } = useModal();
 
@@ -20,7 +21,7 @@ export default function MainContainer() {
         closeModal();
     }
 
-    function handleDeny() {
+    function handleClose() {
         closeModal();
     }
 
@@ -30,10 +31,19 @@ export default function MainContainer() {
         } 
     }, [isLoggedIn, userLocation]);
 
+    useEffect(() => {
+        setTimeout(() => {
+            if (error) {
+                openModal();
+            }
+        }, 500);
+    }, [error]);
+
     return (
         <>
             <Modal ref={modalRef}>
-                <LocationModal onAllow={handleAllow} onDeny={handleDeny} />
+               {!error && <LocationModal onAllow={handleAllow} onDeny={handleClose} />}
+               {error && <LocationNotAvailableModal error={error} onClose={handleClose} />}
             </Modal>
             <div className='h-screen px-8 mt-8 flex justify-center'>
                 {active === ActiveState.AddFish &&
