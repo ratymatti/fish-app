@@ -61,7 +61,7 @@ export function AppStateProvider({ children }: AppStateProps) {
             lat: 66.215381, // If user location is not available, center the map to 
             lng: 29.635635 // 'Hevonperse' ('Horses ass' in English) in Kuusamo, Finland
         }, 
-        zoom: 10
+        zoom: 12
     });
 
     const { initialIdToken } = useIdToken();
