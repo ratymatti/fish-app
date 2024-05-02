@@ -24,6 +24,14 @@ export enum AppError {
     GeolocationNotAvailable = 'Location information not available. Check your browser settings.'
 }
 
+interface MapState {
+    center: {
+        lat: number;
+        lng: number;
+    };
+    zoom: number;
+}
+
 
 export interface AppStateContextType {
     isLoggedIn: boolean;
@@ -35,7 +43,7 @@ export interface AppStateContextType {
     userLocation: Location | undefined;
     setUserLocation: (userLocation: Location | undefined) => void;
     getAndSetLocation: () => Promise<void>;
-    mapRef: React.MutableRefObject<Location | null>;
+    mapRef: React.MutableRefObject<MapState>;
     loading: boolean;
 }
 
@@ -48,7 +56,13 @@ export function AppStateProvider({ children }: AppStateProps) {
     const [userLocation, setUserLocation] = useState<Location | undefined>(undefined);
     const [loading, setLoading] = useState<boolean>(true);
 
-    const mapRef = useRef<Location | null>(null);
+    const mapRef = useRef<MapState>({
+        center: {
+            lat: 66.215381, // If user location is not available, center the map to 
+            lng: 29.635635 // 'Hevonperse' ('Horses ass' in English) in Kuusamo, Finland
+        }, 
+        zoom: 10
+    });
 
     const { initialIdToken } = useIdToken();
 
@@ -62,7 +76,7 @@ export function AppStateProvider({ children }: AppStateProps) {
                 const { latitude: lat, longitude: lng } = position.coords;
 
                 setUserLocation({ lat, lng });
-                mapRef.current = { lat, lng };
+                mapRef.current.center = { lat, lng };
             } catch (error) {
                 setError(AppError.GeolocationNotAvailable);
                 console.error(error);

@@ -15,7 +15,6 @@ const options = {
 
 interface MapProps {
     markerLocations: LocationObject[];
-    zoom: number;
     setFishGeolocation?: (value: LocationObject[]) => void;
     setNewWeatherLocation?: (value: LocationObject[]) => void;
 }
@@ -28,12 +27,12 @@ interface Marker {
 export default function Map(props: MapProps): JSX.Element {
     const {
         markerLocations,
-        zoom, setFishGeolocation,
+        setFishGeolocation,
         setNewWeatherLocation
     } = props;
 
     const { active, mapRef, loading } = useContext(AppStateContext) as AppStateContextType;
-    
+
     const [markers, setMarkers] = useState<Marker[]>([]);
 
     const { isLoaded } = useLoadScript({
@@ -65,27 +64,23 @@ export default function Map(props: MapProps): JSX.Element {
         )
     }
 
-    let center: Location;
-
-    if (mapRef.current) {
-        center = mapRef.current!;
-    } else {
-        center = { lat: 66.215381, lng: 29.635635 }
-        // If user location is not available, center the map to
-        // 'Hevonperse' ('Horses ass' in English) in Kuusamo, Finland 
-    }
-
     return (
         <GoogleMap
-            zoom={zoom}
-            center={center}
+            zoom={mapRef.current.zoom}
+            center={mapRef.current.center}
             mapContainerClassName='w-full h-full'
             onClick={(event) => handleClick(event)}
             options={options}
             onLoad={map => {
                 map.addListener('bounds_changed', () => {
                     const center = map.getCenter();
-                    if (center) mapRef.current = { lat: center.lat(), lng: center.lng() }
+                    const zoom = map.getZoom();
+                    if (center && zoom) {
+                        mapRef.current = {
+                            center: { lat: center.lat(), lng: center.lng() },
+                            zoom
+                        }
+                    }
                 })
             }}
         >
