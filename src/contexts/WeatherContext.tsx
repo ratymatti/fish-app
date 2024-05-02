@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, ReactNode } from 'react';
+import React, { useState, useEffect, useContext, ReactNode, createContext } from 'react';
 import { useFetchWeather } from '../hooks/useFetchWeather';
 import { WeatherObject } from '../types/weather';
 import { Location } from '../types/location';
@@ -7,15 +7,6 @@ import { useFetchDelete } from '../hooks/useFetchDelete';
 import { useFetchTrackings } from '../hooks/useFetchTrackings';
 import { useUpdateTracking } from '../hooks/useUpdateTracking';
 import { AppStateContext, AppStateContextType } from './AppStateContext';
-
-export const WeatherContext = React.createContext<WeatherContextType | undefined>(undefined);
-
-export interface WeatherContextType {
-    currentLocationWeather: WeatherObject | null;
-    weatherTrackings: WeatherObject[];
-    addNewTracking: (coords: Location) => void;
-    removeFromTracking: (idToRemove: string) => void;
-}
 
 export enum WeatherEndpoint {
     CURRENT = '/fetch/current',
@@ -26,6 +17,14 @@ interface WeatherProviderProps {
     children: ReactNode;
 }
 
+export interface WeatherContextType {
+    currentLocationWeather: WeatherObject | null;
+    weatherTrackings: WeatherObject[];
+    addNewTracking: (coords: Location) => void;
+    removeFromTracking: (idToRemove: string) => void;
+}
+
+export const WeatherContext = createContext<WeatherContextType | undefined>(undefined);
 
 export function WeatherProvider({ children }: WeatherProviderProps): JSX.Element {
     const [currentLocationWeather, setCurrentLocationWeather] = useState<WeatherObject | null>(null);
@@ -33,7 +32,7 @@ export function WeatherProvider({ children }: WeatherProviderProps): JSX.Element
 
     const { fetchCurrentWeather } = useFetchWeather();
     const { fetchUserTrackings } = useFetchTrackings();
-    const { fetchRemoveWeather } = useFetchDelete();
+    const { fetchDeleteWeatherObject } = useFetchDelete();
     const { fetchUpdateTrackingWeather } = useUpdateTracking();
 
     const { initialIdToken } = useIdToken();
@@ -50,7 +49,7 @@ export function WeatherProvider({ children }: WeatherProviderProps): JSX.Element
     }
 
     async function removeFromTracking(idToRemove: string): Promise<void> {
-        const deletedFromDB = await fetchRemoveWeather(idToRemove);
+        const deletedFromDB = await fetchDeleteWeatherObject(idToRemove);
         if (!deletedFromDB) return;
         const filteredWeatherTrackings = weatherTrackings.filter((tracking) => tracking.id !== idToRemove);
         setWeatherTrackings(filteredWeatherTrackings);
@@ -110,14 +109,12 @@ export function WeatherProvider({ children }: WeatherProviderProps): JSX.Element
         }
     }, [initialIdToken]);
 
-
     return (
         <WeatherContext.Provider value={{
             currentLocationWeather,
             weatherTrackings,
             addNewTracking,
-            removeFromTracking,
-        }}>
+            removeFromTracking }}>
             {children}
         </WeatherContext.Provider>
     )
