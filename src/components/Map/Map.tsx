@@ -18,7 +18,6 @@ interface MapProps {
     zoom: number;
     setFishGeolocation?: (value: LocationObject[]) => void;
     setNewWeatherLocation?: (value: LocationObject[]) => void;
-    center?: Location | null;
 }
 
 interface Marker {
@@ -39,11 +38,17 @@ export default function Map(props: MapProps): JSX.Element {
 
     const [markers, setMarkers] = useState<Marker[]>([]);
 
-    const { active, userLocation } = useContext(AppStateContext) as AppStateContextType;
+    const { active, mapRef } = useContext(AppStateContext) as AppStateContextType;
 
-    let center: Location = { lat: 66.215381, lng: 29.635635 }; // If user location is not available, center the map to
-                                                               // 'Hevonperse' ('Horses ass' in English) in Kuusamo, Finland 
-    if (userLocation) center = userLocation;                   
+    let center: Location;
+
+    if (mapRef.current) {
+        center = mapRef.current!;
+    } else {
+        center = { lat: 66.215381, lng: 29.635635 }
+        // If user location is not available, center the map to
+        // 'Hevonperse' ('Horses ass' in English) in Kuusamo, Finland 
+    }
 
     function handleClick(event: google.maps.MapMouseEvent): void {
         try {
@@ -76,7 +81,14 @@ export default function Map(props: MapProps): JSX.Element {
             center={center}
             mapContainerClassName='w-full h-full'
             onClick={(event) => handleClick(event)}
-            options={options}>
+            options={options}
+            onLoad={map => {
+                map.addListener('bounds_changed', () => {
+                    const center = map.getCenter();
+                    if (center) mapRef.current = { lat: center.lat(), lng: center.lng() }
+                })
+            }}
+        >
             {markers.map(marker => <MarkerF
                 key={marker.id.valueOf()}
                 position={
