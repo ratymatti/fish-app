@@ -11,8 +11,10 @@ export default function MapContainer({ children }: MapContainerProps) {
     const [key, setKey] = useState<number>(Math.random()); // Used for forcing update of the map
 
     function handleCenter() {
-       if (userLocation) mapRef.current = userLocation;
-       setKey(Math.random()); // Force update of the map
+        if (userLocation) {
+            mapRef.current.center = userLocation;
+        }
+        setKey(Math.random()); // Force update of the map
     }
 
     return (

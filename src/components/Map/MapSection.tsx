@@ -30,7 +30,6 @@ export default function MapSection(): JSX.Element {
     return (
         <MapContainer>
             <Map
-                zoom={10}
                 markerLocations={fishGeolocationArr} />
         </MapContainer>
     )

@@ -90,7 +90,6 @@ export default function Weather(): JSX.Element | null {
             <MapContainer>
                 <>
                     <Map
-                        zoom={6}
                         markerLocations={newWeatherLocation}
                         setNewWeatherLocation={setNewWeatherLocation} />
                     <div className='mt-2 h-6 text-center uppercase'>

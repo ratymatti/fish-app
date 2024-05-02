@@ -82,7 +82,6 @@ export default function AddContainer(): JSX.Element | null {
             <MapContainer>
                 <>
                     <Map
-                        zoom={10}
                         setFishGeolocation={setFishGeolocation}
                         markerLocations={fishGeolocation} />
                     <div className='flex justify-center py-8'>
