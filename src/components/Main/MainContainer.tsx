@@ -5,7 +5,7 @@ import MapSection from '../Map/MapSection';
 import Weather from '../Weather/Weather';
 import Auth from '../Auth/Auth';
 import { CreateFishProvider } from '../../contexts/CreateFishContext';
-import { AppStateContext, AppStateContextType, ActiveState } from '../../contexts/AppStateContext';
+import { AppStateContext, AppStateContextType, ActiveState, AppError } from '../../contexts/AppStateContext';
 import Modal from '../Modal/Modal';
 import { useModal } from '../../hooks/useModal';
 import LocationModal from '../Modal/LocationModal';
@@ -28,7 +28,7 @@ export default function MainContainer() {
     useEffect(() => {
         if (isLoggedIn && !userLocation) {
             openModal();
-        } 
+        }
     }, [isLoggedIn, userLocation]);
 
     useEffect(() => {
@@ -41,10 +41,11 @@ export default function MainContainer() {
 
     return (
         <>
-            <Modal ref={modalRef}>
-               {!error && <LocationModal onAllow={handleAllow} onDeny={handleClose} />}
-               {error && <LocationNotAvailableModal error={error} onClose={handleClose} />}
-            </Modal>
+            {!userLocation &&
+                <Modal ref={modalRef}>
+                    {!error && <LocationModal onAllow={handleAllow} onDeny={handleClose} />}
+                    {error === AppError.GeolocationNotAvailable && <LocationNotAvailableModal error={error} onClose={handleClose} />}
+                </Modal>}
             <div className='h-screen px-8 mt-8 flex justify-center'>
                 {active === ActiveState.AddFish &&
                     <CreateFishProvider>
