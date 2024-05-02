@@ -11,7 +11,7 @@ interface FetchFishHook {
 }
 
 export function useFetchFish(): FetchFishHook {
-    const urlToFetch = 'http://localhost:8080/user/fishes';
+    const urlToFetch = 'http://localhost:8080/fish/user';
 
     const { refreshedIdToken } = useIdToken();
 
