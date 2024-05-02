@@ -1,4 +1,4 @@
-import React, { ReactNode, createContext, useEffect, useState } from 'react'
+import React, { ReactNode, createContext, useEffect, useRef, useState } from 'react'
 import { useIdToken } from '../hooks/useIdToken';
 import { Position, Location } from '../types/location';
 
@@ -35,6 +35,7 @@ export interface AppStateContextType {
     userLocation: Location | undefined;
     setUserLocation: (userLocation: Location | undefined) => void;
     getAndSetLocation: () => Promise<void>;
+    mapRef: React.MutableRefObject<Location | null>;
 }
 
 export const AppStateContext = createContext<AppStateContextType | undefined>(undefined);
@@ -44,6 +45,8 @@ export function AppStateProvider({ children }: AppStateProps) {
     const [active, setActive] = useState<ActiveState>(ActiveState.Empty);
     const [error, setError] = useState<AppError | null>(null);
     const [userLocation, setUserLocation] = useState<Location | undefined>(undefined);
+
+    const mapRef = useRef<Location | null>(null);
 
     const { initialIdToken } = useIdToken();
 
@@ -80,7 +83,8 @@ export function AppStateProvider({ children }: AppStateProps) {
             setError,
             userLocation,
             setUserLocation,
-            getAndSetLocation
+            getAndSetLocation,
+            mapRef
         }}>
             {children}
         </AppStateContext.Provider>
