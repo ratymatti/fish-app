@@ -36,6 +36,7 @@ export interface AppStateContextType {
     setUserLocation: (userLocation: Location | undefined) => void;
     getAndSetLocation: () => Promise<void>;
     mapRef: React.MutableRefObject<Location | null>;
+    loading: boolean;
 }
 
 export const AppStateContext = createContext<AppStateContextType | undefined>(undefined);
@@ -45,6 +46,7 @@ export function AppStateProvider({ children }: AppStateProps) {
     const [active, setActive] = useState<ActiveState>(ActiveState.Empty);
     const [error, setError] = useState<AppError | null>(null);
     const [userLocation, setUserLocation] = useState<Location | undefined>(undefined);
+    const [loading, setLoading] = useState<boolean>(true);
 
     const mapRef = useRef<Location | null>(null);
 
@@ -60,9 +62,12 @@ export function AppStateProvider({ children }: AppStateProps) {
                 const { latitude: lat, longitude: lng } = position.coords;
 
                 setUserLocation({ lat, lng });
+                mapRef.current = { lat, lng };
             } catch (error) {
                 setError(AppError.GeolocationNotAvailable);
                 console.error(error);
+            } finally {
+                setLoading(false);
             }
         }
     }
@@ -84,7 +89,8 @@ export function AppStateProvider({ children }: AppStateProps) {
             userLocation,
             setUserLocation,
             getAndSetLocation,
-            mapRef
+            mapRef,
+            loading
         }}>
             {children}
         </AppStateContext.Provider>

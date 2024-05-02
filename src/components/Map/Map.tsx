@@ -32,23 +32,13 @@ export default function Map(props: MapProps): JSX.Element {
         setNewWeatherLocation
     } = props;
 
+    const { active, mapRef, loading } = useContext(AppStateContext) as AppStateContextType;
+    
+    const [markers, setMarkers] = useState<Marker[]>([]);
+
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY!
     });
-
-    const [markers, setMarkers] = useState<Marker[]>([]);
-
-    const { active, mapRef } = useContext(AppStateContext) as AppStateContextType;
-
-    let center: Location;
-
-    if (mapRef.current) {
-        center = mapRef.current!;
-    } else {
-        center = { lat: 66.215381, lng: 29.635635 }
-        // If user location is not available, center the map to
-        // 'Hevonperse' ('Horses ass' in English) in Kuusamo, Finland 
-    }
 
     function handleClick(event: google.maps.MapMouseEvent): void {
         try {
@@ -69,10 +59,20 @@ export default function Map(props: MapProps): JSX.Element {
         setMarkers(markerLocations);
     }, [markerLocations]);
 
-    if (!isLoaded) {
+    if (!isLoaded || loading) {
         return (
             <div>Loading..</div>
         )
+    }
+
+    let center: Location;
+
+    if (mapRef.current) {
+        center = mapRef.current!;
+    } else {
+        center = { lat: 66.215381, lng: 29.635635 }
+        // If user location is not available, center the map to
+        // 'Hevonperse' ('Horses ass' in English) in Kuusamo, Finland 
     }
 
     return (
