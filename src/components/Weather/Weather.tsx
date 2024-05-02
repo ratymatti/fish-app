@@ -6,7 +6,6 @@ import { LocationObject } from '../../types/location';
 import ContainerHeader from '../Main/ContainerHeader';
 import SectionContainer from '../Main/SectionContainer';
 import SectionButton from '../Main/SectionButton';
-import { AppStateContext, AppStateContextType } from '../../contexts/AppStateContext';
 import MapContainer from '../Map/MapContainer';
 
 enum Current {
@@ -19,8 +18,6 @@ export default function Weather(): JSX.Element | null {
         currentLocationWeather,
         weatherTrackings,
         addNewTracking } = useContext(WeatherContext) as WeatherContextType;
-
-    const { userLocation } = useContext(AppStateContext) as AppStateContextType;
 
     const [current, setCurrent] = useState<Current>(Current.WEATHER);
     const [newWeatherLocation, setNewWeatherLocation] = useState<LocationObject[]>([]);
@@ -72,17 +69,17 @@ export default function Weather(): JSX.Element | null {
                                 isRemovable={false} />
                         </SectionContainer>}
                     {weatherTrackings.length > 0 &&
-                    <SectionContainer half>
-                        <ContainerHeader>
-                            Your weather trackings
-                        </ContainerHeader>
-                        {weatherTrackings.map((weatherObj) => (
-                            <WeatherCard
-                                key={weatherObj.id}
-                                data={weatherObj}
-                                isRemovable={true} />
-                        ))}
-                    </SectionContainer>}
+                        <SectionContainer half>
+                            <ContainerHeader>
+                                Your weather trackings
+                            </ContainerHeader>
+                            {weatherTrackings.map((weatherObj) => (
+                                <WeatherCard
+                                    key={weatherObj.id}
+                                    data={weatherObj}
+                                    isRemovable={true} />
+                            ))}
+                        </SectionContainer>}
                 </div>
             </div>
         )
@@ -91,19 +88,20 @@ export default function Weather(): JSX.Element | null {
     if (current === Current.MAP) {
         return (
             <MapContainer>
-                <Map
-                    center={userLocation}
-                    zoom={5}
-                    markerLocations={newWeatherLocation}
-                    setNewWeatherLocation={setNewWeatherLocation} />
-                <div className='mt-2 h-6 text-center uppercase'>
-                    {!newWeatherLocation.length && <p className='text-md text-orange-400'>Select location from the map to continue</p>}
-                </div>
-                <div className='border-b border-neutral-800 pb-2 h-10 flex justify-center items-center'>
-                    <SectionButton onClick={() => handleSelection()} disabled={!newWeatherLocation.length}>
-                        Set Weather Tracking
-                    </SectionButton>
-                </div>
+                <>
+                    <Map
+                        zoom={6}
+                        markerLocations={newWeatherLocation}
+                        setNewWeatherLocation={setNewWeatherLocation} />
+                    <div className='mt-2 h-6 text-center uppercase'>
+                        {!newWeatherLocation.length && <p className='text-md text-orange-400'>Select location from the map to continue</p>}
+                    </div>
+                    <div className='border-b border-neutral-800 pb-2 h-10 flex justify-center items-center'>
+                        <SectionButton onClick={() => handleSelection()} disabled={!newWeatherLocation.length}>
+                            Set Weather Tracking
+                        </SectionButton>
+                    </div>
+                </>
             </MapContainer>
         )
     }

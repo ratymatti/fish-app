@@ -59,16 +59,16 @@ export default function AddContainer(): JSX.Element | null {
             return;
         } else {
             submitCountRef.current += 1;
-        }    
-            const response = await saveNewFish();
-            if (response) {
-                submitCountRef.current = 0;
-                setCurrent(CurrentState.Map);
-                setFishGeolocation([]);
-            } else {
-                setCurrent(CurrentState.Add);
-                setError(AppError.Network);
-            }
+        }
+        const response = await saveNewFish();
+        if (response) {
+            submitCountRef.current = 0;
+            setCurrent(CurrentState.Map);
+            setFishGeolocation([]);
+        } else {
+            setCurrent(CurrentState.Add);
+            setError(AppError.Network);
+        }
     }
 
     useEffect(() => {
@@ -77,22 +77,22 @@ export default function AddContainer(): JSX.Element | null {
         }
     }, [error]);
 
-
     if (current === CurrentState.Map && userLocation) {
         return (
             <MapContainer>
-                <Map
-                    zoom={12}
-                    center={userLocation}
-                    setFishGeolocation={setFishGeolocation}
-                    markerLocations={fishGeolocation} />
-                <div className='flex justify-center py-8'>
-                    <Button
-                        onClick={() => setCurrent(CurrentState.Add)}
-                        disabled={!fishGeolocation.length}>
-                        {'Select location'}
-                    </Button>
-                </div>
+                <>
+                    <Map
+                        zoom={10}
+                        setFishGeolocation={setFishGeolocation}
+                        markerLocations={fishGeolocation} />
+                    <div className='flex justify-center py-8'>
+                        <Button
+                            onClick={() => setCurrent(CurrentState.Add)}
+                            disabled={!fishGeolocation.length}>
+                            {'Select location'}
+                        </Button>
+                    </div>
+                </>
             </MapContainer>
         )
     }

@@ -3,7 +3,6 @@ import Map from './Map';
 import { FishContext, FishContextType } from '../../contexts/FishContext';
 import { Location, LocationObject } from '../../types/location';
 import { FishObject } from '../../types/fish';
-import { AppStateContext, AppStateContextType } from '../../contexts/AppStateContext';
 import MapContainer from './MapContainer';
 
 const filterAndTransformFishes = (userFishArr: FishObject[]): LocationObject[] => {
@@ -20,7 +19,6 @@ const filterAndTransformFishes = (userFishArr: FishObject[]): LocationObject[] =
 
 export default function MapSection(): JSX.Element {
     const { userFishArr } = useContext(FishContext) as FishContextType;
-    const { userLocation } = useContext(AppStateContext) as AppStateContextType;
 
     const [fishGeolocationArr, setFishGeolocationArr] = useState<LocationObject[]>([]);
 
@@ -32,7 +30,6 @@ export default function MapSection(): JSX.Element {
     return (
         <MapContainer>
             <Map
-                center={userLocation}
                 zoom={10}
                 markerLocations={fishGeolocationArr} />
         </MapContainer>
