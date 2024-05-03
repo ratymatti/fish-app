@@ -22,7 +22,7 @@ export default function AddContainer(): JSX.Element | null {
     const [fishGeolocation, setFishGeolocation] = useState<LocationObject[]>([]);
 
     const { error, setError, setActive } = useContext(AppStateContext) as AppStateContextType;
-    const { newFishData, saveNewFish, resetNewFishData } = useContext(CreateFishContext) as CreateFishContextType;
+    const { newFishDataRef, saveNewFish, resetNewFishData } = useContext(CreateFishContext) as CreateFishContextType;
 
     const { modalRef, openModal, closeModal } = useModal();
 
@@ -44,7 +44,7 @@ export default function AddContainer(): JSX.Element | null {
     }
 
     async function handleSubmit(): Promise<void> {
-        const errorMessage = validateForm(newFishData);
+        const errorMessage = validateForm(newFishDataRef.current);
         if (errorMessage) {
             setCurrent(CurrentState.Add);
             setError(errorMessage as AppError);
