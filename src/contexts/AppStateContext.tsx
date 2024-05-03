@@ -1,4 +1,4 @@
-import React, { ReactNode, createContext, useRef, useState } from 'react'
+import React, { ReactNode, createContext, useEffect, useRef, useState } from 'react'
 import { Position, Location } from '../types/location';
 import { useAuth } from '../hooks/useAuth';
 import { useIdTokenContext } from './IdTokenContext';
@@ -95,6 +95,7 @@ export function AppStateProvider({ children }: AppStateProps) {
         const response = await signInWithGoogle();
         if (response) {
             setIsLoggedIn(true);
+            localStorage.setItem('isLoggedIn', 'true');
         }
     }
 
@@ -102,10 +103,16 @@ export function AppStateProvider({ children }: AppStateProps) {
         const response = await signOutWithGoogle();
         if (response) {
             setIsLoggedIn(false);
+            localStorage.removeItem('isLoggedIn');
             setActive(ActiveState.Empty);
             resetIdTokens();
         }
     }
+
+    useEffect(() => {
+        const savedLoginStatus = localStorage.getItem('isLoggedIn');
+        if (savedLoginStatus === 'true') setIsLoggedIn(true);
+    }, []);
 
     return (
         <AppStateContext.Provider value={{
