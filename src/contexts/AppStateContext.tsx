@@ -1,6 +1,7 @@
-import React, { ReactNode, createContext, useEffect, useRef, useState } from 'react'
+import React, { ReactNode, createContext, useRef, useState } from 'react'
 import { useIdToken } from '../hooks/useIdToken';
 import { Position, Location } from '../types/location';
+import { useAuth } from '../hooks/useAuth';
 
 export enum ActiveState {
     AddFish = 'add fish',
@@ -46,6 +47,8 @@ export interface AppStateContextType {
     mapRef: React.MutableRefObject<MapState>;
     loading: boolean;
     setLoading: (loading: boolean) => void;
+    handleSignIn: () => void;
+    handleSignOut: () => void;
 }
 
 export const AppStateContext = createContext<AppStateContextType | undefined>(undefined);
@@ -61,11 +64,13 @@ export function AppStateProvider({ children }: AppStateProps) {
         center: {
             lat: 66.215381, // If user location is not available, center the map to 
             lng: 29.635635 // 'Hevonperse' ('Horses ass' in English) in Kuusamo, Finland
-        }, 
+        },
         zoom: 12
     });
 
-    const { initialIdToken } = useIdToken();
+    const { resetIdTokens } = useIdToken();
+
+    const { signInWithGoogle, signOutWithGoogle } = useAuth();
 
     async function getAndSetLocation(): Promise<void> {
         if (navigator.geolocation) {
@@ -87,11 +92,21 @@ export function AppStateProvider({ children }: AppStateProps) {
         }
     }
 
-    useEffect(() => {
-        if (initialIdToken) {
+    async function handleSignIn() {
+        const response = await signInWithGoogle();
+        if (response) {
             setIsLoggedIn(true);
         }
-    }, [initialIdToken]);
+    }
+
+    async function handleSignOut() {
+        const response = await signOutWithGoogle();
+        if (response) {
+            setIsLoggedIn(false);
+            setActive(ActiveState.Empty);
+            resetIdTokens();
+        }
+    }
 
     return (
         <AppStateContext.Provider value={{
@@ -106,7 +121,9 @@ export function AppStateProvider({ children }: AppStateProps) {
             getAndSetLocation,
             mapRef,
             loading,
-            setLoading
+            setLoading,
+            handleSignIn,
+            handleSignOut
         }}>
             {children}
         </AppStateContext.Provider>
