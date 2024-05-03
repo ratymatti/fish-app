@@ -1,15 +1,20 @@
-import React, { ReactNode, createContext, useContext, useState } from 'react';
+import React, {
+    MutableRefObject,
+    ReactNode,
+    createContext,
+    useContext,
+    useRef } from 'react';
 
 import { FishObject, NewFishObject, RequestFishObject } from '../types/fish';
 import copyFishObject from '../utils/copyFishObject';
 import { useSaveFish } from '../hooks/useSaveFish';
 import { FishContext, FishContextType } from './FishContext';
 
-export const initialFishData: NewFishObject = {
+export const initialNewFishData: NewFishObject = {
     species: null,
     date: null,
     length: null,
-    locationName: null,
+    location: null,
     comment: null,
     geolocation: {
         lat: 0,
@@ -18,10 +23,9 @@ export const initialFishData: NewFishObject = {
 }
 
 export interface CreateFishContextType {
-    newFishData: NewFishObject;
-    setNewFishData: (newFishData: NewFishObject) => void;
     saveNewFish: () => Promise<boolean>;
     resetNewFishData: () => void;
+    newFishDataRef: MutableRefObject<NewFishObject>;
 }
 
 interface CreateFishProviderProps {
@@ -31,7 +35,7 @@ interface CreateFishProviderProps {
 export const CreateFishContext = createContext<CreateFishContextType | undefined>(undefined);
 
 export function CreateFishProvider({ children }: CreateFishProviderProps) {
-    const [newFishData, setNewFishData] = useState<NewFishObject>(JSON.parse(JSON.stringify(initialFishData)));
+    const newFishDataRef = useRef<NewFishObject>(JSON.parse(JSON.stringify(initialNewFishData)));
 
     const { updateUserFishArr } = useContext(FishContext) as FishContextType;
 
@@ -39,7 +43,7 @@ export function CreateFishProvider({ children }: CreateFishProviderProps) {
 
     async function saveNewFish(): Promise<boolean> {
         try {
-            const requestFishData: RequestFishObject = copyFishObject(newFishData as NewFishObject);
+            const requestFishData: RequestFishObject = copyFishObject(newFishDataRef.current as NewFishObject);
             const savedFish = await saveFishData(requestFishData as RequestFishObject);
             if (savedFish !== null) {
                 updateUserFishArr(savedFish as FishObject);
@@ -53,15 +57,14 @@ export function CreateFishProvider({ children }: CreateFishProviderProps) {
     }
 
     function resetNewFishData(): void {
-        setNewFishData(JSON.parse(JSON.stringify(initialFishData)));
+        newFishDataRef.current = JSON.parse(JSON.stringify(initialNewFishData));
     }
 
     return (
         <CreateFishContext.Provider value={{
-            newFishData,
-            setNewFishData,
             saveNewFish,
-            resetNewFishData
+            resetNewFishData,
+            newFishDataRef
         }}>
             {children}
         </CreateFishContext.Provider>
