@@ -6,23 +6,24 @@ import Header from './components/Header/Header';
 import { FishProvider } from './contexts/FishContext';
 import { WeatherProvider } from './contexts/WeatherContext';
 import { AppStateProvider } from './contexts/AppStateContext';
+import { IdTokenProvider } from './contexts/IdTokenContext';
 
 function App() {
 
     return (
-        <AppStateProvider>
-                    <FishProvider>
-                        <WeatherProvider>
-                            <div className='h-screen overflow-auto'>
-                                <Header />
-                                <MainContainer />
-                                {/* <Footer /> */}
-                            </div>
-                        </WeatherProvider>
-                    </FishProvider>
-        </AppStateProvider>
-                
-
+        <IdTokenProvider>
+            <AppStateProvider>
+                <FishProvider>
+                    <WeatherProvider>
+                        <div className='h-screen overflow-auto'>
+                            <Header />
+                            <MainContainer />
+                            {/* <Footer /> */}
+                        </div>
+                    </WeatherProvider>
+                </FishProvider>
+            </AppStateProvider>
+        </IdTokenProvider>
     )
 }
 
