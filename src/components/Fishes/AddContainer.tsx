@@ -24,6 +24,8 @@ export default function AddContainer(): JSX.Element | null {
     const { error, setError, setActive } = useContext(AppStateContext) as AppStateContextType;
     const { newFishDataRef, saveNewFish, resetNewFishData } = useContext(CreateFishContext) as CreateFishContextType;
 
+    if (!newFishDataRef) return null;
+
     const { modalRef, openModal, closeModal } = useModal();
 
     const submitCountRef = useRef(0);
