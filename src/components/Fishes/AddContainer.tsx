@@ -21,23 +21,15 @@ export default function AddContainer(): JSX.Element | null {
     const [current, setCurrent] = useState<CurrentState>(CurrentState.Map);
     const [fishGeolocation, setFishGeolocation] = useState<LocationObject[]>([]);
 
-    const { error, setError, userLocation, setUserLocation, setActive } = useContext(AppStateContext) as AppStateContextType;
+    const { error, setError, setActive } = useContext(AppStateContext) as AppStateContextType;
     const { newFishData, saveNewFish, resetNewFishData } = useContext(CreateFishContext) as CreateFishContextType;
 
     const { modalRef, openModal, closeModal } = useModal();
 
     const submitCountRef = useRef(0);
 
-    function handleClick(): void {
-        if (fishGeolocation.length) {
-            setUserLocation(
-                {
-                    lat: fishGeolocation[0].geolocation.lat,
-                    lng: fishGeolocation[0].geolocation.lng
-                }
-            );
-        }
-        setCurrent(CurrentState.Map);
+    function handleEditLocation(): void {
+        setCurrent(CurrentState.Map);   
     }
 
     function handleCloseModal(): void {
@@ -77,7 +69,7 @@ export default function AddContainer(): JSX.Element | null {
         }
     }, [error]);
 
-    if (current === CurrentState.Map && userLocation) {
+    if (current === CurrentState.Map) {
         return (
             <MapContainer>
                 <>
@@ -111,7 +103,7 @@ export default function AddContainer(): JSX.Element | null {
 
                     </div>
                     <div className='flex justify-center my-6'>
-                        <Button onClick={handleClick}>
+                        <Button onClick={handleEditLocation}>
                             {'Edit location'}
                         </Button>
                         <Button onClick={handleSubmit}>
