@@ -1,18 +1,30 @@
 // BasicDateCalendar.tsx
 import * as React from 'react';
+import { MutableRefObject, useEffect, useState } from 'react';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
-import { useState } from 'react';
+import dayjs, { Dayjs } from 'dayjs';
+import { NewFishObject } from '../../types/fish';
 
-export default function BasicDateCalendar({ onDateChange }) {
-    const [selectedDate, setSelectedDate] = useState(null);
+interface BasicDateCalendarProps {
+    newFishDataRef: MutableRefObject<NewFishObject>;
+}
 
-    const handleDateChange = (date) => {
+export default function BasicDateCalendar({ newFishDataRef }: BasicDateCalendarProps) {
+    const initialDate: Dayjs | null = newFishDataRef.current.date ? dayjs(newFishDataRef.current.date) : null;
+    const [selectedDate, setSelectedDate] = useState<Dayjs | null>(initialDate);
+
+    const handleDateChange = (date: Dayjs) => {
         setSelectedDate(date);
-        const jsDate = date.toDate();
-        onDateChange(jsDate);
     };
+
+    useEffect(() => {
+        if (selectedDate) {
+            const jsDate: Date = selectedDate.toDate();
+            newFishDataRef.current.date = jsDate;
+        }
+    }, [selectedDate]);
 
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
