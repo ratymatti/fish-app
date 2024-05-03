@@ -13,7 +13,7 @@ function copyFishObject(newFishData: NewFishObject): RequestFishObject {
         species: newFishData.species!,
         length: newFishData.length!,
         date: newFishData.date!.toISOString(),
-        locationName: newFishData.locationName!,
+        location: newFishData.location!,
         comment: newFishData.comment,
         geolocation: {
             lat: newFishData.geolocation.lat,

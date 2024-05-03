@@ -34,7 +34,7 @@ export const sortFishes = ({field, userFishArr, direction}: SortFishes): FishObj
 
             case Field.LOCATION:
                 return fishesCopy.sort((fishA, fishB) => {
-                    const waterComparison = (fishB.locationName || '').localeCompare(fishA.locationName || '') ?? 0;
+                    const waterComparison = (fishB.location || '').localeCompare(fishA.location || '') ?? 0;
                     return waterComparison === 0 ? (fishA.length ?? 0) - (fishB.length ?? 0) : waterComparison;
                 });
 

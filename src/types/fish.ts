@@ -17,7 +17,7 @@ export interface FishObject {
     species: string;
     length: number;
     date: string | Date;
-    locationName: string;
+    location: string;
     comment: string | null;
     geolocation: Location;
     dateString: string | null;
@@ -35,7 +35,7 @@ export interface NewFishObject {
     species: string | null;
     length: number | null;
     date: Date | null;
-    locationName: string | null;
+    location: string | null;
     comment: string | null;
     geolocation: Location;
 }
@@ -44,7 +44,7 @@ export interface RequestFishObject {
     species: string;
     length: number;
     date: string;
-    locationName: string;
+    location: string;
     comment: string | null;
     geolocation: Location;
 }
