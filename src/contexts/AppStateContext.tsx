@@ -45,6 +45,7 @@ export interface AppStateContextType {
     getAndSetLocation: () => Promise<void>;
     mapRef: React.MutableRefObject<MapState>;
     loading: boolean;
+    setLoading: (loading: boolean) => void;
 }
 
 export const AppStateContext = createContext<AppStateContextType | undefined>(undefined);
@@ -104,7 +105,8 @@ export function AppStateProvider({ children }: AppStateProps) {
             setUserLocation,
             getAndSetLocation,
             mapRef,
-            loading
+            loading,
+            setLoading
         }}>
             {children}
         </AppStateContext.Provider>

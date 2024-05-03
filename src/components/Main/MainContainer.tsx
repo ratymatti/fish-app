@@ -12,7 +12,13 @@ import LocationModal from '../Modal/LocationModal';
 import LocationNotAvailableModal from '../Modal/LocationNotAvailableModal';
 
 export default function MainContainer() {
-    const { error, isLoggedIn, active, userLocation, getAndSetLocation } = useContext(AppStateContext) as AppStateContextType;
+    const {
+        error,
+        isLoggedIn,
+        active,
+        userLocation,
+        getAndSetLocation,
+        setLoading } = useContext(AppStateContext) as AppStateContextType;
 
     const { modalRef, openModal, closeModal } = useModal();
 
@@ -23,6 +29,7 @@ export default function MainContainer() {
 
     function handleClose() {
         closeModal();
+        if (!error) setLoading(false);
     }
 
     useEffect(() => {
