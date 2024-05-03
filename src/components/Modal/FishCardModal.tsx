@@ -9,10 +9,7 @@ interface FishCardModalProps {
 }
 
 const keyToLabelMap: { [key: string]: string } = {
-    locationName: 'Location',
-    species: 'Species',
     dateString: 'Date',
-    name: 'Location',
     temp: 'Temperature',
 };
 
