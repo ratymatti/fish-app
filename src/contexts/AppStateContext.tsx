@@ -1,7 +1,7 @@
 import React, { ReactNode, createContext, useRef, useState } from 'react'
-import { useIdToken } from '../hooks/useIdToken';
 import { Position, Location } from '../types/location';
 import { useAuth } from '../hooks/useAuth';
+import { useIdTokenContext } from './IdTokenContext';
 
 export enum ActiveState {
     AddFish = 'add fish',
@@ -32,7 +32,6 @@ interface MapState {
     };
     zoom: number;
 }
-
 
 export interface AppStateContextType {
     isLoggedIn: boolean;
@@ -68,7 +67,7 @@ export function AppStateProvider({ children }: AppStateProps) {
         zoom: 12
     });
 
-    const { resetIdTokens } = useIdToken();
+    const { resetIdTokens } = useIdTokenContext();
 
     const { signInWithGoogle, signOutWithGoogle } = useAuth();
 

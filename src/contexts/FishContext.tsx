@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createContext, ReactNode } from 'react';
 import { FishObject } from '../types/fish';
 import { useFetchFish } from '../hooks/useFetchFish';
-import { useIdToken } from '../hooks/useIdToken';
+import { useIdTokenContext } from './IdTokenContext';
 
 export interface FishContextType {
     userFishArr: FishObject[];
@@ -36,7 +36,7 @@ export function FishProvider({ children }: FishProviderProps): JSX.Element {
     const [userFishArr, setUserFishArr] = useState<FishObject[]>([]);
     const [selectedFish, setSelectedFish] = useState<FishObject | null>(null);
 
-    const { initialIdToken } = useIdToken();
+    const { initialIdToken } = useIdTokenContext();
     const { fetchFishData } = useFetchFish();
 
     function updateUserFishArr(newFish: FishObject): void {

@@ -3,8 +3,8 @@
  * @returns {FetchFish} - object with function for fetching fish data
  */
 
+import { useIdTokenContext } from "../contexts/IdTokenContext";
 import { FishObject } from "../types/fish";
-import { useIdToken } from "./useIdToken";
 
 interface FetchFishHook {
     fetchFishData: () => Promise<FishObject[] | null>
@@ -13,7 +13,7 @@ interface FetchFishHook {
 export function useFetchFish(): FetchFishHook {
     const urlToFetch = 'http://localhost:8080/fish/user';
 
-    const { refreshedIdToken } = useIdToken();
+    const { refreshedIdToken } = useIdTokenContext();
 
     async function fetchFishData(): Promise<FishObject[] | null> {
         const config: RequestInit = {

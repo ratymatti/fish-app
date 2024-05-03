@@ -1,7 +1,5 @@
-
+import { useIdTokenContext } from '../contexts/IdTokenContext';
 import { WeatherObject } from '../types/weather';
-import { useIdToken } from './useIdToken';
-
 
 interface FetchWeatherTrackingHook {
     fetchUserTrackings: () => Promise<WeatherObject[]>;
@@ -9,10 +7,9 @@ interface FetchWeatherTrackingHook {
 
 export function useFetchTrackings(): FetchWeatherTrackingHook {
 
-    const { refreshedIdToken } = useIdToken();
+    const { refreshedIdToken } = useIdTokenContext();
 
     const rootUrl = 'http://localhost:8080/weather';
-
 
     async function fetchWeatherFromBackend({ endpoint, method }): Promise<WeatherObject[]> {
         const urlToFetch = `${rootUrl}${endpoint}`;

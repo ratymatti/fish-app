@@ -1,4 +1,4 @@
-import { useIdToken } from './useIdToken';
+import { useIdTokenContext } from '../contexts/IdTokenContext';
 
 interface DeleteWeatherHook {
     fetchDeleteWeatherObject: (idToRemove: string) => Promise<boolean>;
@@ -7,7 +7,7 @@ interface DeleteWeatherHook {
 export function useFetchDelete(): DeleteWeatherHook {
     const rootUrl = 'http://localhost:8080/weather/delete/';
 
-    const { refreshedIdToken } = useIdToken();
+    const { refreshedIdToken } = useIdTokenContext();
 
     async function fetchDeleteWeatherObject(idToRemove: string ): Promise<boolean> {
         const urlToFetch = `${rootUrl}${idToRemove}`;

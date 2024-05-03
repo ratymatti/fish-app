@@ -1,5 +1,5 @@
+import { useIdTokenContext } from "../contexts/IdTokenContext";
 import { FishObject, RequestFishObject } from "../types/fish";
-import { useIdToken } from "./useIdToken";
 
 /**
  * Custom hook for saving fish data
@@ -13,7 +13,7 @@ import { useIdToken } from "./useIdToken";
 export function useSaveFish(): SaveFishHook {
     const urlToFetch = 'http://localhost:8080/fish/save';
 
-    const { refreshedIdToken } = useIdToken();
+    const { refreshedIdToken } = useIdTokenContext();
 
     async function saveFishData(newFishData: RequestFishObject): Promise<FishObject | null> {
         const config: RequestInit = {
@@ -24,7 +24,6 @@ export function useSaveFish(): SaveFishHook {
             },
             body: JSON.stringify(newFishData)
         }
-
         try {
             const response = await fetch(urlToFetch, config);
             if (response.ok) {
@@ -36,6 +35,5 @@ export function useSaveFish(): SaveFishHook {
         }
         return null;
     }
-    
    return { saveFishData }
 }

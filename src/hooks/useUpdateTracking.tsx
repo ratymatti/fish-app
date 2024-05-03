@@ -1,5 +1,5 @@
+import { useIdTokenContext } from "../contexts/IdTokenContext";
 import { WeatherObject } from "../types/weather";
-import { useIdToken } from "./useIdToken";
 
 interface UpdateTrackingsHook {
     fetchUpdateTrackingWeather: (weatherObjId: string) => Promise<WeatherObject | null>;
@@ -7,7 +7,7 @@ interface UpdateTrackingsHook {
 
 export function useUpdateTracking(): UpdateTrackingsHook {
 
-    const { refreshedIdToken } = useIdToken();
+    const { refreshedIdToken } = useIdTokenContext();
 
     const rootUrl = 'http://localhost:8080/weather';
 

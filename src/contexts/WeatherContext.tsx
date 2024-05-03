@@ -2,11 +2,11 @@ import React, { useState, useEffect, useContext, ReactNode, createContext } from
 import { useFetchWeather } from '../hooks/useFetchWeather';
 import { WeatherObject } from '../types/weather';
 import { Location } from '../types/location';
-import { useIdToken } from '../hooks/useIdToken';
 import { useFetchDelete } from '../hooks/useFetchDelete';
 import { useFetchTrackings } from '../hooks/useFetchTrackings';
 import { useUpdateTracking } from '../hooks/useUpdateTracking';
 import { AppStateContext, AppStateContextType } from './AppStateContext';
+import { useIdTokenContext } from './IdTokenContext';
 
 export enum WeatherEndpoint {
     CURRENT = '/fetch/current',
@@ -35,7 +35,7 @@ export function WeatherProvider({ children }: WeatherProviderProps): JSX.Element
     const { fetchDeleteWeatherObject } = useFetchDelete();
     const { fetchUpdateTrackingWeather } = useUpdateTracking();
 
-    const { initialIdToken } = useIdToken();
+    const { initialIdToken } = useIdTokenContext();
 
     const { userLocation } = useContext(AppStateContext) as AppStateContextType;
 

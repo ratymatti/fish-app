@@ -1,8 +1,7 @@
-
 import { Location } from '../types/location';
 import { WeatherObject } from '../types/weather';
-import { useIdToken } from './useIdToken';
 import { WeatherEndpoint } from '../contexts/WeatherContext';
+import { useIdTokenContext } from '../contexts/IdTokenContext';
 
 interface FetchCurrentWeatherHook {
     fetchCurrentWeather: (location: Location, endpoint: WeatherEndpoint) => Promise<WeatherObject | null>;
@@ -10,7 +9,7 @@ interface FetchCurrentWeatherHook {
 
 export function useFetchWeather(): FetchCurrentWeatherHook {
 
-    const { refreshedIdToken } = useIdToken();
+    const { refreshedIdToken } = useIdTokenContext();
 
     const rootUrl = 'http://localhost:8080/weather';
 
